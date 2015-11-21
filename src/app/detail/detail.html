@@ -1,0 +1,111 @@
+ <article class="main-content">
+  <section class="content">
+    <div class="wrapper">
+      <form class="form">
+        <section class="info-group form-inline">
+          <h4>个人信息</h4>
+          <div class="form-group">
+            <label for="" class="control-label">姓名: </label>
+            <input type="text" class="form-control" ng-model="detail.info.name">
+          </div>
+          <div class="form-group">
+            <label for="">电话: </label>
+            <input type="text" class="form-control" ng-model="detail.info.phone">
+          </div>
+          <div class="form-group">
+            <label for="">微信: </label>
+            <input type="text" class="form-control" ng-model="detail.info.wechat">
+          </div>
+          <div class="form-group">
+            <label for="">QQ: </label>
+            <input type="text" class="form-control" ng-model="detail.info.qq">
+          </div>
+          <div class="form-group">
+            <label for="">城市: </label>
+            <select class="form-control" ng-model="detail.info.cityId">
+              <option value="12">北京</option>
+              <option value="13">宁波</option>
+              <option value="14">南京</option>
+              <option value="15">苏州</option>
+              <option value="16">广州</option>
+              <option value="17">杭州</option>
+              <option value="18">深圳</option>
+              <option value="19">武汉</option>
+              <option value="20">天津</option>
+              <option value="21">上海</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="">合作类型: </label>
+            <select class="form-control" ng-model="detail.info.customerType">
+              <option value="1">供应商</option>
+              <option value="2">小店</option>
+            </select>
+          </div>
+        </section>
+        <section class="info-group form-inline">
+          <h4>处理状况</h4>
+          <div class="form-group">
+            <label for="">分类: </label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="">组别: </label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="">销售代表: </label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="">任务状态: </label>
+            <select class="form-control" ng-model="detail.info.status">
+              <option value="00">已分配</option>
+              <option value="01">无组未分配</option>
+              <option value="02">组内未分配</option>
+              <option value="03">未处理</option>
+              <option value="04">跟进中</option>
+              <option value="05">有效</option>
+              <option value="06">无效</option>
+            </select>
+          </div>
+        </section>
+        <section class="info-group form-inline">
+          <h4>渠道</h4>
+          <div class="form-group">
+            <label for="">客户来源: </label>
+            <label class="" ng-model="detail.info.customerSource">-</label>
+          </div>
+          <div class="form-group">
+            <label for="">来源详情: </label>
+            <label class="" ng-model="detail.info.sourceDetail">-</label>
+          </div>
+        </section>
+        <section class="info-group form-inline">
+          <h4>历史记录</h4>
+          <div class="form-group">
+            <label for="">分配时间: </label>
+            <label class="">-</label>
+          </div>
+          <div class="form-group">
+            <label for="">通话次数: </label>
+            <label class="">{{detail.info.callCount}}</label>
+          </div>
+        </section>
+        <section class="info-group form">
+          <h4>当前备注</h4>
+          <div class="form-group">
+            <textarea class="form-control" rows="3" ng-model="detail.info.remark"></textarea>
+          </div>
+        </section>
+
+        <section class="pull-right">
+          <button type="button" class="btn btn-success" ng-click="detail.save()">保存</button>
+          <button type="button" class="btn btn-default" ng-click="detail.back()">返回</button>
+        </section>
+      </form>
+      
+
+    </div>
+  </section>
+</article>

@@ -1,0 +1,113 @@
+<article class="main-content">
+  <aside class="side-nav">
+    <section class="category">
+      <div class="title">
+        客户来源
+      </div>
+      <ul class="item-list">
+        <li class="item">全部</li>
+        <li class="item">广点通</li>
+        <li class="item">talk99</li>
+        <li class="item">腾讯新闻</li>
+      </ul>
+    </section>
+
+    <section class="category">
+      <div class="title">
+        合作类型
+      </div>
+      <ul class="item-list">
+        <li class="item">全部</li>
+        <li class="item">经销商</li>
+        <li class="item">小店</li>
+      </ul>
+    </section>
+
+    <section class="category">
+      <div class="title">
+        城市
+      </div>
+      <ul class="item-list">
+        <li class="item">上海</li>
+        <li class="item">北京</li>
+      </ul>
+    </section>
+
+    <section class="category">
+      <div class="title">
+        状态
+      </div>
+      <ul class="item-list">
+        <li class="item">全部</li>
+        <li class="item">已分配</li>
+        <li class="item">未分配</li>
+        <li class="item">跟进中</li>
+        <li class="item">有效</li>
+        <li class="item">无效</li>
+      </ul>
+    </section>
+    
+  </aside>
+  <section class="content">
+    <div class="wrapper">
+      <table class="table table-hover table-striped table-responsive">
+        <thead>
+          <tr>
+            <th ng-if="main.user.roleId!=3">客户来源</th>
+            <!-- <th ng-if="main.user.roleId!=3">来源详情</th> -->
+            <th ng-if="main.user.roleId!=3">分配时间</th>
+            <th ng-if="main.user.roleId!=3">上次通话</th>
+            <th>通话次数</th>
+            <th>姓名</th>
+            <th>电话</th>
+            <th>城市</th>
+            <th>合作类型</th>
+            <th>状态</th>
+            <th ng-if="main.user.roleId==3">备注</th>
+            <th ng-if="main.user.roleId!=3">组别</th>
+            <th ng-if="main.user.roleId!=3">销售代表</th>
+            <th>修改</th>
+            <th ng-if="main.user.roleId!=3">分配</th>
+          </tr>
+        </thead>
+        <tbody>
+          </tr>
+          <tr ng-repeat="item in main.list">
+            <td ng-if="main.user.roleId!=3">{{item.customerSource || '-'}}</td>
+            <!-- <td ng-if="main.user.roleId!=3">{{item.sourceDetail || '-'}}</td> -->
+            <td ng-if="main.user.roleId!=3">-</td>
+            <td ng-if="main.user.roleId!=3">{{item.lastCallDate || '-'}}</td>
+            <td>{{item.callCount}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.phone}}</td>
+            <td>{{item.cityId | city}}</td>
+            <td>{{item.customerType | coType}}</td>
+            <td>{{item.status | status}}</td>
+            <td ng-if="main.user.roleId==3">{{item.remark || '-'}}</td>
+            <td ng-if="main.user.roleId!=3">-</td>
+            <td ng-if="main.user.roleId!=3">{{item.saleman || '-'}}</td>
+            <td>
+              <button type="button" class="btn btn-info btn-sm" ng-click="main.modify($index)">修改</button>
+            </td>
+            <td ng-if="main.user.roleId!=3">
+              <button type="button" class="btn btn-danger btn-sm">分配</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination ng-change="main.pageChanged()"
+        max-size="5"
+        rotate="false"
+        boundary-links="true"
+        total-items="main.totalItems"
+        ng-model="main.currentPage"
+        items-per-page="main.itemsPerPage"
+        class="pagination green pull-right"
+        previous-text="上一页"
+        next-text="下一页"
+        first-text="首页"
+        last-text="末页">
+      </pagination>
+    </div>
+  </section>
+</article>
