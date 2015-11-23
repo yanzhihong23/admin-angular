@@ -10,6 +10,7 @@
     $log.debug('MainController start');
     var vm = this;
 
+    vm.user = UserService.getUser();
     vm.itemsPerPage = 10;
     vm.currentPage = 1;
     vm.statusFilter = ['1', '01', '02', '11', '12', '13', '14'];
@@ -19,10 +20,11 @@
     vm.pageChanged = getDataList;
     vm.filter = filter;
 
-    var searchFilter = {};
-    
-
-    vm.user = UserService.getUser();
+    var searchFilter = {
+      username: vm.user.username,
+      pageIndex: vm.currentPage,
+      pageSize: vm.itemsPerPage
+    };
 
     // init
     if($stateParams.back === 'true') {
@@ -41,12 +43,15 @@
     function filter(index) {
       if(angular.isDefined(index)) {
         if(index === 0) { // assigned
-          searchFilter = {status: 1};
+          searchFilter.status = 1;
+          searchFilter.subStatus = null;
         } else {
-          searchFilter = {subStatus: vm.statusFilter[index]};
+          searchFilter.status = null;
+          searchFilter.subStatus = vm.statusFilter[index];
         }
-      } else { // reset
-        searchFilter = {};
+      } else {
+        searchFilter.status = null;
+        searchFilter.subStatus = null;
       }
 
       getDataList();
