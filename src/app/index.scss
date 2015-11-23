@@ -44,6 +44,13 @@ body{
 .header{
   height: 150px;
   border-bottom: solid 1px #fff;
+  color: #fff;
+  .user{
+    padding: 20px;
+    .btn{
+      margin-left: 20px;
+    }
+  }
 }
 
 .main-content{

@@ -4,8 +4,10 @@
   angular
     .module('adminAngular')
     .filter('city', city)
+    .filter('team', team)
     .filter('status', status)
-    .filter('coType', coType);
+    .filter('coType', coType)
+    .filter('role', role);
 
   /** @ngInject */
   function city() {
@@ -30,12 +32,13 @@
 
   function status() {
     var map = {
+      '1': '已分配',
       '01': '无组未分配',
       '02': '组内未分配',
-      '03': '未处理',
-      '04': '跟进中',
-      '05': '有效',
-      '06': '无效',
+      '11': '未处理',
+      '12': '跟进中',
+      '13': '有效',
+      '14': '无效',
     };
 
     return function(id) {
@@ -52,5 +55,54 @@
     return function(id) {
       return map[id] || '-';
     };
+  }
+
+  function role() {
+    var map = {
+      '0': '管理员',
+      '1': '部门负责人',
+      '2': '主管',
+      '3': '销售'
+    };
+
+    return function(id) {
+      return map[id];
+    }
+  }
+
+  function team() {
+    var map = {
+      '111': '大客户A',
+      '112': '大客户B',
+      '113': '大客户C',
+      '114': '大客户D',
+      '121': '北京A',
+      '122': '北京B',
+      '131': '宁波A',
+      '132': '宁波B',
+      '141': '南京A',
+      '151': '苏州A',
+      '161': '广州A',
+      '162': '广州B',
+      '163': '广州C',
+      '171': '杭州A',
+      '172': '杭州B',
+      '181': '深圳A',
+      '182': '深圳B',
+      '183': '深圳C',
+      '184': '深圳D',
+      '191': '武汉A',
+      '192': '武汉B',
+      '193': '武汉C',
+      '201': '天津A',
+      '211': '上海A',
+      '212': '上海B',
+      '213': '上海C',
+      '214': '上海D'
+    }
+
+    return function(id) {
+      return map[id] || '-';
+    }
   }
 })();

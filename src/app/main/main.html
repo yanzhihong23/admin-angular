@@ -1,6 +1,6 @@
 <article class="main-content">
   <aside class="side-nav">
-    <section class="category">
+    <section class="category" hidden>
       <div class="title">
         客户来源
       </div>
@@ -23,7 +23,7 @@
       </ul>
     </section>
 
-    <section class="category">
+    <section class="category" hidden>
       <div class="title">
         城市
       </div>
@@ -38,12 +38,18 @@
         状态
       </div>
       <ul class="item-list">
-        <li class="item">全部</li>
+        <li class="item" ng-click="main.filter()">全部</li>
+        <li class="item" ng-repeat="f in main.statusFilter" ng-click="main.filter($index)">
+          {{f | status}}
+        </li>
+        <!-- <li class="item">全部</li>
         <li class="item">已分配</li>
-        <li class="item">未分配</li>
+        <li class="item">无组未分配</li>
+        <li class="item">组内未分配</li>
+        <li class="item">未处理</li>
         <li class="item">跟进中</li>
         <li class="item">有效</li>
-        <li class="item">无效</li>
+        <li class="item">无效</li> -->
       </ul>
     </section>
     
@@ -71,11 +77,10 @@
           </tr>
         </thead>
         <tbody>
-          </tr>
           <tr ng-repeat="item in main.list">
             <td ng-if="main.user.roleId!=3">{{item.customerSource || '-'}}</td>
             <!-- <td ng-if="main.user.roleId!=3">{{item.sourceDetail || '-'}}</td> -->
-            <td ng-if="main.user.roleId!=3">-</td>
+            <td ng-if="main.user.roleId!=3">{{item.assignDate || '-'}}</td>
             <td ng-if="main.user.roleId!=3">{{item.lastCallDate || '-'}}</td>
             <td>{{item.callCount}}</td>
             <td>{{item.name}}</td>
@@ -84,13 +89,14 @@
             <td>{{item.customerType | coType}}</td>
             <td>{{item.status | status}}</td>
             <td ng-if="main.user.roleId==3">{{item.remark || '-'}}</td>
-            <td ng-if="main.user.roleId!=3">-</td>
+            <td ng-if="main.user.roleId!=3">{{item.groupId | team}}</td>
             <td ng-if="main.user.roleId!=3">{{item.saleman || '-'}}</td>
             <td>
               <button type="button" class="btn btn-info btn-sm" ng-click="main.modify($index)">修改</button>
             </td>
             <td ng-if="main.user.roleId!=3">
-              <button type="button" class="btn btn-danger btn-sm">分配</button>
+              <button type="button" class="btn btn-danger btn-sm" ng-click="main.assign($index)" ng-hide="item.assigned">分配</button>
+              <span ng-show="item.assigned">已分配</span>
             </td>
           </tr>
         </tbody>

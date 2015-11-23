@@ -6,8 +6,9 @@
     .service('UserService', UserService);
 
   /** @ngInject */
-  function UserService(localStorageService, $log) {
+  function UserService(localStorageService, $log, $state, $rootScope) {
     this.setUser = function(user) {
+      $rootScope.user = user;
       localStorageService.add('user', user);
     };
 
@@ -29,6 +30,11 @@
 
     this.getDataList = function() {
       return localStorageService.get('list');
+    };
+
+    this.logout = function() {
+      localStorageService.clearAll();
+      $state.go('login');
     };
 
     $log.debug('UserService end');

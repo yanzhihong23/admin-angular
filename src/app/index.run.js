@@ -8,6 +8,7 @@
   /** @ngInject */
   function runBlock($log, $state, $rootScope, UserService) {
     var user = UserService.getUser();
+    $rootScope.user = $rootScope.user || user;
 
     $rootScope.$on('$stateChangeStart', function(evt, toState, fromState, fromParams) {
       $log.debug('toState', toState.name);
@@ -21,12 +22,19 @@
             $state.go('home');
           }
         default:
-          if(!user) {
+          if(!$rootScope.user) {
             evt.preventDefault();
             $state.go('login');
           }
       }
     });
+
+    $rootScope.logout = function() {
+      $log.debug('logout');
+
+      $rootScope.user = null;
+      UserService.logout();
+    };
 
     $log.debug('runBlock end');
   }

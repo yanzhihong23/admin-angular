@@ -11,9 +11,12 @@
 
     vm.user = {
       username: '18616725872',
+      // username: '13764903755',
       password: '123456'
     };
+
     vm.submit = submit;
+    vm.logout = logout;
 
     function submit() {
       ApiService.login(vm.user).success(function(data) {
@@ -35,6 +38,10 @@
           toastr.error('用户名或密码错误', 'Error');
         }
       });
+    }
+
+    function logout() {
+      $log.debug('logout');
     }
   }
 })();

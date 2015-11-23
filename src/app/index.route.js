@@ -21,7 +21,7 @@
         controllerAs: 'detail'
       })
       .state('assign', {
-        url: '/assign',
+        url: '/assign?id',
         templateUrl: 'app/assign/assign.html',
         controller: 'AssignController',
         controllerAs: 'assign'

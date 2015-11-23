@@ -30,7 +30,8 @@
           khly: obj.customerSource, // 客户来源
           hzlx: obj.cooperationType, // 合作类型 1: 经销商, 2: 小店
           cs: obj.cityId, // 城市
-          zt: obj.stauts, // 状态
+          zt: obj.status, // 状态
+          dtlsts: obj.subStatus,
           uid: obj.username, // 用户ID
           page: obj.pageIndex || 1, // 当前页码
           pageCount: obj.pageSize || 15 // 每页条数
@@ -44,7 +45,7 @@
         url: APISERVER + '/query/updateData',
         header: headers,
         data: {
-          id: obj.id, 
+          id: obj.taskId, 
           name: obj.name,
           phone: obj.phone,
           wx: obj.wechat,
@@ -59,13 +60,49 @@
       });
     };
 
-    this.getTeamMemberInfo = function(obj) {
+    this.groupList = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER + '/query/groupList',
+        header: headers,
+        data: {
+          uid: obj.username,
+          urole: obj.roleId
+        }
+      });
+    };
+
+    this.memberList = function(obj) {
       return $http({
         method: 'POST',
         url: APISERVER + '/query/userList',
         header: headers,
         data: {
           orgid: obj.orgId
+        }
+      });
+    };
+
+    this.assignToTeam = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER + '/query/dispatchGroupWork',
+        header: headers,
+        data: {
+          wid: obj.taskId,
+          orgid: obj.orgId
+        }
+      });
+    };
+
+    this.assignToMember = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER + '/query/dispatchPersonWork',
+        header: headers,
+        data: {
+          wid: obj.taskId,
+          uid: obj.userId
         }
       });
     };
