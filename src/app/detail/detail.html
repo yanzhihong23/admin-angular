@@ -6,19 +6,19 @@
           <h4>个人信息</h4>
           <div class="form-group">
             <label for="" class="control-label">姓名: </label>
-            <input type="text" class="form-control" ng-model="detail.info.name">
+            <input type="text" class="form-control" ng-model="detail.info.name" maxlength="20">
           </div>
           <div class="form-group">
             <label for="">电话: </label>
-            <input type="text" class="form-control" ng-model="detail.info.phone">
+            <input type="text" class="form-control" ng-model="detail.info.phone" maxlength="12">
           </div>
           <div class="form-group">
             <label for="">微信: </label>
-            <input type="text" class="form-control" ng-model="detail.info.wechat">
+            <input type="text" class="form-control" ng-model="detail.info.wechat" maxlength="20">
           </div>
           <div class="form-group">
             <label for="">QQ: </label>
-            <input type="text" class="form-control" ng-model="detail.info.qq">
+            <input type="text" class="form-control" ng-model="detail.info.qq" maxlength="12">
           </div>
           <div class="form-group">
             <label for="">合作类型: </label>
@@ -77,7 +77,7 @@
           <h4>渠道</h4>
           <div class="form-group">
             <label for="">客户来源: </label>
-            <label class="" ng-model="detail.info.customerSource">-</label>
+            <label class="">{{detail.info.customerSource || '-'}}</label>
           </div>
           <div class="form-group">
             <label for="">来源详情: </label>
@@ -98,15 +98,17 @@
         <section class="info-group form">
           <h4>当前备注</h4>
           <div class="form-group">
-            <textarea class="form-control" rows="3" ng-model="detail.info.remark"></textarea>
+            <textarea class="form-control" rows="3" ng-model="detail.info.remark" maxlength="200"></textarea>
           </div>
         </section>
 
         <div class="divider"></div>
 
-        <section class="pull-right">
-          <button type="button" class="btn btn-success btn-lg" ng-click="detail.save()">保存</button>
-          <button type="button" class="btn btn-default btn-lg" ng-click="detail.back()">返回</button>
+        <section class="clearfix">
+          <div class="pull-right">
+            <button type="button" class="btn btn-success btn-lg" ng-click="detail.save()">保存</button>
+            <button type="button" class="btn btn-default btn-lg" ng-click="detail.back()">返回</button>
+          </div>
         </section>
       </form>
       

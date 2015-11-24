@@ -88,7 +88,7 @@
             <td>{{item.cityId | city}}</td>
             <td>{{item.customerType | coType}}</td>
             <td>{{item.status | status}}</td>
-            <td ng-if="main.user.roleId==3">{{item.remark || '-'}}</td>
+            <td ng-if="main.user.roleId==3">{{(item.remark | remark) || '-'}}</td>
             <td ng-if="main.user.roleId!=3">{{item.groupId | team}}</td>
             <td ng-if="main.user.roleId!=3">{{item.saleman || '-'}}</td>
             <td>

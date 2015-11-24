@@ -7,7 +7,8 @@
     .filter('team', team)
     .filter('status', status)
     .filter('coType', coType)
-    .filter('role', role);
+    .filter('role', role)
+    .filter('remark', remark);
 
   /** @ngInject */
   function city() {
@@ -60,7 +61,7 @@
   function role() {
     var map = {
       '0': '管理员',
-      '1': '部门负责人',
+      '1': '城市CEO',
       '2': '主管',
       '3': '销售'
     };
@@ -103,6 +104,17 @@
 
     return function(id) {
       return map[id] || '-';
+    }
+  }
+
+
+  function remark() {
+    return function(str) {
+      if(str.length > 30) {
+        return str.substr(0, 30) + '...';
+      } else {
+        return str;
+      }
     }
   }
 })();

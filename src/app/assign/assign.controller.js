@@ -9,7 +9,8 @@
   function AssignController($scope, $log, $state, $stateParams, ApiService, UserService, toastr) {
     var vm = this, 
         taskId = $stateParams.id,
-        user = UserService.getUser();
+        user = UserService.getUser(),
+        updated = false;
 
     vm.assignType = +user.roleId === 1 ? 'team' : 'member';
     vm.getGroupList = getGroupList;
@@ -63,6 +64,8 @@
       }).success(function(data) {
         if(data.flag === 1) {
           toastr.success('任务分配成功');
+          updated = true;
+          $state.reload();
         } else {
           toastr.error(data.msg);
         }
@@ -76,6 +79,8 @@
       }).success(function(data) {
         if(data.flag === 1) {
           toastr.success('任务分配成功');
+          updated = true;
+          $state.reload();
         } else {
           toastr.error(data.msg);
         }
@@ -83,7 +88,8 @@
     }
 
     function back() {
-      $state.go('home', {back: true});
+      // $state.go('home', {back: !updated});
+      $state.go('home');
     }
     
   }

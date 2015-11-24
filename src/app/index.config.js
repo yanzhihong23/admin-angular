@@ -18,10 +18,10 @@
 
     // toastr config
     toastrConfig.allowHtml = true;
-    toastrConfig.timeOut = 3000;
+    toastrConfig.timeOut = 2000;
     toastrConfig.positionClass = 'toast-top-center';
-    // toastrConfig.preventDuplicates = true;
-    toastrConfig.progressBar = true;
+    toastrConfig.preventDuplicates = true;
+    // toastrConfig.progressBar = true;
   }
 
 })();

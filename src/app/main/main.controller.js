@@ -22,7 +22,7 @@
 
     var searchFilter = {
       username: vm.user.username,
-      pageIndex: vm.currentPage,
+      // pageIndex: vm.currentPage,
       pageSize: vm.itemsPerPage
     };
 
@@ -58,6 +58,7 @@
     }
 
     function getDataList() {
+      searchFilter.pageIndex = vm.currentPage;
       ApiService.getDataList(searchFilter).success(function(data) {
         if(data.flag === 1) {
           toastr.info('列表数据已更新');

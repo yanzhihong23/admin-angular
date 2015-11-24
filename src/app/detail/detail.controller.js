@@ -22,7 +22,7 @@
       $log.debug('save');
       ApiService.updateData(vm.info).success(function(data) {
         if(data.flag === 1) {
-          toastr.success('信息保存成功！', '已自动未您载入下一条数据！');
+          toastr.success('信息保存成功！', '已自动为您载入下一条数据！');
 
           cachedData.list[index] = vm.info;
           UserService.setDataList(cachedData);
@@ -30,6 +30,8 @@
         } else {
           toastr.error(data.msg);
         }
+      }).error(function(data) {
+        toastr.error('出错了~');
       })
     }
 
@@ -38,7 +40,7 @@
     }
 
     function next() {
-      if(index < list.length) {
+      if(index < list.length - 1) {
         index++;
         // update location search
         $location.search('index', index);
