@@ -11,9 +11,9 @@
 
     vm.user = {
       username: '18616725872',
+      password: 'zjdd1234',
       // username: '13764903755',
-      // password: 'zjdd1234',
-      password: '123456'
+      // password: '123456'
     };
 
     vm.submit = submit;

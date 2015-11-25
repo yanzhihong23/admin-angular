@@ -28,40 +28,76 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
 }
 
 body{
-  background: #273241;
+  background: #000;
   font-size: 14px;
 }
 
 .container{
+  position: relative;
   width: 1280px;
   min-height: 800px;
   margin: 0 auto;
-  border: solid 1px #fff;
   padding-left: 0;
   padding-right: 0;
+  background: #fff;
+  .side-nav{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    min-height: 100%;
+    background: #273241;
+    .logo{
+      height: 80px;
+      background: url(../assets/images/logo.png) no-repeat center;
+      background-size: 60% 60%;
+    }
+    .item-list{
+      padding: 0;
+      .item{
+        list-style: none;
+        text-align: center;
+        color: #fff;
+        line-height: 30px;
+        cursor: pointer;
+      }
+    }
+  }
+  .main-content{
+    position: relative;
+    padding-left: 200px;
+  }
 }
 
 .header{
-  height: 150px;
+  height: 72px;
   border-bottom: solid 1px #fff;
   color: #fff;
-  .logo{
-    width: 200px;
-    height: 80px;
-    float: left;
-    background: url(../assets/images/logo.png) no-repeat center;
-  }
+  background: #32b97c;
   .user{
     padding: 20px;
-    .btn{
+    .btn-logout{
+      background: transparent;
+      border: dashed 1px #fff;
       margin-left: 20px;
     }
   }
 }
 
-.main-content{
-  position: relative;
+.view-title{
+  line-height: 60px;
+  font-size: 18px;
+  border-bottom: solid 1px #ddd;
+  padding-left: 20px;
+  background: #f2f2f2;
 }
+
+.content{
+  padding: 20px 25px;
+  min-height: 800px;
+  background: #fff;
+}
+
 
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject
