@@ -6,19 +6,57 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($log, $state, $stateParams, ApiService, UserService, toastr, moment) {
+  function MainController($log, $state, $stateParams, $scope, ApiService, UserService, toastr, moment) {
     $log.debug('MainController start');
     var vm = this;
 
     vm.user = UserService.getUser();
     vm.itemsPerPage = 10;
     vm.currentPage = 1;
-    vm.statusFilter = ['1', '01', '02', '11', '12', '13', '14'];
+    vm.filterData = { // -1 for all, and fix empty option
+      status: ['-1', '1', '01', '02', '11', '12', '13', '14'],
+      coType: ['-1', '1', '2'],
+      itemsPerPage: ['-1', 10, 15, 20, 25, 30]
+    };
+    vm.filter = {
+      status: '-1',
+      coType: '-1',
+      itemsPerPage: '10'
+    };
+
+    // status watcher
+    $scope.$watch(function() {
+      return vm.filter.status;
+    }, function(val, old) {
+      if(val !== old) {
+        doStatusFilter(val);
+      }
+    }, true);
+
+    // coType watcher
+    $scope.$watch(function() {
+      return vm.filter.coType;
+    }, function(val, old) {
+      if(val !== old) {
+        doCoTypeFilter(val);
+      }
+    }, true); 
+
+    // paginator watcher
+    $scope.$watch(function() {
+      return vm.filter.itemsPerPage;
+    }, function(val, old) {
+      if(val !== old) {
+        doPaginatorFilter(val);
+      }
+    }, true);  
+
     // methods
     vm.modify = modify;
     vm.assign = assign;
-    vm.pageChanged = getDataList;
-    vm.filter = filter;
+    vm.batchAssign = batchAssign;
+    vm.pageChanged = updateDataList;
+    vm.selectAll = selectAll;
 
     var searchFilter = {
       username: vm.user.username,
@@ -35,29 +73,50 @@
       vm.list = data.list;
       searchFilter = data.searchFilter;
     } else {
-      getDataList({
+      updateDataList({
         pageIndex: vm.currentPage
       });
     }
 
-    function filter(index) {
-      if(angular.isDefined(index)) {
-        if(index === 0) { // assigned
+    function doStatusFilter(val) {
+      switch(val) {
+        case '-1': // all
+          searchFilter.status = null;
+          searchFilter.subStatus = null;
+          break;
+        case '1': // assigned
           searchFilter.status = 1;
           searchFilter.subStatus = null;
-        } else {
+          break;
+        default:
           searchFilter.status = null;
-          searchFilter.subStatus = vm.statusFilter[index];
-        }
-      } else {
-        searchFilter.status = null;
-        searchFilter.subStatus = null;
+          searchFilter.subStatus = val;
       }
 
-      getDataList();
+      updateDataList();
     }
 
-    function getDataList() {
+    function doCoTypeFilter(val) {
+      searchFilter.coType = val === '-1' ? null : val;
+      updateDataList();
+    }
+
+    function doPaginatorFilter(val) {
+      searchFilter.pageSize = vm.itemsPerPage = Math.abs(val);
+      updateDataList();
+    }
+
+    function selectAll() {
+      vm.selectedCount = 0;
+      vm.list.forEach(function(obj) {
+        obj.selected = !obj.selected;
+        if(obj.selected && !obj.assigned) {
+          vm.selectedCount += 1;
+        }
+      });
+    }
+
+    function updateDataList() {
       searchFilter.pageIndex = vm.currentPage;
       ApiService.getDataList(searchFilter).success(function(data) {
         if(data.flag === 1) {
@@ -108,6 +167,16 @@
       setTempData();
 
       $state.go('assign', {id: taskId});
+    }
+
+    function batchAssign() {
+      var ids = vm.list.filter(function(obj) {
+        return obj.selected && !obj.assigned;
+      }).map(function(obj) {
+        return obj.taskId;
+      });
+
+      $state.go('assign', {id: ids});
     }
 
     function setTempData() {

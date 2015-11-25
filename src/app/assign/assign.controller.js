@@ -8,7 +8,7 @@
   /** @ngInject */
   function AssignController($scope, $log, $state, $stateParams, ApiService, UserService, toastr) {
     var vm = this, 
-        taskId = $stateParams.id,
+        taskIds = $stateParams.id,
         user = UserService.getUser(),
         updated = false;
 
@@ -58,18 +58,31 @@
     }
 
     function assignToTeam(index) {
-      ApiService.assignToTeam({
-        taskId: taskId,
-        orgId: vm.groupList[index].orgId
-      }).success(function(data) {
-        if(data.flag === 1) {
-          toastr.success('任务分配成功');
-          updated = true;
-          $state.reload();
-        } else {
-          toastr.error(data.msg);
+      var assign = function(id, isLast) {
+        ApiService.assignToTeam({
+          taskId: id,
+          orgId: vm.groupList[index].orgId
+        }).success(function(data) {
+          if(data.flag === 1) {
+            updated = true;
+
+            if(isLast) {
+              toastr.success('任务分配成功');
+              $state.reload();
+            }
+          } else {
+            toastr.error(data.msg);
+          }
+        });
+      };
+
+      if(angular.isArray(taskIds)) {
+        for(var i=0, len=taskIds.length; i<len; i++) {
+          assign(taskIds[i], i === len - 1);
         }
-      });
+      } else {
+        assign(taskIds, true);
+      }
     }
 
     function assignToMember(index) {

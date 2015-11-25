@@ -62,6 +62,7 @@
 // pagination
 .pagination.green{
   $green: #32b97c;
+  margin-top: 0;
   & > li > a{
     color: $green;
     &:hover{

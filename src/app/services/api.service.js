@@ -28,13 +28,13 @@
         header: headers,
         data: {
           khly: obj.customerSource, // 客户来源
-          hzlx: obj.cooperationType, // 合作类型 1: 经销商, 2: 小店
+          hzlx: obj.coType, // 合作类型 1: 经销商, 2: 小店
           cs: obj.cityId, // 城市
           zt: obj.status, // 状态
           dtlsts: obj.subStatus,
           uid: obj.username, // 用户ID
           page: obj.pageIndex || 1, // 当前页码
-          pageCount: obj.pageSize || 15 // 每页条数
+          pageCount: obj.pageSize || 10 // 每页条数
         }
       });
     };

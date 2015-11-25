@@ -3,6 +3,7 @@
 
   angular
     .module('adminAngular')
+    .filter('abs', abs)
     .filter('city', city)
     .filter('team', team)
     .filter('status', status)
@@ -11,6 +12,12 @@
     .filter('remark', remark);
 
   /** @ngInject */
+  function abs() {
+    return function(num) {
+      return Math.abs(num);
+    }
+  }
+
   function city() {
     var map = {
       '11': '大客户',
@@ -33,6 +40,7 @@
 
   function status() {
     var map = {
+      '-1': '全部',
       '1': '已分配',
       '01': '无组未分配',
       '02': '组内未分配',
@@ -49,6 +57,7 @@
 
   function coType() {
     var map = {
+      '-1': '全部',
       '1': '经销商',
       '2': '小店'
     };
@@ -99,7 +108,8 @@
       '211': '上海A',
       '212': '上海B',
       '213': '上海C',
-      '214': '上海D'
+      '214': '上海D',
+      '215': '上海E'
     }
 
     return function(id) {

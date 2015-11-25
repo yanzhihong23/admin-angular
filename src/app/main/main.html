@@ -1,66 +1,37 @@
 <article class="main-content">
   <aside class="side-nav">
-    <section class="category" hidden>
-      <div class="title">
-        客户来源
-      </div>
-      <ul class="item-list">
-        <li class="item">全部</li>
-        <li class="item">广点通</li>
-        <li class="item">talk99</li>
-        <li class="item">腾讯新闻</li>
-      </ul>
-    </section>
-
-    <section class="category">
-      <div class="title">
-        合作类型
-      </div>
-      <ul class="item-list">
-        <li class="item">全部</li>
-        <li class="item">经销商</li>
-        <li class="item">小店</li>
-      </ul>
-    </section>
-
-    <section class="category" hidden>
-      <div class="title">
-        城市
-      </div>
-      <ul class="item-list">
-        <li class="item">上海</li>
-        <li class="item">北京</li>
-      </ul>
-    </section>
-
-    <section class="category">
-      <div class="title">
-        状态
-      </div>
-      <ul class="item-list">
-        <li class="item" ng-click="main.filter()">全部</li>
-        <li class="item" ng-repeat="f in main.statusFilter" ng-click="main.filter($index)">
-          {{f | status}}
-        </li>
-        <!-- <li class="item">全部</li>
-        <li class="item">已分配</li>
-        <li class="item">无组未分配</li>
-        <li class="item">组内未分配</li>
-        <li class="item">未处理</li>
-        <li class="item">跟进中</li>
-        <li class="item">有效</li>
-        <li class="item">无效</li> -->
-      </ul>
-    </section>
-    
   </aside>
   <section class="content">
-    <div class="wrapper">
+    <div class="wrapper clearfix">
+      <div class="form-inline clearfix">
+        <div class="form-group">
+          <label for="" class="control-label">状态: </label>
+          <select name="" id="" class="form-control" ng-model="main.filter.status">
+            <option value="{{f}}" ng-repeat="f in main.filterData.status">{{f | status}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="" class="control-label">合作类型: </label>
+          <select name="" id="" class="form-control" ng-model="main.filter.coType">
+            <option value="{{f}}" ng-repeat="f in main.filterData.coType">{{f | coType}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="" class="control-label">每页条数: </label>
+          <select name="" id="" class="form-control" ng-model="main.filter.itemsPerPage">
+            <option value="{{f}}" ng-repeat="f in main.filterData.itemsPerPage">{{f | abs}}</option>
+          </select>
+        </div>
+        <div class="pull-right">
+          <button class="btn btn-default" ng-click="main.batchAssignEnabled=!main.batchAssignEnabled">批量分配</button>
+        </div>
+      </div>
+      <div class="divider"></div>
       <table class="table table-hover table-striped table-responsive">
         <thead>
           <tr>
+            <th ng-if="main.batchAssignEnabled"><button class="btn btn-default btn-sm" ng-click="main.selectAll()">反选</button></th>
             <th ng-if="main.user.roleId!=3">客户来源</th>
-            <!-- <th ng-if="main.user.roleId!=3">来源详情</th> -->
             <th ng-if="main.user.roleId!=3">分配时间</th>
             <th ng-if="main.user.roleId!=3">上次通话</th>
             <th>通话次数</th>
@@ -78,8 +49,8 @@
         </thead>
         <tbody>
           <tr ng-repeat="item in main.list">
+            <td ng-if="main.batchAssignEnabled"><input type="checkbox" ng-model="item.selected" ng-if="!item.assigned"></td>
             <td ng-if="main.user.roleId!=3">{{item.customerSource || '-'}}</td>
-            <!-- <td ng-if="main.user.roleId!=3">{{item.sourceDetail || '-'}}</td> -->
             <td ng-if="main.user.roleId!=3">{{item.assignDate || '-'}}</td>
             <td ng-if="main.user.roleId!=3">{{item.lastCallDate || '-'}}</td>
             <td>{{item.callCount}}</td>
@@ -101,6 +72,10 @@
           </tr>
         </tbody>
       </table>
+      <div class="divider"></div>
+      <div class="pull-left">
+        <button class="btn btn-danger" ng-click="main.batchAssign()" ng-if="main.batchAssignEnabled">选好了({{main.selectedCount}})</button>
+      </div>
       <pagination ng-change="main.pageChanged()"
         max-size="5"
         rotate="false"
