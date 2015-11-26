@@ -3,18 +3,19 @@
 
   angular
     .module('adminAngular')
-    .controller('MainController', MainController);
+    .controller('ListController', ListController);
 
   /** @ngInject */
-  function MainController($log, $state, $stateParams, $scope, ApiService, UserService, toastr, moment) {
-    $log.debug('MainController start');
+  function ListController($log, $state, $stateParams, $scope, ApiService, UserService, StatusService, toastr, moment) {
     var vm = this;
+    var statusList = StatusService.getStatusList();
+    statusList.unshift('-1');
 
     vm.user = UserService.getUser();
     vm.itemsPerPage = 10;
     vm.currentPage = 1;
     vm.filterData = { // -1 for all, and fix empty option
-      status: ['-1', '1', '01', '02', '11', '12', '13', '14'],
+      status: statusList,
       coType: ['-1', '1', '2'],
       itemsPerPage: ['-1', 10, 15, 20, 25, 30]
     };
@@ -59,7 +60,7 @@
     vm.selectAll = selectAll;
 
     var searchFilter = {
-      username: vm.user.username,
+      uId: vm.user.uId,
       // pageIndex: vm.currentPage,
       pageSize: vm.itemsPerPage
     };
@@ -158,7 +159,7 @@
       
       setTempData();
 
-      $state.go('detail', {index: index});
+      $state.go('task.detail', {index: index});
     }
 
     function assign(index) {
@@ -166,7 +167,7 @@
 
       setTempData();
 
-      $state.go('assign', {id: taskId});
+      $state.go('task.assign', {id: taskId});
     }
 
     function batchAssign() {
@@ -176,7 +177,7 @@
         return obj.taskId;
       });
 
-      $state.go('assign', {id: ids});
+      $state.go('task.assign', {id: ids});
     }
 
     function setTempData() {
@@ -189,6 +190,5 @@
       });
     }
 
-    $log.debug('MainController end');
   }
 })();

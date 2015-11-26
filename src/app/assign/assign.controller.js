@@ -102,7 +102,7 @@
 
     function back() {
       // $state.go('home', {back: !updated});
-      $state.go('home');
+      $state.go('task.list');
     }
     
   }

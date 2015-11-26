@@ -36,7 +36,7 @@
     }
 
     function back() {
-      $state.go('home', {back: true});
+      $state.go('task.list', {back: true});
     }
 
     function next() {

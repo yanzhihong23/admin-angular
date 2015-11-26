@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, $state, $rootScope, UserService) {
+  function runBlock($log, $state, $rootScope, UserService, StatusService) {
     var user = UserService.getUser();
     $rootScope.user = $rootScope.user || user;
 
@@ -15,11 +15,11 @@
       switch(toState.name) {
         case 'login':
           break;
-        case 'home':
+        case 'task.list':
           // handle user refresh page
           if(fromParams.name === '' && fromState.back === 'true') {
             evt.preventDefault();
-            $state.go('home');
+            $state.go('task.list');
           }
         default:
           if(!$rootScope.user) {

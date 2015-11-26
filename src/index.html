@@ -2,7 +2,7 @@
 <html ng-app="adminAngular">
   <head>
     <meta charset="utf-8">
-    <title>adminAngular</title>
+    <title>后台管理系统</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -23,24 +23,8 @@
     <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    
-    <div class="container">
-      <aside class="side-nav">
-        <div class="logo"></div>
-      </aside>
-      <article class="main-content">
-        <header class="header">
-          <div class="pull-right user" ng-if="user" ng-cloak>
-            您好！<span class="name">{{user.realName}}</span>
-            (<span class="role">{{user.roleId | role }}</span>)
 
-            <button class="btn btn-logout" ng-click="logout()">安全退出</button>
-          </div>
-        </header>
-        <div ui-view></div>
-      </article>
-    </div>    
-    
+    <div ui-view></div>
 
     <!-- build:js(src) scripts/vendor.js -->
     <!-- bower:js -->

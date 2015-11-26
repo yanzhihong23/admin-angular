@@ -1,0 +1,23 @@
+<div class="container">
+  <aside class="side-nav">
+    <div class="logo"></div>
+    <ul class="item-list">
+      <li class="item active">店铺信息统计</li>
+      <li class="item">内部人员信息</li>
+      <li class="item">MP人员工作考核</li>
+      <li class="item">后台权限管理</li>
+    </ul>
+  </aside>
+  <article class="main-content">
+    <header class="header">
+      <div class="pull-right user" ng-if="user" ng-cloak>
+        <span class="date">{{task.date}}</span>
+        您好！<span class="name">{{user.realName}}</span>
+        (<span class="role">{{user.roleId | role }}</span>)
+
+        <button class="btn btn-logout" ng-click="logout()">安全退出</button>
+      </div>
+    </header>
+    <div ui-view="task"></div>
+  </article>
+</div>  

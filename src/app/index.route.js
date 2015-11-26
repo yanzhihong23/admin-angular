@@ -8,23 +8,42 @@
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('home', {
-        url: '/?back',
-        templateUrl: 'app/main/main.html',
-        controller: 'MainController',
-        controllerAs: 'main'
+      .state('task', {
+        url: '/task',
+        abstract: true,
+        templateUrl: 'app/task/task.html',
+        controller: 'TaskController',
+        controllerAs: 'task'
       })
-      .state('detail', {
+      .state('task.list', {
+        url: '/list?back',
+        views: {
+          'task': {
+            templateUrl: 'app/list/list.html',
+            controller: 'ListController',
+            controllerAs: 'list'
+          }
+        }
+      })
+      .state('task.detail', {
         url: '/detail?index',
-        templateUrl: 'app/detail/detail.html',
-        controller: 'DetailController',
-        controllerAs: 'detail'
+        views: {
+          'task': {
+            templateUrl: 'app/detail/detail.html',
+            controller: 'DetailController',
+            controllerAs: 'detail'
+          }
+        }
       })
-      .state('assign', {
+      .state('task.assign', {
         url: '/assign?id',
-        templateUrl: 'app/assign/assign.html',
-        controller: 'AssignController',
-        controllerAs: 'assign'
+        views: {
+          'task': {
+            templateUrl: 'app/assign/assign.html',
+            controller: 'AssignController',
+            controllerAs: 'assign'
+          }
+        }
       })
       .state('login', {
         url: '/login',
@@ -33,7 +52,7 @@
         controllerAs: 'login'
       });
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/task/list');
   }
 
 })();

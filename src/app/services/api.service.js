@@ -21,6 +21,13 @@
       });
     };
 
+    this.getStatusList = function() {
+      return $http({
+        method: 'POST',
+        url: APISERVER + '/query/statusType'
+      });
+    };
+
     this.getDataList = function(obj) {
       return $http({
         method: 'POST',
@@ -32,7 +39,7 @@
           cs: obj.cityId, // 城市
           zt: obj.status, // 状态
           dtlsts: obj.subStatus,
-          uid: obj.username, // 用户ID
+          uid: obj.uId, // 用户ID
           page: obj.pageIndex || 1, // 当前页码
           pageCount: obj.pageSize || 10 // 每页条数
         }
@@ -66,7 +73,7 @@
         url: APISERVER + '/query/groupList',
         header: headers,
         data: {
-          uid: obj.username,
+          uid: obj.uId,
           urole: obj.roleId
         }
       });

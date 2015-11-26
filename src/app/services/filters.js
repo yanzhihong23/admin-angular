@@ -38,7 +38,7 @@
     };
   }
 
-  function status() {
+  function status(StatusService) {
     var map = {
       '-1': '全部',
       '1': '已分配',
@@ -49,6 +49,9 @@
       '13': '有效',
       '14': '无效',
     };
+
+    var map = StatusService.getStatusMap();
+    map['-1'] = '全部';
 
     return function(id) {
       return map[id] || '-';

@@ -11,9 +11,9 @@
 
     vm.user = {
       username: '18616725872',
-      password: 'zjdd1234',
+      // password: 'zjdd1234',
       // username: '13764903755',
-      // password: '123456'
+      password: '123456'
     };
 
     vm.submit = submit;
@@ -30,10 +30,11 @@
           vm.user.realName = info.username;
           vm.user.orgId = info.orgid;
           vm.user.roleId = info.roleid;
+          vm.user.uId = info.uid;
           // save user info
           UserService.setUser(vm.user);
 
-          $state.go('home');
+          $state.go('task.list');
 
         } else {
           toastr.error('用户名或密码错误', 'Error');
