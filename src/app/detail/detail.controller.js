@@ -6,27 +6,30 @@
     .controller('DetailController', DetailController);
 
   /** @ngInject */
-  function DetailController($log, $state, $stateParams, $location, UserService, ApiService, toastr) {
+  function DetailController($log, $state, $stateParams, $location, UserService, ApiService, CallService, toastr) {
     var vm  = this, 
         index = $stateParams.index,
         cachedData = UserService.getDataList(),
+        user = UserService.getUser(),
         list = cachedData.list;
 
     vm.save = save;
     vm.back = back;
+    vm.dial = dial;
+    vm.hangup = hangup;
 
 
     vm.info = angular.copy(list[index]);
     
-    function save() {
+    function save(loadNext) {
       $log.debug('save');
       ApiService.updateData(vm.info).success(function(data) {
         if(data.flag === 1) {
-          toastr.success('信息保存成功！', '已自动为您载入下一条数据！');
+          toastr.success('信息保存成功！', loadNext ? '已自动为您载入下一条数据！': '');
 
           cachedData.list[index] = vm.info;
           UserService.setDataList(cachedData);
-          next();
+          loadNext && next();
         } else {
           toastr.error(data.msg);
         }
@@ -49,6 +52,33 @@
       } else {
         toastr.error('没有数据了，请先返回吧~');
       }
+    }
+
+    function dial() {
+      CallService.dial({
+        userId: user.uId,
+        destPhone: vm.info.phone,
+        taskId: vm.info.taskId
+      }).success(function(data) {
+        if(data.flag === 1) {
+          toastr.success('呼叫成功');
+          vm.calling = true;
+        } else {
+          toastr.error('呼叫失败');
+          vm.calling = false;
+        }
+      })
+    }
+
+    function hangup() {
+      CallService.hangup({
+        userId: user.uId,
+        destPhone: vm.info.phone,
+        taskId: vm.info.taskId
+      }).success(function(data) {
+        vm.calling = false;
+        toastr.success('挂断成功');
+      })
     }
   }
 })();

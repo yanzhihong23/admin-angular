@@ -4,3 +4,46 @@
   border-bottom: dashed 1px #ddd;
   margin: 20px 0;
 }
+
+.table{
+  .table-row, .table-head{
+    display: table-row;
+    margin: 0;
+    padding: 0;
+  }
+  .pointer{
+    cursor: pointer;
+    &:hover{
+      background: #f6f6f6;
+    }
+  }
+  .bg{
+    background: #f6f6f6;
+  }
+  .main:nth-of-type(odd) {
+    background: #f6f6f6;
+  }
+  .table-head{
+    font-weight: bold;
+  }
+  .table-head .table-cell{
+    border-bottom: solid 2px $border-color;
+  }
+  .detail{
+    .table-cell{
+      border-bottom: dashed 1px $border-color;
+      &:first-child{
+        border-bottom: 0;
+      }
+    }
+  }
+  .table-cell{
+    display: table-cell;
+    width: 300px;
+    line-height: 47px;
+    border-bottom: solid 1px $border-color;
+    .glyphicon{
+      padding-left: 10px;
+    }
+  }
+}

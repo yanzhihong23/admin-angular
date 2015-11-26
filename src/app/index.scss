@@ -3,14 +3,6 @@
  *  The list of variables are listed here bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss
  */
 $navbar-inverse-link-color: #5AADBB;
-$icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
-
-/**
- *  Do not remove the comments below. It's the markers used by wiredep to inject
- *  sass dependencies when defined in the bower.json of your dependencies
- */
-// bower:scss
-// endbower
 
 $red:           #EF706F;
 $orange:        #FE9B4D;
@@ -19,6 +11,18 @@ $green:         #32b87c;
 $blue:          #6DB5F5;
 $dark-blue:     #273242;
 $border-color:  #cecece;
+
+$brand-success: $green;
+$brand-danger:  $red;
+$brand-warning: $yellow;
+$icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
+
+/**
+ *  Do not remove the comments below. It's the markers used by wiredep to inject
+ *  sass dependencies when defined in the bower.json of your dependencies
+ */
+// bower:scss
+// endbower
 
 .browsehappy {
   margin: 0.2em 0;

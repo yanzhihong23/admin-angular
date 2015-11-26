@@ -25,7 +25,7 @@
         <label for="" class="control-label">搜索: </label>
         <input type="text" class="form-control" ng-model="list.filter.searchStr" placeholder="姓名/手机号/微信/QQ" ng-keypress="list.search($event)">
       </div>
-      <div class="pull-right">
+      <div class="pull-right" ng-if="list.user.roleId!=3">
         <button class="btn btn-default" ng-click="list.batchAssignEnabled=!list.batchAssignEnabled">批量分配</button>
       </div>
     </div>

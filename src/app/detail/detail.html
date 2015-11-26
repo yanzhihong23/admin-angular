@@ -1,5 +1,12 @@
  <article>
-  <header class="view-title">任务详情</header>
+  <header class="view-title clearfix">
+    任务详情
+    <div class="pull-right">
+      <button type="button" class="btn btn-success" ng-click="detail.save(true)">保存并加载下一条</button>
+      <button type="button" class="btn btn-info" ng-click="detail.save()">保存</button>
+      <button type="button" class="btn btn-default" ng-click="detail.back()">返回</button>
+    </div>
+  </header>
   <section class="content">
     <form class="form">
       <section class="info-group form-inline">
@@ -11,7 +18,12 @@
         <div class="form-group">
           <label for="">电话: </label>
           <input type="text" class="form-control" ng-model="detail.info.phone" maxlength="12">
+          <button class="btn btn-success" ng-click="detail.dial()">呼叫</button>
+          <button class="btn btn-danger" ng-disabled="!detail.calling" ng-click="detail.hangup()">挂断</button>
         </div>
+
+        <br>
+
         <div class="form-group">
           <label for="">微信: </label>
           <input type="text" class="form-control" ng-model="detail.info.wechat" maxlength="20">
@@ -29,8 +41,8 @@
         </div>
         <div class="form-group">
           <label for="">城市: </label>
-          <label for="">{{detail.info.cityId | city}}</label>
-          <!-- <select class="form-control" ng-model="detail.info.cityId">
+          <!-- <label for="">{{detail.info.cityId | city}}</label> -->
+          <select class="form-control" ng-model="detail.info.cityId">
             <option value="12">北京</option>
             <option value="13">宁波</option>
             <option value="14">南京</option>
@@ -41,7 +53,7 @@
             <option value="19">武汉</option>
             <option value="20">天津</option>
             <option value="21">上海</option>
-          </select> -->
+          </select>
         </div>
       </section>
       <section class="info-group form-inline">
@@ -99,15 +111,6 @@
         <h4>当前备注</h4>
         <div class="form-group">
           <textarea class="form-control" rows="3" ng-model="detail.info.remark" maxlength="200"></textarea>
-        </div>
-      </section>
-
-      <div class="divider"></div>
-
-      <section class="clearfix">
-        <div class="pull-right">
-          <button type="button" class="btn btn-success btn-lg" ng-click="detail.save()">保存</button>
-          <button type="button" class="btn btn-default btn-lg" ng-click="detail.back()">返回</button>
         </div>
       </section>
     </form>

@@ -20,7 +20,7 @@
     toastrConfig.allowHtml = true;
     toastrConfig.timeOut = 2000;
     toastrConfig.positionClass = 'toast-top-center';
-    toastrConfig.preventDuplicates = true;
+    // toastrConfig.preventDuplicates = true;
     // toastrConfig.progressBar = true;
   }
 
