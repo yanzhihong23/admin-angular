@@ -39,6 +39,7 @@
           cs: obj.cityId, // 城市
           zt: obj.status, // 状态
           dtlsts: obj.subStatus,
+          searchStr: obj.searchStr,
           uid: obj.uId, // 用户ID
           page: obj.pageIndex || 1, // 当前页码
           pageCount: obj.pageSize || 10 // 每页条数
@@ -112,6 +113,13 @@
           uid: obj.userId
         }
       });
+    };
+
+    this.call = function(obj) {
+      return $http({
+        method: 'JSONP',
+        url: 'http://192.168.100.20:8080/ec2/callengine/http/operation?json={%22dest%22:%2213918320423%22,%22ext_field%22:%22%22,%22command%22:%22dial%22,%20%22src%22:%2210086%22}'
+      })
     };
 
     $log.debug('ApiService end');

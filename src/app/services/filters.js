@@ -51,7 +51,7 @@
     };
 
     var map = StatusService.getStatusMap();
-    map['-1'] = '全部';
+    // map['-1'] = '全部';
 
     return function(id) {
       return map[id] || '-';

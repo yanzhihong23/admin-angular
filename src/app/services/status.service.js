@@ -19,10 +19,11 @@
             return obj.statusValue;
           });
 
-          localStorageService.add('statusMap', map);
-          localStorageService.add('statusList', list);
+          map[-1] = '全部';
+          list.unshift('-1');
 
-          $log.debug(list);
+          localStorageService.set('statusMap', map);
+          localStorageService.set('statusList', list);
         }
       });
     }

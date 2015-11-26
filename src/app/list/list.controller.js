@@ -9,9 +9,9 @@
   function ListController($log, $state, $stateParams, $scope, ApiService, UserService, StatusService, toastr, moment) {
     var vm = this;
     var statusList = StatusService.getStatusList();
-    statusList.unshift('-1');
 
     vm.user = UserService.getUser();
+    vm.selectedCount = 0;
     vm.itemsPerPage = 10;
     vm.currentPage = 1;
     vm.filterData = { // -1 for all, and fix empty option
@@ -24,6 +24,14 @@
       coType: '-1',
       itemsPerPage: '10'
     };
+
+    // methods
+    vm.modify = modify;
+    vm.assign = assign;
+    vm.batchAssign = batchAssign;
+    vm.pageChanged = updateDataList;
+    vm.select = select;
+    vm.search = search;
 
     // status watcher
     $scope.$watch(function() {
@@ -50,18 +58,10 @@
       if(val !== old) {
         doPaginatorFilter(val);
       }
-    }, true);  
-
-    // methods
-    vm.modify = modify;
-    vm.assign = assign;
-    vm.batchAssign = batchAssign;
-    vm.pageChanged = updateDataList;
-    vm.selectAll = selectAll;
+    }, true);
 
     var searchFilter = {
       uId: vm.user.uId,
-      // pageIndex: vm.currentPage,
       pageSize: vm.itemsPerPage
     };
 
@@ -107,14 +107,23 @@
       updateDataList();
     }
 
-    function selectAll() {
+    function select(isInvert) {
       vm.selectedCount = 0;
       vm.list.forEach(function(obj) {
-        obj.selected = !obj.selected;
+        if(isInvert) {
+          obj.selected = !obj.selected;
+        }
         if(obj.selected && !obj.assigned) {
           vm.selectedCount += 1;
         }
       });
+    }
+
+    function search(evt) {
+      searchFilter.searchStr = vm.filter.searchStr;
+      if(evt.keyCode === 13) { // enter
+        updateDataList();
+      }
     }
 
     function updateDataList() {
@@ -123,6 +132,7 @@
         if(data.flag === 1) {
           toastr.info('列表数据已更新');
 
+          vm.selectedCount = 0;
           vm.totalItems = data.data.dataCount;
 
           vm.list = data.data.result.map(function(obj) {
@@ -155,8 +165,6 @@
     }
 
     function modify(index) {
-      $log.debug(index);
-      
       setTempData();
 
       $state.go('task.detail', {index: index});

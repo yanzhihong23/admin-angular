@@ -1,6 +1,7 @@
 <article>
   <header class="view-title">任务列表</header>
   <section class="content clearfix">
+    <!-- search filters -->
     <div class="form-inline clearfix search-filters">
       <div class="form-group">
         <label for="" class="control-label">状态: </label>
@@ -20,15 +21,20 @@
           <option value="{{f}}" ng-repeat="f in list.filterData.itemsPerPage">{{f | abs}}</option>
         </select>
       </div>
+      <div class="form-group">
+        <label for="" class="control-label">搜索: </label>
+        <input type="text" class="form-control" ng-model="list.filter.searchStr" placeholder="姓名/手机号/微信/QQ" ng-keypress="list.search($event)">
+      </div>
       <div class="pull-right">
         <button class="btn btn-default" ng-click="list.batchAssignEnabled=!list.batchAssignEnabled">批量分配</button>
       </div>
     </div>
     <div class="divider"></div>
     <table class="table table-hover table-striped table-responsive">
+      <!-- table header -->
       <thead>
         <tr>
-          <th ng-if="list.batchAssignEnabled"><button class="btn btn-default btn-sm" ng-click="list.selectAll()">反选</button></th>
+          <th ng-if="list.batchAssignEnabled"><button class="btn btn-default btn-sm" ng-click="list.select(true)">反选</button></th>
           <th ng-if="list.user.roleId!=3">客户来源</th>
           <th ng-if="list.user.roleId!=3">分配时间</th>
           <th ng-if="list.user.roleId!=3">上次通话</th>
@@ -45,9 +51,10 @@
           <th ng-if="list.user.roleId!=3">分配</th>
         </tr>
       </thead>
+      <!-- table body -->
       <tbody>
         <tr ng-repeat="item in list.list">
-          <td ng-if="list.batchAssignEnabled"><input type="checkbox" ng-model="item.selected" ng-if="!item.assigned"></td>
+          <td ng-if="list.batchAssignEnabled"><input type="checkbox" ng-model="item.selected" ng-click="list.select()" ng-if="!item.assigned"></td>
           <td ng-if="list.user.roleId!=3">{{item.customerSource || '-'}}</td>
           <td ng-if="list.user.roleId!=3">{{item.assignDate || '-'}}</td>
           <td ng-if="list.user.roleId!=3">{{item.lastCallDate || '-'}}</td>
@@ -74,6 +81,7 @@
     <div class="pull-left">
       <button class="btn btn-danger" ng-click="list.batchAssign()" ng-if="list.batchAssignEnabled">选好了({{list.selectedCount}})</button>
     </div>
+    <!-- paginator -->
     <pagination ng-change="list.pageChanged()"
       max-size="5"
       rotate="false"
