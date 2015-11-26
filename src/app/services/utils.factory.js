@@ -6,13 +6,13 @@
     .factory('utils', utils);
 
   /** @ngInject */
-  function utils($log) {
+  function utils() {
     return {
       getLocationSearch: function() {
         var query_string = {};
           var query = window.location.search.substring(1);
           var vars = query.split("&");
-          for (var i=0;i<vars.length;i++) {
+          for (var i = 0; i < vars.length; i++) {
             var pair = vars[i].split("=");
                 // If first entry with this name
             if (typeof query_string[pair[0]] === "undefined") {

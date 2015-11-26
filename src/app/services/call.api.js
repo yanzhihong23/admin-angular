@@ -6,7 +6,7 @@
     .service('CallService', CallService);
 
   /** @ngInject */
-  function CallService($http, $log, APISERVER, md5, utils) {
+  function CallService($http, $log, APISERVER) {
     var headers = {'Conetent-Type': 'application/json'};
 
     this.dial = function(obj) {

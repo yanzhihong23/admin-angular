@@ -6,7 +6,7 @@
     .service('ApiService', ApiService);
 
   /** @ngInject */
-  function ApiService($http, $log, APISERVER, md5, utils) {
+  function ApiService($http, $log, APISERVER, md5) {
     var headers = {'Conetent-Type': 'application/json'};
 
     this.login = function(obj) {

@@ -39,17 +39,6 @@
   }
 
   function status(StatusService) {
-    var map = {
-      '-1': '全部',
-      '1': '已分配',
-      '01': '无组未分配',
-      '02': '组内未分配',
-      '11': '未处理',
-      '12': '跟进中',
-      '13': '有效',
-      '14': '无效',
-    };
-
     var map = StatusService.getStatusMap();
     // map['-1'] = '全部';
 

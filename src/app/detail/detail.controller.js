@@ -96,7 +96,7 @@
         } else {
           toastr.error(data.msg);
         }
-      }).error(function(data) {
+      }).error(function() {
         toastr.error('出错了~');
       })
     }
@@ -138,7 +138,7 @@
         userId: user.uId,
         destPhone: vm.info.phone,
         taskId: vm.info.taskId
-      }).success(function(data) {
+      }).success(function() {
         vm.calling = false;
         toastr.success('挂断成功');
       })
