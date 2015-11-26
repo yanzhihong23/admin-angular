@@ -32,6 +32,7 @@
             return {
               orgId: obj.orgid,
               name: obj.name,
+              leader: obj.realname,
               members: obj.usercount,
               tasks: obj.workcount
             };
@@ -106,17 +107,19 @@
       }
     }
 
-    function assignToTeam(orgId, taskId, isLast) {
+    function assignToTeam(toOrgId, taskId, isLast) {
       ApiService.assignToTeam({
         taskId: taskId,
-        orgId: orgId
+        orgId: toOrgId,
+        userId: user.uId
       }).success(assignHandler(isLast));
     }
 
-    function assignToMember(userId, taskId, isLast) {
+    function assignToMember(toUserId, taskId, isLast) {
       ApiService.assignToMember({
         taskId: taskId,
-        userId: userId
+        uId: toUserId,
+        userId: user.uId
       }).success(assignHandler(isLast));
       
     }

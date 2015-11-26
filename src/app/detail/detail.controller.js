@@ -6,26 +6,89 @@
     .controller('DetailController', DetailController);
 
   /** @ngInject */
-  function DetailController($log, $state, $stateParams, $location, UserService, ApiService, CallService, toastr) {
+  function DetailController($log, $state, $stateParams, $location, UserService, ApiService, CallService, StatusService, toastr, moment) {
     var vm  = this, 
         index = $stateParams.index,
         cachedData = UserService.getDataList(),
         user = UserService.getUser(),
-        list = cachedData.list;
+        list = cachedData.list,
+        statusList = angular.copy(StatusService.getStatusList());
 
+    statusList.shift();
+
+    vm.statusList = statusList;
     vm.save = save;
     vm.back = back;
     vm.dial = dial;
     vm.hangup = hangup;
 
+    init();
 
-    vm.info = angular.copy(list[index]);
+    function init() {
+      vm.info = angular.copy(list[index]);
+      vm.info.curStatus = vm.info.status; // for save check
+      vm.info.remark = '';
+
+      getAssignHistory();
+      getStatusHistory();
+      getRemarkHistory();
+    }
+
+    // get assign history
+    function getAssignHistory() {
+      ApiService.assignHistory({taskId: vm.info.taskId}).success(function(data) {
+        if(data.flag === 1) {
+          vm.assignHistory = data.data.dispatchDetail.map(function(obj) {
+            return {
+              from: obj.fromRealname,
+              to: obj.toRealname,
+              date: moment(obj.allotTime).format('YYYY-MM-DD HH:mm:ss')
+            }
+          });
+        }
+      });
+    }
+
+    function getStatusHistory() {
+      ApiService.statusHistory({taskId: vm.info.taskId}).success(function(data) {
+        if(data.flag === 1) {
+          vm.statusHistory = data.data.statusLogList.map(function(obj) {
+            return {
+              name: obj.realname,
+              status: obj.statusType,
+              date: moment(obj.changeDate).format('YYYY-MM-DD HH:mm:ss')
+            }
+          });
+        }
+      });
+    }
+
+    function getRemarkHistory() {
+      ApiService.remarkHistory({taskId: vm.info.taskId}).success(function(data) {
+        if(data.flag === 1) {
+          vm.remarkHistory = data.data.remarkLogList.map(function(obj) {
+            return {
+              name: obj.realname,
+              remark: obj.changeRemark,
+              date: moment(obj.changeDate).format('YYYY-MM-DD HH:mm:ss')
+            }
+          });
+        }
+      });
+    }
     
     function save(loadNext) {
-      $log.debug('save');
-      ApiService.updateData(vm.info).success(function(data) {
+      var params = angular.copy(vm.info);
+      params.userId = user.uId;
+      if(vm.info.status === vm.info.curStatus) {
+        params.status = null;
+      }
+
+      ApiService.updateData(params).success(function(data) {
         if(data.flag === 1) {
           toastr.success('信息保存成功！', loadNext ? '已自动为您载入下一条数据！': '');
+          // reset data
+          init();
 
           cachedData.list[index] = vm.info;
           UserService.setDataList(cachedData);
@@ -48,7 +111,7 @@
         // update location search
         $location.search('index', index);
         // load next item
-        vm.info = angular.copy(list[index]);
+        init();
       } else {
         toastr.error('没有数据了，请先返回吧~');
       }

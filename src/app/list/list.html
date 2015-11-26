@@ -37,8 +37,9 @@
           <th ng-if="list.batchAssignEnabled"><button class="btn btn-default btn-sm" ng-click="list.select(true)">反选</button></th>
           <th ng-if="list.user.roleId!=3">客户来源</th>
           <th ng-if="list.user.roleId!=3">分配时间</th>
-          <th ng-if="list.user.roleId!=3">上次通话</th>
-          <th>通话次数</th>
+          <th>录入时间</th>
+          <!-- <th ng-if="list.user.roleId!=3">上次通话</th> -->
+          <!-- <th>通话次数</th> -->
           <th>姓名</th>
           <th>电话</th>
           <th>城市</th>
@@ -57,8 +58,9 @@
           <td ng-if="list.batchAssignEnabled"><input type="checkbox" ng-model="item.selected" ng-click="list.select()" ng-if="!item.assigned"></td>
           <td ng-if="list.user.roleId!=3">{{item.customerSource || '-'}}</td>
           <td ng-if="list.user.roleId!=3">{{item.assignDate || '-'}}</td>
-          <td ng-if="list.user.roleId!=3">{{item.lastCallDate || '-'}}</td>
-          <td>{{item.callCount}}</td>
+          <td>{{item.receiveDate || '-'}}</td>
+          <!-- <td ng-if="list.user.roleId!=3">{{item.lastCallDate || '-'}}</td> -->
+          <!-- <td>{{item.callCount}}</td> -->
           <td>{{item.name}}</td>
           <td>{{item.phone}}</td>
           <td>{{item.cityId | city}}</td>

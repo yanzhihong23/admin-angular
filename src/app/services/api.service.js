@@ -37,8 +37,8 @@
           khly: obj.customerSource, // 客户来源
           hzlx: obj.coType, // 合作类型 1: 经销商, 2: 小店
           cs: obj.cityId, // 城市
-          zt: obj.status, // 状态
-          dtlsts: obj.subStatus,
+          statusType: obj.status, // 状态
+          // dtlsts: obj.subStatus,
           searchStr: obj.searchStr,
           uid: obj.uId, // 用户ID
           page: obj.pageIndex || 1, // 当前页码
@@ -61,9 +61,11 @@
           ccity: obj.cityId,
           custype: obj.customerType, // 客户类型
           // lb: obj.category // 类别
-          dtlsts: obj.status, // 状态
+          // dtlsts: obj.status, // 状态
+          statusType: obj.status,
           remark: obj.remark,
-          cgroup: obj.group // 所属组
+          cgroup: obj.group, // 所属组
+          userId: obj.userId
         }
       });
     };
@@ -98,7 +100,8 @@
         header: headers,
         data: {
           wid: obj.taskId,
-          orgid: obj.orgId
+          orgid: obj.orgId,
+          userId: obj.userId
         }
       });
     };
@@ -110,17 +113,46 @@
         header: headers,
         data: {
           wid: obj.taskId,
-          uid: obj.userId
+          uid: obj.uId,
+          userId: obj.userId
         }
       });
     };
 
-    this.call = function(obj) {
+    this.assignHistory = function(obj) {
       return $http({
-        method: 'JSONP',
-        url: 'http://192.168.100.20:8080/ec2/callengine/http/operation?json={%22dest%22:%2213918320423%22,%22ext_field%22:%22%22,%22command%22:%22dial%22,%20%22src%22:%2210086%22}'
-      })
+        method: 'POST',
+        url: APISERVER + '/query/dispatchDetail',
+        header: headers,
+        data: {
+          wId: obj.taskId
+        }
+      });
     };
+
+    this.statusHistory = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER + '/query/statusLog',
+        header: headers,
+        data: {
+          wId: obj.taskId
+        }
+      });
+    };
+
+    this.remarkHistory = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER + '/query/remarkLog',
+        header: headers,
+        data: {
+          wId: obj.taskId
+        }
+      });
+    };
+
+
 
     $log.debug('ApiService end');
     

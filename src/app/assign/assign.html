@@ -16,7 +16,7 @@
       <section ng-repeat="item in assign.groupList">
         <div class="table-row pointer" ng-class="{bg: $index%2}" ng-click="item.showDetail = !item.showDetail">
           <div class="table-cell">
-            {{item.name}}
+            {{item.name}} （{{item.leader}}）
             <span class="glyphicon glyphicon-menu-down" ng-class="{'glyphicon-menu-up':item.showDetail,'glyphicon-menu-down':!item.showDetail}"></span>
           </div>
           <div class="table-cell">{{item.members}}</div>

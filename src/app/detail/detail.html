@@ -3,7 +3,7 @@
     任务详情
     <div class="pull-right">
       <button type="button" class="btn btn-success" ng-click="detail.save(true)">保存并加载下一条</button>
-      <button type="button" class="btn btn-info" ng-click="detail.save()">保存</button>
+      <button type="button" class="btn btn-warning" ng-click="detail.save()">保存</button>
       <button type="button" class="btn btn-default" ng-click="detail.back()">返回</button>
     </div>
   </header>
@@ -41,7 +41,6 @@
         </div>
         <div class="form-group">
           <label for="">城市: </label>
-          <!-- <label for="">{{detail.info.cityId | city}}</label> -->
           <select class="form-control" ng-model="detail.info.cityId">
             <option value="12">北京</option>
             <option value="13">宁波</option>
@@ -58,30 +57,18 @@
       </section>
       <section class="info-group form-inline">
         <h4>处理状况</h4>
-        <!-- <div class="form-group">
-          <label for="">分类: </label>
-          <input type="text" class="form-control">
-        </div> -->
         <div class="form-group">
           <label for="">组别: </label>
           <label>{{detail.info.groupId | team}}</label>
-          <!-- <input type="text" class="form-control" ng-model="detail.info.groupId"> -->
         </div>
         <div class="form-group">
           <label for="">销售代表: </label>
           <label for="">{{detail.info.saleman || '-'}}</label>
-          <!-- <input type="text" class="form-control" ng-model="detail.info.saleman"> -->
         </div>
         <div class="form-group">
           <label for="">任务状态: </label>
           <select class="form-control" ng-model="detail.info.status">
-            <!-- <option value="00">已分配</option> -->
-            <option value="01">无组未分配</option>
-            <option value="02">组内未分配</option>
-            <option value="11">未处理</option>
-            <option value="12">跟进中</option>
-            <option value="13">有效</option>
-            <option value="14">无效</option>
+            <option value="{{s}}" ng-repeat="s in detail.statusList" ng-disabled="user.roleId==3&&(s==0||s==1)">{{s | status}}</option>
           </select>
         </div>
       </section>
@@ -98,17 +85,39 @@
       </section>
       <section class="info-group form-inline">
         <h4>历史记录</h4>
-        <div class="form-group">
-          <label for="">分配时间: </label>
-          <label class="">{{detail.info.assignDate || '-'}}</label>
+        <div ng-if="detail.assignHistory.length" class="record">
+          <div class="title">分配历史</div>
+          <div ng-repeat="record in detail.assignHistory">
+            <span class="date">{{record.date}}</span>
+            <span class="from">{{record.from}}</span>
+            <span>分配给</span>
+            <span class="to">{{record.to}}</span>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="">通话次数: </label>
-          <label class="">{{detail.info.callCount}}</label>
+
+        <div ng-if="detail.statusHistory.length"  class="record">
+          <div class="title">状态历史</div>
+          <div ng-repeat="record in detail.statusHistory">
+            <span class="date">{{record.date}}</span>
+            <span class="name">{{record.name}}</span>
+            <span>修改为</span>
+            <span>{{record.status | status}}</span>
+          </div>
         </div>
+
+        <div ng-if="detail.remarkHistory.length"  class="record">
+          <div class="title">备注历史</div>
+          <div ng-repeat="record in detail.remarkHistory">
+            <span class="date">{{record.date}}</span>
+            <span class="name">{{record.name}}</span>
+            <span>修改为</span>
+            <span>{{record.remark}}</span>
+          </div>
+        </div>
+
       </section>
       <section class="info-group form">
-        <h4>当前备注</h4>
+        <h4>添加备注</h4>
         <div class="form-group">
           <textarea class="form-control" rows="3" ng-model="detail.info.remark" maxlength="200"></textarea>
         </div>

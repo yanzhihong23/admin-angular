@@ -80,20 +80,7 @@
     }
 
     function doStatusFilter(val) {
-      switch(val) {
-        case '-1': // all
-          searchFilter.status = null;
-          searchFilter.subStatus = null;
-          break;
-        case '1': // assigned
-          searchFilter.status = 1;
-          searchFilter.subStatus = null;
-          break;
-        default:
-          searchFilter.status = null;
-          searchFilter.subStatus = val;
-      }
-
+      searchFilter.status = val === '-1' ? null : val;
       updateDataList();
     }
 
@@ -142,9 +129,9 @@
               groupId: obj.cgroup,
               customerType: obj.custype,
               email: obj.email,
-              assigned: obj.txnsts === '1',
+              assigned: obj.status_type === 1,
               assignDate: obj.allot_date && moment(obj.allot_date).format('YYYY-MM-DD HH:mm:ss'),
-              status: obj.dtlsts,
+              status: obj.status_type + '',
               name: obj.name,
               phone: obj.phone,
               receiveDate: obj.protim,
@@ -153,7 +140,7 @@
               callCount: obj.phncnt,
               lastCallDate: obj.lastphntim,
               sourceDetail: obj.srcdtl,
-              customerSource: obj.cussrc,
+              customerSource: obj.channelName,
               saleman: obj.crewRealName,
               remark: obj.remark
             };
