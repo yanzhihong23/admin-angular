@@ -11,7 +11,6 @@
     $rootScope.user = $rootScope.user || user;
 
     $rootScope.$on('$stateChangeStart', function(evt, toState, fromState, fromParams) {
-      $log.debug('toState', toState.name);
       switch(toState.name) {
         case 'login':
           break;
@@ -27,6 +26,12 @@
             $state.go('login');
           }
       }
+    });
+
+    $rootScope.$on('$stateChangeSuccess', function(evt, toState, fromState, fromParams) {
+      // reset scroll
+      document.documentElement.scrollTop = document.body.scrollTop = 0;
+      document.documentElement.scrollLeft = document.body.scrollLeft = 0;
     });
 
     $rootScope.logout = function() {
