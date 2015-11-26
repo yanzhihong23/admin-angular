@@ -81,7 +81,7 @@
     </table>
     <div class="divider"></div>
     <div class="pull-left">
-      <button class="btn btn-danger" ng-click="list.batchAssign()" ng-if="list.batchAssignEnabled">选好了({{list.selectedCount}})</button>
+      <button class="btn btn-danger" ng-click="list.batchAssign()" ng-if="list.batchAssignEnabled" ng-disabled="!list.selectedCount">选好了({{list.selectedCount}})</button>
     </div>
     <!-- paginator -->
     <pagination ng-change="list.pageChanged()"
