@@ -52,7 +52,7 @@
         controllerAs: 'login'
       });
 
-    $urlRouterProvider.otherwise('/task/list');
+    $urlRouterProvider.otherwise('/login');
   }
 
 })();
