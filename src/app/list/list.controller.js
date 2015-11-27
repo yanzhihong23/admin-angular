@@ -6,24 +6,15 @@
     .controller('ListController', ListController);
 
   /** @ngInject */
-  function ListController($log, $state, $stateParams, $scope, ApiService, UserService, StatusService, toastr, moment) {
+  function ListController($log, $state, $stateParams, $scope, ApiService, UserService, FilterService, toastr, moment) {
     var vm = this;
-    var statusList = StatusService.getStatusList();
 
     vm.user = UserService.getUser();
     vm.selectedCount = 0;
     vm.itemsPerPage = 10;
     vm.currentPage = 1;
-    vm.filterData = { // -1 for all, and fix empty option
-      status: statusList,
-      coType: ['-1', '1', '2'],
-      itemsPerPage: ['-1', 10, 15, 20, 25, 30]
-    };
-    vm.filter = {
-      status: '-1',
-      coType: '-1',
-      itemsPerPage: '10'
-    };
+    vm.filterData = FilterService.filterData;
+    vm.filter = FilterService.filter;
 
     // methods
     vm.modify = modify;
@@ -62,17 +53,13 @@
 
     var searchFilter = {
       uId: vm.user.uId,
-      pageSize: vm.itemsPerPage
+      pageSize: vm.filter.itemsPerPage
     };
 
     // init
     if($stateParams.back === 'true') {
       var data = UserService.getDataList();
-      vm.itemsPerPage = data.itemsPerPage;
-      vm.currentPage = data.currentPage;
-      vm.totalItems = data.totalItems;
       vm.list = data.list;
-      vm.filter = data.filter;
       searchFilter = data.searchFilter;
     } else {
       updateDataList({
@@ -91,7 +78,7 @@
     }
 
     function doPaginatorFilter(val) {
-      searchFilter.pageSize = vm.itemsPerPage = Math.abs(val);
+      searchFilter.pageSize = Math.abs(val) + '';
       updateDataList();
     }
 
@@ -115,13 +102,13 @@
     }
 
     function updateDataList() {
-      searchFilter.pageIndex = vm.currentPage;
+      searchFilter.pageIndex = vm.filter.currentPage;
       ApiService.getDataList(searchFilter).success(function(data) {
         if(data.flag === 1) {
           toastr.info('列表数据已更新');
 
           vm.selectedCount = 0;
-          vm.totalItems = data.data.dataCount;
+          vm.filter.totalItems = data.data.dataCount;
 
           vm.list = data.data.result.map(function(obj) {
             return {
@@ -130,7 +117,7 @@
               groupId: obj.cgroup,
               customerType: obj.custype,
               email: obj.email,
-              assigned: obj.status_type === 1,
+              assigned: !/0|2|7/.test(obj.status_type),
               assignDate: obj.allot_date && moment(obj.allot_date).format('YYYY-MM-DD HH:mm:ss'),
               status: obj.status_type + '',
               name: obj.name,
@@ -147,7 +134,7 @@
             };
           })
         } else {
-          vm.totalItems = 0;
+          vm.filter.totalItems = 0;
         }
       })
     }
@@ -178,11 +165,7 @@
 
     function setTempData() {
       UserService.setDataList({
-        itemsPerPage: vm.itemsPerPage,
-        currentPage: vm.currentPage,
-        totalItems: vm.totalItems,
         list: vm.list,
-        filter: vm.filter,
         searchFilter: searchFilter
       });
     }
