@@ -9,9 +9,9 @@
   function DetailController($log, $state, $stateParams, $location, UserService, ApiService, CallService, StatusService, toastr, moment) {
     var vm  = this, 
         index = $stateParams.index,
-        cachedData = UserService.getDataList(),
+        cachedData,
         user = UserService.getUser(),
-        list = cachedData.list,
+        list,
         statusList = angular.copy(StatusService.getStatusList());
 
     statusList.shift();
@@ -25,6 +25,9 @@
     init();
 
     function init() {
+      cachedData = UserService.getDataList();
+      list = cachedData.list;
+
       vm.info = angular.copy(list[index]);
       vm.info.curStatus = vm.info.status; // for save check
       vm.info.remark = '';
@@ -87,11 +90,13 @@
       ApiService.updateData(params).success(function(data) {
         if(data.flag === 1) {
           toastr.success('信息保存成功！', loadNext ? '已自动为您载入下一条数据！': '');
-          // reset data
-          init();
 
           cachedData.list[index] = vm.info;
           UserService.setDataList(cachedData);
+
+          // reset data
+          init();
+          // load next item
           loadNext && next();
         } else {
           toastr.error(data.msg);

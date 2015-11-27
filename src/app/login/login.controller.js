@@ -10,8 +10,8 @@
     var vm = this;
 
     vm.user = {
-      // username: '18616725872',
-      // password: 'zjdd1234',
+      username: '18616725872',
+      password: 'zjdd1234',
       // username: '13764903755',
       // password: '123456'
     };
