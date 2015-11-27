@@ -41,8 +41,8 @@
           // dtlsts: obj.subStatus,
           searchStr: obj.searchStr,
           uid: obj.uId, // 用户ID
-          page: obj.pageIndex || 1, // 当前页码
-          pageCount: obj.pageSize || 10 // 每页条数
+          page: obj.currentPage || 1, // 当前页码
+          pageCount: obj.itemsPerPage  || 10 // 每页条数
         }
       });
     };

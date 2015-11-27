@@ -107,7 +107,8 @@
     }
 
     function back() {
-      $state.go('task.list', {back: true});
+      // $state.go('task.list', {back: true});
+      $state.go('task.list');
     }
 
     function next() {

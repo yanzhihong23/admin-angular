@@ -29,7 +29,7 @@
       return vm.filter.status;
     }, function(val, old) {
       if(val !== old) {
-        doStatusFilter(val);
+        updateDataList();
       }
     }, true);
 
@@ -38,7 +38,7 @@
       return vm.filter.coType;
     }, function(val, old) {
       if(val !== old) {
-        doCoTypeFilter(val);
+        updateDataList();
       }
     }, true); 
 
@@ -47,14 +47,9 @@
       return vm.filter.itemsPerPage;
     }, function(val, old) {
       if(val !== old) {
-        doPaginatorFilter(val);
+        updateDataList();
       }
     }, true);
-
-    var searchFilter = {
-      uId: vm.user.uId,
-      pageSize: vm.filter.itemsPerPage
-    };
 
     // init
     if($stateParams.back === 'true') {
@@ -65,21 +60,6 @@
       updateDataList({
         pageIndex: vm.currentPage
       });
-    }
-
-    function doStatusFilter(val) {
-      searchFilter.status = val === '-1' ? null : val;
-      updateDataList();
-    }
-
-    function doCoTypeFilter(val) {
-      searchFilter.coType = val === '-1' ? null : val;
-      updateDataList();
-    }
-
-    function doPaginatorFilter(val) {
-      searchFilter.pageSize = Math.abs(val) + '';
-      updateDataList();
     }
 
     function select(isInvert) {
@@ -95,14 +75,24 @@
     }
 
     function search(evt) {
-      searchFilter.searchStr = vm.filter.searchStr;
       if(evt.keyCode === 13) { // enter
         updateDataList();
       }
     }
 
     function updateDataList() {
-      searchFilter.pageIndex = vm.filter.currentPage;
+      var searchFilter = angular.copy(vm.filter);
+      if(searchFilter.status === '-1') {
+        searchFilter.status = null;
+      }
+
+      if(searchFilter.coType === '-1') {
+        searchFilter.coType = null;
+      }
+
+      searchFilter.itemsPerPage = Math.abs(searchFilter.itemsPerPage);
+      searchFilter.uId = vm.user.uId;
+
       ApiService.getDataList(searchFilter).success(function(data) {
         if(data.flag === 1) {
           toastr.info('列表数据已更新');
@@ -165,8 +155,7 @@
 
     function setTempData() {
       UserService.setDataList({
-        list: vm.list,
-        searchFilter: searchFilter
+        list: vm.list
       });
     }
 
