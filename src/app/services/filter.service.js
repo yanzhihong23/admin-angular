@@ -12,7 +12,7 @@
     this.filterData = { // -1 for all, and fix empty option
       status: statusList,
       coType: ['-1', '1', '2'],
-      itemsPerPage: ['-1', 10, 15, 20, 25, 30]
+      itemsPerPage: [10, 15, 20, 25, 30]
     };
 
     this.filter = {
