@@ -112,7 +112,7 @@
 
   function remark() {
     return function(str) {
-      if(str.length > 30) {
+      if(str && str.length > 30) {
         return str.substr(0, 30) + '...';
       } else {
         return str;
