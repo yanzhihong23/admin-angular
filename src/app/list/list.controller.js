@@ -72,6 +72,7 @@
       vm.currentPage = data.currentPage;
       vm.totalItems = data.totalItems;
       vm.list = data.list;
+      vm.filter = data.filter;
       searchFilter = data.searchFilter;
     } else {
       updateDataList({
@@ -181,6 +182,7 @@
         currentPage: vm.currentPage,
         totalItems: vm.totalItems,
         list: vm.list,
+        filter: vm.filter,
         searchFilter: searchFilter
       });
     }
