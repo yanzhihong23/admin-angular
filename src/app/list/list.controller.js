@@ -103,7 +103,7 @@
           vm.list = data.data.result.map(function(obj) {
             return {
               taskId: obj.msgid,
-              cityId: obj.ccity,
+              ccity: obj.ccity,
               groupId: obj.cgroup,
               customerType: obj.custype,
               email: obj.email,
@@ -120,7 +120,9 @@
               sourceDetail: obj.srcdtl,
               customerSource: obj.channelName,
               saleman: obj.crewRealName,
-              remark: obj.remark
+              remark: obj.remark,
+              provinceId: obj.province_id ? obj.province_id + '' : '-1',
+              cityId: obj.city_id ? obj.city_id + '' : '-1'
             };
           })
         } else {

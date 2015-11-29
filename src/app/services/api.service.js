@@ -58,14 +58,16 @@
           phone: obj.phone,
           wx: obj.wechat,
           qq: obj.qq,
-          ccity: obj.cityId,
+          ccity: obj.ccity,
           custype: obj.customerType, // 客户类型
           // lb: obj.category // 类别
           // dtlsts: obj.status, // 状态
           statusType: obj.status,
           remark: obj.remark,
           cgroup: obj.group, // 所属组
-          userId: obj.userId
+          userId: obj.userId,
+          provinceId: obj.provinceId,
+          cityId: obj.cityId
         }
       });
     };
@@ -148,6 +150,38 @@
         header: headers,
         data: {
           wId: obj.taskId
+        }
+      });
+    };
+
+    this.callHistory = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER + '/query/callingLog',
+        header: headers,
+        data: {
+          wId: obj.taskId
+        }
+      });
+    };
+
+    this.input = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER + '/query/addMsg',
+        header: headers,
+        data: {
+          provinceId: obj.provinceId,
+          cityId: obj.cityId,
+          channelId: obj.channelId,
+          coType: obj.coType,
+          name: obj.name,
+          phone: obj.phone,
+          wechat: obj.wechat,
+          qq: obj.qq,
+          remark: obj.remark,
+          userId: obj.userId,
+          ccity: obj.ccity
         }
       });
     };

@@ -18,3 +18,15 @@
     padding: 0 10px;
   }
 }
+
+#detail_view{
+  video{
+    height: 0;
+    width: 300px;
+    position: absolute;
+    top: 35px;
+  }
+  .control-label{
+    padding-left: 0;
+  }
+}

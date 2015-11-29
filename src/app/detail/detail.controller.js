@@ -6,15 +6,19 @@
     .controller('DetailController', DetailController);
 
   /** @ngInject */
-  function DetailController($log, $state, $stateParams, $location, UserService, ApiService, CallService, StatusService, toastr, moment) {
+  function DetailController($log, $state, $scope, $stateParams, $location, UserService, ApiService, SystemApi, CallApi, StatusService, AddressService, toastr, moment) {
     var vm  = this, 
         index = $stateParams.index,
         cachedData,
         user = UserService.getUser(),
         list,
+        cityList,
         statusList = angular.copy(StatusService.getStatusList());
 
     statusList.shift();
+
+    vm.provinceList = AddressService.provinceList;
+    cityList = AddressService.cityList;
 
     vm.statusList = statusList;
     vm.save = save;
@@ -24,6 +28,19 @@
 
     init();
 
+    $scope.$watch(function() {
+      return vm.info.provinceId;
+    }, function(val, old) {
+      if(val != -1) {
+        // reset city
+        // vm.info.cityId = '-1';
+        initCity(val);
+        if(val!==old) {
+          vm.info.cityId = '-1';
+        }
+      }
+    });
+
     function init() {
       cachedData = UserService.getDataList();
       list = cachedData.list;
@@ -32,9 +49,18 @@
       vm.info.curStatus = vm.info.status; // for save check
       vm.info.remark = '';
 
+      $log.debug(vm.info.provinceId)
+
       getAssignHistory();
       getStatusHistory();
       getRemarkHistory();
+      getCallHistory();
+    }
+
+    function initCity(id) {
+      vm.cityList = cityList.filter(function(obj) {
+        return obj.provinceId == id;
+      });
     }
 
     // get assign history
@@ -46,7 +72,7 @@
               from: obj.fromRealname,
               to: obj.toRealname,
               date: moment(obj.allotTime).format('YYYY-MM-DD HH:mm:ss')
-            }
+            };
           });
         }
       });
@@ -60,7 +86,7 @@
               name: obj.realname,
               status: obj.statusType,
               date: moment(obj.changeDate).format('YYYY-MM-DD HH:mm:ss')
-            }
+            };
           });
         }
       });
@@ -74,7 +100,22 @@
               name: obj.realname,
               remark: obj.changeRemark,
               date: moment(obj.changeDate).format('YYYY-MM-DD HH:mm:ss')
-            }
+            };
+          });
+        }
+      });
+    }
+
+    function getCallHistory() {
+      ApiService.callHistory({taskId: vm.info.taskId}).success(function(data) {
+        if(data.flag === 1) {
+          vm.callHistory = data.data.callingLog.map(function(obj) {
+            return {
+              name: obj.realname,
+              src: obj.recordUrl,
+              duration: obj.holdingTime,
+              date: moment(obj.beginDate).format('YYYY-MM-DD HH:mm:ss')
+            };
           });
         }
       });
@@ -124,7 +165,7 @@
     }
 
     function dial() {
-      CallService.dial({
+      CallApi.dial({
         userId: user.uId,
         destPhone: vm.info.phone,
         taskId: vm.info.taskId
@@ -140,7 +181,7 @@
     }
 
     function hangup() {
-      CallService.hangup({
+      CallApi.hangup({
         userId: user.uId,
         destPhone: vm.info.phone,
         taskId: vm.info.taskId

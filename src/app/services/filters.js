@@ -9,7 +9,8 @@
     .filter('status', status)
     .filter('coType', coType)
     .filter('role', role)
-    .filter('remark', remark);
+    .filter('remark', remark)
+    .filter('trustUrl', trustUrl);
 
   /** @ngInject */
   function abs() {
@@ -106,7 +107,7 @@
 
     return function(id) {
       return map[id] || '-';
-    }
+    };
   }
 
 
@@ -117,6 +118,12 @@
       } else {
         return str;
       }
-    }
+    };
+  }
+
+  function trustUrl($sce) {
+    return function(url) {
+      return $sce.trustAsResourceUrl(url);
+    };
   }
 })();

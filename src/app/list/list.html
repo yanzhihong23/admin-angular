@@ -1,5 +1,10 @@
 <article>
-  <header class="view-title">任务列表</header>
+  <header class="view-title">
+    任务列表
+    <div class="pull-right">
+      <a class="btn btn-danger" ui-sref="task.input">新客户录入</a>
+    </div>
+  </header>
   <section class="content clearfix">
     <!-- search filters -->
     <div class="form-inline clearfix search-filters">
@@ -63,7 +68,7 @@
           <!-- <td>{{item.callCount}}</td> -->
           <td>{{item.name}}</td>
           <td>{{item.phone}}</td>
-          <td>{{item.cityId | city}}</td>
+          <td>{{item.ccity | city}}</td>
           <td>{{item.customerType | coType}}</td>
           <td>{{item.status | status}}</td>
           <td ng-if="list.user.roleId==3">{{(item.remark | remark) || '-'}}</td>

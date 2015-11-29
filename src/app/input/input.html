@@ -1,0 +1,100 @@
+<article>
+  <header class="view-title">
+    新客户录入
+    <div class="pull-right">
+      <a class="btn btn-default" ui-sref="task.list">返回</a>
+    </div>
+  </header>
+  <section class="content">
+    <form name="inputForm" class="form-horizontal" ng-submit="input.submit()">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">姓名: </label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" ng-model="input.info.name" maxlength="20" required>
+        </div>
+        <label class="col-sm-1 control-label">电话: </label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" ng-model="input.info.phone" maxlength="12" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">微信: </label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" ng-model="input.info.wechat" maxlength="20">
+        </div>
+        <label class="col-sm-1 control-label">QQ: </label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" ng-model="input.info.qq" maxlength="12">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">省份: </label>
+        <div class="col-sm-3">
+          <select class="form-control" ng-model="input.info.provinceId" required>
+            <option value="-1" disabled>请选择</option>
+            <option ng-value="{{p.id}}" ng-repeat="p in input.provinceList">{{p.name}}</option>
+          </select>
+        </div>
+        <label class="col-sm-1 control-label">城市: </label>
+        <div class="col-sm-3">
+          <select class="form-control" ng-model="input.info.cityId" required>
+            <option value="-1" disabled>请选择</option>
+            <option ng-value="{{c.id}}" ng-repeat="c in input.cityList">{{c.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">合作类型: </label>
+        <div class="col-sm-3">
+          <select class="form-control" ng-model="input.info.coType">
+            <option value="-1" disabled>请选择</option>
+            <option value="1">经销商</option>
+            <option value="2">小店</option>
+          </select>
+        </div>
+        <label class="col-sm-1 control-label">渠道: </label>
+        <div class="col-sm-3">
+          <select class="form-control" ng-model="input.info.channelId">
+            <option value="-1" disabled>请选择</option>
+            <option ng-value="{{channel.id}}" ng-repeat="channel in input.channelList">{{channel.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">预分城市: </label>
+        <div class="col-sm-3">
+          <select class="form-control" ng-model="input.info.ccity">
+            <option value="-1" disabled="">请选择</option>
+            <option value="0">总部</option>
+            <option value="11">大客户</option>
+            <option value="12">北京</option>
+            <option value="13">宁波</option>
+            <option value="14">南京</option>
+            <option value="15">苏州</option>
+            <option value="16">广州</option>
+            <option value="17">杭州</option>
+            <option value="18">深圳</option>
+            <option value="19">武汉</option>
+            <option value="20">天津</option>
+            <option value="21">上海</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">备注: </label>
+        <div class="col-sm-7">
+          <textarea class="form-control" ng-model="input.info.remark" rows="3" maxlength="200"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-2">
+          <button class="btn btn-block btn-success" ng-disabled="inputForm.$invalid">保存</button>
+        </div>
+        <div class="col-sm-2">
+          <button class="btn btn-block btn-danger" ng-click="input.reset()">重置</button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+</article>

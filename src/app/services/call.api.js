@@ -3,10 +3,10 @@
 
   angular
     .module('adminAngular')
-    .service('CallService', CallService);
+    .service('CallApi', CallApi);
 
   /** @ngInject */
-  function CallService($http, $log, APISERVER) {
+  function CallApi($http, $log, APISERVER) {
     var headers = {'Conetent-Type': 'application/json'};
 
     this.dial = function(obj) {
@@ -34,7 +34,7 @@
       });
     };
 
-    $log.debug('ApiService end');
+    $log.debug('CallApi end');
     
   }
 })();

@@ -25,14 +25,20 @@
       .item{
         position: relative;
         list-style: none;
-        padding-left: 20px;
-        color: #7C8695;
-        line-height: 50px;
-        cursor: pointer;
         border-bottom: solid 1px #354050;
+        a{
+          display: block;
+          text-decoration: none;
+          padding-left: 20px;
+          color: #7C8695;
+          line-height: 50px;
+          cursor: pointer;
+        }
         &.active{
-          color: #fff;
-          background: #161F2C;
+          a{
+            color: #fff;
+            background: #161F2C;
+          }
           &:after{
             content: '';
             display: block;
@@ -100,7 +106,7 @@
 
 .content{
   padding: 20px 25px;
-  min-height: 800px;
+  min-height: 600px;
   background: #fff;
   margin-top: 101px;
   z-index: 1;

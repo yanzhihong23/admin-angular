@@ -45,6 +45,16 @@
           }
         }
       })
+      .state('task.input', {
+        url: '/input',
+        views: {
+          'task': {
+            templateUrl: 'app/input/input.html',
+            controller: 'InputController',
+            controllerAs: 'input'
+          }
+        }
+      })
       .state('login', {
         url: '/login',
         templateUrl: 'app/login/login.html',

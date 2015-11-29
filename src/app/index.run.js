@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, $state, $rootScope, UserService, StatusService) {
+  function runBlock($log, $state, $rootScope, UserService, StatusService, AddressService) {
     var user = UserService.getUser();
     $rootScope.user = $rootScope.user || user;
 
