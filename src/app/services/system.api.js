@@ -19,14 +19,14 @@
     this.provinceList = function() {
       return $http({
         method: 'GET',
-        url: '/assets/data/province.json'
+        url: 'assets/data/province.json'
       });
     };
 
     this.cityList = function() {
       return $http({
         method: 'GET',
-        url: '/assets/data/city.json'
+        url: 'assets/data/city.json'
       });
     };
 
