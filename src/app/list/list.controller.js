@@ -24,6 +24,10 @@
     vm.select = select;
     vm.search = search;
 
+    if(vm.user.roleId !== 3) {
+      vm.batchAssignEnabled = true;
+    }
+
     // status watcher
     $scope.$watch(function() {
       return vm.filter.status;
