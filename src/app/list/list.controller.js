@@ -19,6 +19,7 @@
     // methods
     vm.modify = modify;
     vm.assign = assign;
+    vm.recovery = recovery;
     vm.batchAssign = batchAssign;
     vm.pageChanged = updateDataList;
     vm.select = select;
@@ -150,14 +151,41 @@
     }
 
     function batchAssign() {
+      var ids = getSelectedIds();
+
+      $state.go('task.assign', {id: ids});
+    }
+
+    function recovery(index) {
+      var taskId = vm.list[index].taskId;
+
+      ApiService.recovery({
+        taskId: taskId,
+        userId: vm.user.uId
+      }).success(function(data) {
+        if(data.flag === 1) {
+          toastr.success('回收成功');
+          updateDataList();
+        } else {
+          toastr.error('回收失败');
+        }
+      })
+    }
+
+    function batchRecycle() {
+      var ids = getSelectedIds();
+
+    }
+
+    function getSelectedIds() {
       var ids = vm.list.filter(function(obj) {
         return obj.selected && !obj.assigned;
       }).map(function(obj) {
         return obj.taskId;
       });
 
-      $state.go('task.assign', {id: ids});
-    }
+      return ids;
+    } 
 
     function setTempData() {
       UserService.setDataList({

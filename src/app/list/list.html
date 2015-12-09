@@ -21,18 +21,29 @@
         </select>
       </div>
       <div class="form-group">
+        <label for="" class="control-label">搜索: </label>
+        <input type="text" class="form-control" ng-model="list.filter.searchStr" placeholder="姓名/手机号/微信/QQ" ng-keypress="list.search($event)">
+      </div>
+      <div class="form-group">
         <label for="" class="control-label">每页条数: </label>
         <select name="" id="" class="form-control" ng-model="list.filter.itemsPerPage">
           <option value="{{f}}" ng-repeat="f in list.filterData.itemsPerPage">{{f | abs}}</option>
         </select>
       </div>
-      <div class="form-group">
-        <label for="" class="control-label">搜索: </label>
-        <input type="text" class="form-control" ng-model="list.filter.searchStr" placeholder="姓名/手机号/微信/QQ" ng-keypress="list.search($event)">
+
+      <div class="pull-right">
+        <button class="btn btn-success">总数: {{list.filter.totalItems}}</button>
       </div>
-      <!-- <div class="pull-right" ng-if="list.user.roleId!=3">
-        <button class="btn btn-default" ng-click="list.batchAssignEnabled=!list.batchAssignEnabled">批量分配</button>
-      </div> -->
+
+      <div>
+        <div class="form-group">
+          <label for="" class="control-label">录入时间: </label>
+          <input type="text" class="form-control" ng-model="list.filter.startDate" placeholder="20151108"  ng-keypress="list.search($event)">
+          ~
+          <input type="text" class="form-control" ng-model="list.filter.endDate" placeholder="20151208"  ng-keypress="list.search($event)">
+        </div>
+      </div>
+      
     </div>
     <div class="divider"></div>
     <table class="table table-hover table-striped table-responsive">
@@ -55,6 +66,7 @@
           <th ng-if="list.user.roleId!=3">销售代表</th>
           <th>修改</th>
           <th ng-if="list.user.roleId!=3">分配</th>
+          <th ng-if="list.user.roleId!=3">回收</th>
         </tr>
       </thead>
       <!-- table body -->
@@ -81,26 +93,35 @@
             <button type="button" class="btn btn-danger btn-sm" ng-click="list.assign($index)" ng-hide="item.assigned">分配</button>
             <span ng-show="item.assigned">已分配</span>
           </td>
+          <td ng-if="list.user.roleId!=3">
+            <button type="button" class="btn btn-warning btn-sm" ng-click="list.recovery($index)" ng-show="item.assigned">回收</button>
+          </td>
         </tr>
       </tbody>
     </table>
     <div class="divider"></div>
-    <div class="pull-left">
-      <button class="btn btn-danger" ng-click="list.batchAssign()" ng-if="list.batchAssignEnabled" ng-disabled="!list.selectedCount">选好了({{list.selectedCount}})</button>
-    </div>
-    <!-- paginator -->
-    <pagination ng-change="list.pageChanged()"
-      max-size="5"
-      rotate="false"
-      boundary-links="true"
-      total-items="list.filter.totalItems"
-      ng-model="list.filter.currentPage"
-      items-per-page="list.filter.itemsPerPage"
-      class="pagination green pull-right"
-      previous-text="上一页"
-      next-text="下一页"
-      first-text="首页"
-      last-text="末页">
-    </pagination>
+
+    <section class="clearfix">
+      <div class="pull-left">
+        <button class="btn btn-danger" ng-click="list.batchAssign()" ng-if="list.batchAssignEnabled" ng-disabled="!list.selectedCount">批量分配({{list.selectedCount}})</button>
+        <!-- <button class="btn btn-danger" ng-click="list.batchRecycle()" ng-if="list.batchAssignEnabled" ng-disabled="!list.selectedCount">批量回收({{list.selectedCount}})</button> -->
+      </div>
+      
+      <!-- paginator -->
+      <pagination ng-change="list.pageChanged()"
+        max-size="5"
+        rotate="false"
+        boundary-links="true"
+        total-items="list.filter.totalItems"
+        ng-model="list.filter.currentPage"
+        items-per-page="list.filter.itemsPerPage"
+        class="pagination green pull-right"
+        previous-text="上一页"
+        next-text="下一页"
+        first-text="首页"
+        last-text="末页">
+      </pagination>
+    </section>
+    
   </section>
 </article>

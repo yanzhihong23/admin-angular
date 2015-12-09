@@ -40,6 +40,10 @@
           statusType: obj.status, // 状态
           // dtlsts: obj.subStatus,
           searchStr: obj.searchStr,
+          beginDate: obj.startDate,
+          endDate: obj.endDate,
+          queryDate: obj.queryDate,
+          memberId: obj.memberId,
           uid: obj.uId, // 用户ID
           page: obj.currentPage || 1, // 当前页码
           pageCount: obj.itemsPerPage  || 10 // 每页条数
@@ -182,6 +186,18 @@
           remark: obj.remark,
           userId: obj.userId,
           ccity: obj.ccity
+        }
+      });
+    };
+
+    this.recovery = function(obj) {
+      return $http({
+        method: 'post',
+        url: APISERVER + '/query/recoveryMsg',
+        headers: headers,
+        data: {
+          userId: obj.userId,
+          msgId: obj.taskId
         }
       });
     };
