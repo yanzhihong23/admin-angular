@@ -7,12 +7,13 @@
 
   /** @ngInject */
   function ListController($log, $state, $stateParams, $scope, ApiService, UserService, FilterService, toastr, moment) {
-    var vm = this;
+    var vm = this, user = UserService.getUser();
 
-    vm.user = UserService.getUser();
+    vm.user = user;
     vm.selectedCount = 0;
     vm.itemsPerPage = 10;
     vm.currentPage = 1;
+    vm.allowAutoAllot = user.allowAutoAllot;
     vm.filterData = FilterService.filterData;
     vm.filter = FilterService.filter;
 
@@ -24,6 +25,7 @@
     vm.pageChanged = updateDataList;
     vm.select = select;
     vm.search = search;
+    vm.autoAllotSwitch = autoAllotSwitch;
 
     if(vm.user.roleId !== 3) {
       vm.batchAssignEnabled = true;
@@ -56,6 +58,33 @@
       }
     }, true);
 
+    // group watcher
+    $scope.$watch(function() {
+      return vm.filter.orgId;
+    }, function(val, old) {
+      if(val !== old) {
+        vm.filter.memberId = '-1';
+        if(val == -1) {
+          vm.memberList = null;
+        }
+        updateDataList();
+        vm.groupList.forEach(function(group) {
+          if(group.orgId == val) {
+            vm.memberList = group.memberList;
+          }
+        });
+      }
+    }, true);
+
+    // member watcher
+    $scope.$watch(function() {
+      return vm.filter.memberId
+    }, function(val, old) {
+      if(val !== old) {
+        updateDataList();
+      }
+    }, true);
+
     // init
     if($stateParams.back === 'true') {
       var data = UserService.getDataList();
@@ -65,6 +94,12 @@
       updateDataList({
         pageIndex: vm.currentPage
       });
+
+      if(user.roleId == 1) { // city ceo
+        getGroupList();
+      } else if(user.roleId == 2) { // group leader
+        getMemberList();
+      }
     }
 
     function select(isInvert) {
@@ -191,6 +226,74 @@
       UserService.setDataList({
         list: vm.list
       });
+    }
+
+    function autoAllotSwitch() {
+      if(user.autoAllot) {
+        ApiService.autoAllotClose({userId: user.uId}).success(function(data) {
+          if(data.flag === 1) {
+            user.autoAllot = !user.autoAllot;
+            UserService.setUser(user);
+            toastr.success('操作成功！');
+          } else {
+            toastr.success('操作失败！');
+          }
+        });
+      } else {
+        $state.go('task.auto');
+      }
+    }
+
+
+    // group list and member list
+    function getGroupList() {
+      ApiService.groupList(user).success(function(data) {
+        if(data.flag === 1) {
+          vm.groupList = data.data.result.map(function(obj) {
+            return {
+              orgId: obj.orgid,
+              name: obj.name,
+              leader: obj.realname,
+              members: obj.usercount,
+              tasks: obj.workcount
+            };
+          });
+
+          vm.groupList.forEach(function(obj) {
+            ApiService.memberList({orgId: obj.orgId}).success(function(data) {
+              if(data.flag === 1) {
+                obj.memberList = data.data.result.map(function(obj) {
+                  return {
+                    isLeader: obj.isleader === '1',
+                    email: obj.email,
+                    userId: obj.user_id,
+                    name: obj.realname,
+                    tasks: obj.workcount
+                  };
+                });
+              }
+            });
+          });
+
+          $log.debug(vm.groupList);
+        }
+      });
+    }
+
+    function getMemberList() {
+      ApiService.memberList(user).success(function(data) {
+        if(data.flag === 1) {
+          vm.memberList = data.data.result.map(function(obj) {
+            return {
+              isLeader: obj.isleader === '1',
+              email: obj.email,
+              userId: obj.user_id,
+              name: obj.realname,
+              tasks: obj.workcount
+            };
+          });
+        }
+      })
     }
 
   }

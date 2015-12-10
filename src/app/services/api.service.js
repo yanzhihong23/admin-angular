@@ -39,11 +39,12 @@
           cs: obj.cityId, // 城市
           statusType: obj.status, // 状态
           // dtlsts: obj.subStatus,
-          searchStr: obj.searchStr,
+          searchStr: obj.searchStr ? obj.searchStr : null,
           beginDate: obj.startDate,
           endDate: obj.endDate,
           queryDate: obj.queryDate,
-          memberId: obj.memberId,
+          orgId: obj.orgId == '-1' ? null : obj.orgId,
+          memberId: obj.memberId == '-1' ? null : obj.memberId,
           uid: obj.uId, // 用户ID
           page: obj.currentPage || 1, // 当前页码
           pageCount: obj.itemsPerPage  || 10 // 每页条数
@@ -201,6 +202,29 @@
         }
       });
     };
+
+    this.autoAllotClose = function(obj) {
+      return $http({
+        method: 'post',
+        url: APISERVER + '/allot/autoAllotClose',
+        headers: headers,
+        data: {
+          userId: obj.userId
+        }
+      });
+    };
+
+    this.autoAllotOpen = function(obj) {
+      return $http({
+        method: 'post',
+        url: APISERVER + '/allot/autoAllotOpen',
+        headers: headers,
+        data: {
+          userId: obj.userId,
+          allotUserIdArr: obj.ids
+        }
+      });
+    }
 
 
 

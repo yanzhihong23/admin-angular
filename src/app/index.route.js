@@ -55,6 +55,16 @@
           }
         }
       })
+      .state('task.auto', {
+        url: '/auto',
+        views: {
+          'task': {
+            templateUrl: 'app/assign/assign.html',
+            controller: 'AssignController',
+            controllerAs: 'assign'
+          }
+        }
+      })
       .state('login', {
         url: '/login',
         templateUrl: 'app/login/login.html',

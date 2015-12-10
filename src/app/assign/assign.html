@@ -2,6 +2,7 @@
   <header class="view-title clearfix">
     分配任务
     <div class="pull-right">
+      <button type="button" class="btn btn-success" ng-click="assign.save()" ng-if="assign.auto">保存</button>
       <button type="button" class="btn btn-default" ng-click="assign.back()">返回</button>
     </div>
   </header>
@@ -11,7 +12,10 @@
         <div class="table-cell">组别</div>
         <div class="table-cell">组内人数</div>
         <div class="table-cell">任务总数</div>
-        <div class="table-cell">分配</div>
+        <div class="table-cell" ng-if="!assign.auto">分配</div>
+        <div class="table-cell" ng-if="assign.auto">
+          <button class="btn btn-success btn-sm" ng-click="assign.select(true)" ng-if="assign.loadCompleted">反选({{assign.selectedCount}})</button>
+        </div>
       </section>
       <section ng-repeat="item in assign.groupList">
         <div class="table-row pointer" ng-class="{bg: $index%2}" ng-click="item.showDetail = !item.showDetail">
@@ -21,15 +25,20 @@
           </div>
           <div class="table-cell">{{item.members}}</div>
           <div class="table-cell">{{item.tasks}}</div>
-          <div class="table-cell"><button class="btn btn-success btn-sm" ng-click="assign.assign(item.orgId, true)">分配</button></div>
+          <div class="table-cell">
+            <button class="btn btn-success btn-sm" ng-click="assign.assign(item.orgId, true)" ng-if="!assign.auto">分配</button>
+          </div>
         </div>
         <article ng-show="item.showDetail">
-          <div class="table-row detail" ng-repeat="member in item.memberList">
+          <label class="table-row detail" ng-repeat="member in item.memberList" for="{{member.userId}}">
             <div class="table-cell"></div>
             <div class="table-cell">{{member.name}}</div>
             <div class="table-cell">{{member.tasks}}</div>
-            <div class="table-cell"><button class="btn btn-success btn-sm" ng-click="assign.assign(member.userId)">分配</button></div>
-          </div>
+            <div class="table-cell">
+              <button class="btn btn-success btn-sm" ng-click="assign.assign(member.userId)" ng-if="!assign.auto">分配</button>
+              <input type="checkbox" id="{{member.userId}}" ng-model="member.selected" ng-click="assign.select()" ng-if="assign.auto">
+            </div>
+          </label>
         </article>
       </section>
     </article>

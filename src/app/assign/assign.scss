@@ -11,6 +11,9 @@
     margin: 0;
     padding: 0;
   }
+  label.table-row{
+    font-weight: normal;
+  }
   .pointer{
     cursor: pointer;
     &:hover{

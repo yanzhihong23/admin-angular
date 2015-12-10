@@ -11,18 +11,55 @@
         taskIds = $stateParams.id,
         user = UserService.getUser(),
         updated = false;
-
+        
+    vm.loadCompleted = false;
+    vm.selectedCount = 0;
+    vm.selectedIds = [];
     vm.assignType = +user.roleId === 1 ? 'team' : 'member';
+    vm.auto = $state.current.name === 'task.auto';
     vm.getGroupList = getGroupList;
     vm.getMemberList = getMemberList;
     vm.assign = assign;
     vm.back = back;
+    vm.select = select;
+    vm.save = save;
 
     // init
     if(vm.assignType === 'team') {
       getGroupList();
     } else {
       getMemberList();
+    }
+
+    function select(isRevert) {
+      vm.selectedCount = 0;
+      vm.selectedIds = [];
+      vm.groupList.forEach(function(group) {
+        group.memberList.forEach(function(member) {
+          if(isRevert) {
+            member.selected = !member.selected;
+          }
+          if(member.selected) {
+            vm.selectedIds.push(member.userId);
+            vm.selectedCount += 1;
+          }
+        });
+      })
+    }
+
+    function save() {
+      ApiService.autoAllotOpen({
+        userId: user.uId,
+        ids: vm.selectedIds.join(';')
+      }).success(function(data) {
+        if(data.flag === 1) {
+          user.autoAllot = true;
+          UserService.setUser(user);
+          toastr.success('自动分配开启成功');
+        } else {
+          toastr.error(data.msg);
+        }
+      });
     }
 
     function getGroupList() {
@@ -38,6 +75,8 @@
             };
           });
 
+          var length = vm.groupList.length, count = 0;
+
           vm.groupList.forEach(function(obj) {
             ApiService.memberList({orgId: obj.orgId}).success(function(data) {
               if(data.flag === 1) {
@@ -50,6 +89,11 @@
                     tasks: obj.workcount
                   };
                 });
+
+                count++;
+                if(count === length) {
+                  vm.loadCompleted = true;
+                }
               }
             });
           });

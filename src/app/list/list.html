@@ -1,7 +1,9 @@
 <article>
   <header class="view-title">
-    任务列表
+    任务列表（总数: {{list.filter.totalItems}}）
     <div class="pull-right">
+      <button class="btn btn-success" ng-click="list.autoAllotSwitch()" ng-if="list.allowAutoAllot">{{list.user.autoAllot ? '关闭':'开启'}}自动分配</button>
+      <!-- <a class="btn btn-success" ui-sref="task.auto">自动分配</a> -->
       <a class="btn btn-danger" ui-sref="task.input">新客户录入</a>
     </div>
   </header>
@@ -20,10 +22,21 @@
           <option value="{{f}}" ng-repeat="f in list.filterData.coType">{{f | coType}}</option>
         </select>
       </div>
-      <div class="form-group">
-        <label for="" class="control-label">搜索: </label>
-        <input type="text" class="form-control" ng-model="list.filter.searchStr" placeholder="姓名/手机号/微信/QQ" ng-keypress="list.search($event)">
+      <div class="form-group" ng-if="list.user.roleId==1">
+        <label for="" class="control-label">分配组别: </label>
+        <select class="form-control" ng-model="list.filter.orgId">
+          <option value="-1">全部</option>>
+          <option value="{{group.orgId}}" ng-repeat="group in list.groupList">{{group.name}}({{group.leader}})</option>
+        </select>
       </div>
+      <div class="form-group" ng-if="list.user.roleId!=3">
+        <label for="" class="control-label">分配组员: </label>
+        <select class="form-control" ng-model="list.filter.memberId">
+          <option value="-1">全部</option>>
+          <option value="{{member.userId}}" ng-repeat="member in list.memberList">{{member.name}}</option>
+        </select>
+      </div>
+
       <div class="form-group">
         <label for="" class="control-label">每页条数: </label>
         <select name="" id="" class="form-control" ng-model="list.filter.itemsPerPage">
@@ -31,19 +44,17 @@
         </select>
       </div>
 
-      <div class="pull-right">
-        <button class="btn btn-success">总数: {{list.filter.totalItems}}</button>
+      <div class="form-group">
+        <label for="" class="control-label">录入时间: </label>
+        <input type="text" class="form-control" ng-model="list.filter.startDate" placeholder="20151108" ng-pattern="/^[0-9]{6,8}$/" maxlength="8"  ng-keypress="list.search($event)">
+        ~
+        <input type="text" class="form-control" ng-model="list.filter.endDate" placeholder="20151208" ng-pattern="/^[0-9]{6,8}$/" maxlength="8" ng-keypress="list.search($event)">
+      </div>
+      <div class="form-group">
+        <label for="" class="control-label">搜索: </label>
+        <input type="text" class="form-control" ng-model="list.filter.searchStr" placeholder="姓名/手机号/微信/QQ" ng-keypress="list.search($event)">
       </div>
 
-      <div>
-        <div class="form-group">
-          <label for="" class="control-label">录入时间: </label>
-          <input type="text" class="form-control" ng-model="list.filter.startDate" placeholder="20151108"  ng-keypress="list.search($event)">
-          ~
-          <input type="text" class="form-control" ng-model="list.filter.endDate" placeholder="20151208"  ng-keypress="list.search($event)">
-        </div>
-      </div>
-      
     </div>
     <div class="divider"></div>
     <table class="table table-hover table-striped table-responsive">

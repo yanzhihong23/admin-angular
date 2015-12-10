@@ -21,7 +21,9 @@
       itemsPerPage: '10',
       currentPage: 1,
       totalItems: 0,
-      searchStr: ''
+      searchStr: '',
+      orgId: '-1',
+      memberId: '-1'
     };
 
     $log.debug('FilterService end');
