@@ -31,10 +31,16 @@
           vm.user.orgId = info.orgid;
           vm.user.roleId = info.roleid;
           vm.user.uId = info.uid;
-          vm.user.autoAllot = info.autoAllotStatus == '1';
-          vm.user.allowAutoAllot = info.autoAllotAuth == '1';
+          vm.user.rights = {
+            assign: info.allotAuth,
+            recycle: info.recoverAuth,
+            input: info.enterAuth,
+            autoAssign: info.autoAllotAuth
+          };
+
           // save user info
           UserService.setUser(vm.user);
+          $log.debug(vm.user);
 
           $state.go('task.list');
 

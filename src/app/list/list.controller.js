@@ -25,11 +25,6 @@
     vm.pageChanged = updateDataList;
     vm.select = select;
     vm.search = search;
-    vm.autoAllotSwitch = autoAllotSwitch;
-
-    if(vm.user.roleId !== 3) {
-      vm.batchAssignEnabled = true;
-    }
 
     // status watcher
     $scope.$watch(function() {
@@ -207,11 +202,6 @@
       })
     }
 
-    function batchRecycle() {
-      var ids = getSelectedIds();
-
-    }
-
     function getSelectedIds() {
       var ids = vm.list.filter(function(obj) {
         return obj.selected && !obj.assigned;
@@ -227,23 +217,6 @@
         list: vm.list
       });
     }
-
-    function autoAllotSwitch() {
-      if(user.autoAllot) {
-        ApiService.autoAllotClose({userId: user.uId}).success(function(data) {
-          if(data.flag === 1) {
-            user.autoAllot = !user.autoAllot;
-            UserService.setUser(user);
-            toastr.success('操作成功！');
-          } else {
-            toastr.success('操作失败！');
-          }
-        });
-      } else {
-        $state.go('task.auto');
-      }
-    }
-
 
     // group list and member list
     function getGroupList() {

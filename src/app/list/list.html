@@ -2,9 +2,8 @@
   <header class="view-title">
     任务列表（总数: {{list.filter.totalItems}}）
     <div class="pull-right">
-      <button class="btn btn-success" ng-click="list.autoAllotSwitch()" ng-if="list.allowAutoAllot">{{list.user.autoAllot ? '关闭':'开启'}}自动分配</button>
-      <!-- <a class="btn btn-success" ui-sref="task.auto">自动分配</a> -->
-      <a class="btn btn-danger" ui-sref="task.input">新客户录入</a>
+      <a class="btn btn-success" ui-sref="task.auto" ng-if="user.rights.autoAssign">自动分配</a>
+      <a class="btn btn-danger" ui-sref="task.input" ng-if="user.rights.input">新客户录入</a>
     </div>
   </header>
   <section class="content clearfix">
@@ -61,12 +60,10 @@
       <!-- table header -->
       <thead>
         <tr>
-          <th ng-if="list.batchAssignEnabled"><button class="btn btn-default btn-sm" ng-click="list.select(true)">反选</button></th>
+          <th ng-if="user.rights.assign"><button class="btn btn-default btn-sm" ng-click="list.select(true)">反选</button></th>
           <th ng-if="list.user.roleId!=3">客户来源</th>
           <th ng-if="list.user.roleId!=3">分配时间</th>
           <th>录入时间</th>
-          <!-- <th ng-if="list.user.roleId!=3">上次通话</th> -->
-          <!-- <th>通话次数</th> -->
           <th>姓名</th>
           <th>电话</th>
           <th>城市</th>
@@ -76,19 +73,17 @@
           <th ng-if="list.user.roleId!=3">组别</th>
           <th ng-if="list.user.roleId!=3">销售代表</th>
           <th>修改</th>
-          <th ng-if="list.user.roleId!=3">分配</th>
-          <th ng-if="list.user.roleId!=3">回收</th>
+          <th ng-if="user.rights.assign">分配</th>
+          <th ng-if="user.rights.recycle">回收</th>
         </tr>
       </thead>
       <!-- table body -->
       <tbody>
         <tr ng-repeat="item in list.list">
-          <td ng-if="list.batchAssignEnabled"><input type="checkbox" ng-model="item.selected" ng-click="list.select()" ng-if="!item.assigned"></td>
+          <td ng-if="user.rights.assign"><input type="checkbox" ng-model="item.selected" ng-click="list.select()" ng-if="!item.assigned"></td>
           <td ng-if="list.user.roleId!=3">{{item.customerSource || '-'}}</td>
           <td ng-if="list.user.roleId!=3">{{item.assignDate || '-'}}</td>
           <td>{{item.receiveDate || '-'}}</td>
-          <!-- <td ng-if="list.user.roleId!=3">{{item.lastCallDate || '-'}}</td> -->
-          <!-- <td>{{item.callCount}}</td> -->
           <td>{{item.name}}</td>
           <td>{{item.phone}}</td>
           <td>{{item.ccity | city}}</td>
@@ -100,11 +95,11 @@
           <td>
             <button type="button" class="btn btn-info btn-sm" ng-click="list.modify($index)">修改</button>
           </td>
-          <td ng-if="list.user.roleId!=3">
+          <td ng-if="user.rights.assign">
             <button type="button" class="btn btn-danger btn-sm" ng-click="list.assign($index)" ng-hide="item.assigned">分配</button>
             <span ng-show="item.assigned">已分配</span>
           </td>
-          <td ng-if="list.user.roleId!=3">
+          <td ng-if="user.rights.recycle">
             <button type="button" class="btn btn-warning btn-sm" ng-click="list.recovery($index)" ng-show="item.assigned">回收</button>
           </td>
         </tr>
@@ -114,8 +109,7 @@
 
     <section class="clearfix">
       <div class="pull-left">
-        <button class="btn btn-danger" ng-click="list.batchAssign()" ng-if="list.batchAssignEnabled" ng-disabled="!list.selectedCount">批量分配({{list.selectedCount}})</button>
-        <!-- <button class="btn btn-danger" ng-click="list.batchRecycle()" ng-if="list.batchAssignEnabled" ng-disabled="!list.selectedCount">批量回收({{list.selectedCount}})</button> -->
+        <button class="btn btn-danger" ng-click="list.batchAssign()" ng-if="user.rights.assign" ng-disabled="!list.selectedCount">批量分配({{list.selectedCount}})</button>
       </div>
       
       <!-- paginator -->
