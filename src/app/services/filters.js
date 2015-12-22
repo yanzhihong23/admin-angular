@@ -10,7 +10,8 @@
     .filter('coType', coType)
     .filter('role', role)
     .filter('remark', remark)
-    .filter('trustUrl', trustUrl);
+    .filter('trustUrl', trustUrl)
+    .filter('phoneEncrypt', phoneEncrypt);
 
   /** @ngInject */
   function abs() {
@@ -124,6 +125,16 @@
   function trustUrl($sce) {
     return function(url) {
       return $sce.trustAsResourceUrl(url);
+    };
+  }
+
+  function phoneEncrypt() {
+    return function(str) {
+      if(str.length === 11) {
+        return str.substr(0,3) + '****' + str.substr(7);
+      } else {
+        return str;
+      }
     };
   }
 })();
