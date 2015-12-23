@@ -86,7 +86,7 @@
           <td>{{item.receiveDate || '-'}}</td>
           <td>{{item.name}}</td>
           <td>{{item.phone | phoneEncrypt}}</td>
-          <td>{{item.ccity | city}}</td>
+          <td>{{item.city}}</td>
           <td>{{item.customerType | coType}}</td>
           <td>{{item.status | status}}</td>
           <td ng-if="list.user.roleId==3">{{(item.remark | remark) || '-'}}</td>

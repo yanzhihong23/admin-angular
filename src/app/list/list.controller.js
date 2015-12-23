@@ -139,6 +139,7 @@
             return {
               taskId: obj.msgid,
               ccity: obj.ccity,
+              city: obj.city,
               groupId: obj.cgroup,
               customerType: obj.custype,
               email: obj.email,
