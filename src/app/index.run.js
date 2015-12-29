@@ -37,7 +37,6 @@
     $rootScope.logout = function() {
       $log.debug('logout');
 
-      $rootScope.user = null;
       UserService.logout();
     };
 

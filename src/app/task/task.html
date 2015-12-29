@@ -23,7 +23,10 @@
         您好！<span class="name">{{user.realName}}</span>
         (<span class="role">{{user.roleId | role }}</span>)
 
-        <button class="btn btn-logout" ng-click="logout()">安全退出</button>
+        <span class="btns">
+          <a class="btn btn-logout" ng-click="task.changePassword()">修改密码</a>
+          <button class="btn btn-logout" ng-click="logout()">安全退出</button>
+        </span>
       </div>
     </header>
     <div ui-view="task"></div>

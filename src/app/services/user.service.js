@@ -33,6 +33,7 @@
     };
 
     this.logout = function() {
+      $rootScope.user = null;
       localStorageService.clearAll();
       $state.go('login');
     };

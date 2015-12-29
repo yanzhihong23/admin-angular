@@ -21,6 +21,19 @@
       });
     };
 
+    this.changePassword = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER + '/changePassword',
+        headers: headers,
+        data: {
+          userId: obj.userId,
+          password: md5.createHash(obj.password),
+          newPassword: md5.createHash(obj.newPassword)
+        }
+      });
+    };
+
     this.getStatusList = function() {
       return $http({
         method: 'POST',

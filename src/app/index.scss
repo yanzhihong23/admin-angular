@@ -52,6 +52,11 @@ html,body,div[ui-view],.container{
   position: relative;
 }
 
+.form-control.ng-dirty.ng-invalid{
+  border-color: $red;
+  box-shadow: none;
+}
+
 
 
 /**

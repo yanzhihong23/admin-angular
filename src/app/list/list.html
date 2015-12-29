@@ -109,7 +109,7 @@
 
     <section class="clearfix">
       <div class="pull-left">
-        <button class="btn btn-danger" ng-click="list.batchAssign()" ng-if="user.rights.assign" ng-disabled="!list.selectedCount">批量分配({{list.selectedCount}})</button>
+        <button class="btn btn-danger" ng-click="list.batchAssign()" ng-if="user.rights.assign" ng-disabled="!list.selectedCount">批量分配 <span class="badge">{{list.selectedCount}}</span></button>
       </div>
       
       <!-- paginator -->
