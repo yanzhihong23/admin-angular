@@ -17,7 +17,7 @@
 
     function changePassword() {
       var modalInstance = $uibModal.open({
-        animation: $scope.animationsEnabled,
+        animation: true,
         templateUrl: 'app/password/password.html',
         controller: 'PasswordController',
         controllerAs: 'pwd',
