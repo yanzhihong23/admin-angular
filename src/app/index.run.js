@@ -40,6 +40,8 @@
       UserService.logout();
     };
 
+    moment.locale('zh-cn');
+
     $log.debug('runBlock end');
   }
 

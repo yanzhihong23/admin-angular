@@ -12,7 +12,8 @@
     "animate.css": "~3.4.0",
     "angular": "~1.4.2",
     "angular-md5": "~0.1.10",
-    "angular-local-storage": "~0.2.3"
+    "angular-local-storage": "~0.2.3",
+    "angular-datepicker": "~2.0.3"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.2"
@@ -26,6 +27,12 @@
         "assets/fonts/bootstrap/glyphicons-halflings-regular.ttf",
         "assets/fonts/bootstrap/glyphicons-halflings-regular.woff",
         "assets/fonts/bootstrap/glyphicons-halflings-regular.woff2"
+      ]
+    },
+    "moment": {
+      "main": [
+        "moment.js",
+        "locale/zh-cn.js"
       ]
     }
   },

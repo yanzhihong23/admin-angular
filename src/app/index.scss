@@ -57,6 +57,11 @@ html,body,div[ui-view],.container{
   box-shadow: none;
 }
 
+.date-picker-date-time{
+  border: solid 1px $border-color;
+  box-shadow: 0 2px 4px 1px $border-color;
+}
+
 
 
 /**

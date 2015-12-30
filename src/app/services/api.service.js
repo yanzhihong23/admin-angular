@@ -85,7 +85,8 @@
           cgroup: obj.group, // 所属组
           userId: obj.userId,
           provinceId: obj.provinceId,
-          cityId: obj.cityId
+          cityId: obj.cityId,
+          inviteTime: obj.inviteTime // 邀约时间
         }
       });
     };

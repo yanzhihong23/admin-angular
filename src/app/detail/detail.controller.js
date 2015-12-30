@@ -41,6 +41,15 @@
       }
     });
 
+    $scope.$watch(function() {
+      return vm.info.invite;
+    }, function(val) {
+      if(val) {
+        vm.info.inviteTime = moment(val).format('YYYY-MM-DD HH:mm');
+        $log.debug(vm.info.inviteTime);
+      }
+    })
+
     function init() {
       cachedData = UserService.getDataList();
       list = cachedData.list;
