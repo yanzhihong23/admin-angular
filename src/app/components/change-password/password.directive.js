@@ -16,7 +16,7 @@
           $uibModal.open({
             animation: true,
             templateUrl: 'app/components/change-password/password.modal.html',
-            controller: function(ApiService, UserService, toastr, $rootScope, $uibModalInstance) {
+            controller: ['ApiService', 'UserService', 'toastr', '$rootScope', '$uibModalInstance', function(ApiService, UserService, toastr, $rootScope, $uibModalInstance) {
               var vm = this, user = UserService.getUser();
 
               vm.pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8}$/;
@@ -44,7 +44,7 @@
               function cancel() {
                 $uibModalInstance.dismiss('cancel');
               }
-            },
+            }],
             controllerAs: 'pwd',
             size: '', // lg, sm
           });
