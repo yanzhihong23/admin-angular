@@ -91,6 +91,17 @@
       });
     };
 
+    this.msgDetail = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER + '/query/msgDetail',
+        headers: headers,
+        data: {
+          wId: obj.taskId
+        }
+      });
+    }
+
     this.groupList = function(obj) {
       return $http({
         method: 'POST',

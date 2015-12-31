@@ -72,9 +72,7 @@
           <th ng-if="list.user.roleId==3">备注</th>
           <th ng-if="list.user.roleId!=3">组别</th>
           <th ng-if="list.user.roleId!=3">销售代表</th>
-          <th>修改</th>
-          <th ng-if="user.rights.assign">分配</th>
-          <th ng-if="user.rights.recycle">回收</th>
+          <th>操作</th> 
         </tr>
       </thead>
       <!-- table body -->
@@ -93,14 +91,10 @@
           <td ng-if="list.user.roleId!=3">{{item.groupId | team}}</td>
           <td ng-if="list.user.roleId!=3">{{item.saleman || '-'}}</td>
           <td>
-            <button type="button" class="btn btn-info btn-sm" ng-click="list.modify($index)">修改</button>
-          </td>
-          <td ng-if="user.rights.assign">
-            <button type="button" class="btn btn-danger btn-sm" ng-click="list.assign($index)" ng-hide="item.assigned">分配</button>
-            <span ng-show="item.assigned">已分配</span>
-          </td>
-          <td ng-if="user.rights.recycle">
-            <button type="button" class="btn btn-warning btn-sm" ng-click="list.recovery($index)" ng-show="item.assigned">回收</button>
+            <button type="button" class="btn btn-default btn-sm" ng-click="list.modify($index)" ng-if="item.status==8">查看</button>
+            <button type="button" class="btn btn-info btn-sm" ng-click="list.modify($index)" ng-if="item.status!=8">修改</button>
+            <button type="button" class="btn btn-danger btn-sm" ng-click="list.assign($index)" ng-if="user.rights.assign&&!item.assigned">分配</button>
+            <button type="button" class="btn btn-warning btn-sm" ng-click="list.recovery($index)" ng-if="user.rights.recycle&&item.assigned">回收</button>
           </td>
         </tr>
       </tbody>

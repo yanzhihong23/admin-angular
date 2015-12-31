@@ -2,8 +2,8 @@
   <header class="view-title clearfix">
     任务详情
     <div class="pull-right">
-      <button type="button" class="btn btn-success" ng-click="detail.save(true)">保存并加载下一条</button>
-      <button type="button" class="btn btn-warning" ng-click="detail.save()">保存</button>
+      <button type="button" class="btn btn-success" ng-click="detail.save(true)" ng-if="detail.info.status!=8">保存并加载下一条</button>
+      <button type="button" class="btn btn-warning" ng-click="detail.save()" ng-if="detail.info.status!=8">保存</button>
       <button type="button" class="btn btn-default" ng-click="detail.back()">返回</button>
     </div>
   </header>
@@ -93,8 +93,8 @@
 
           <label for="" class="control-label col-sm-1">任务状态: </label>
           <div class="col-sm-2">
-            <select class="form-control" ng-model="detail.info.status">
-              <option value="{{s}}" ng-repeat="s in detail.statusList" ng-disabled="user.roleId==3&&(s==0||s==1)">{{s | status}}</option>
+            <select class="form-control" ng-model="detail.info.status" ng-disabled="detail.info.status==8">
+              <option value="{{s}}" ng-repeat="s in detail.statusList" ng-disabled="user.roleId==3&&(s==0||s==1) || s==8">{{s | status}}</option>
             </select>
           </div>
 

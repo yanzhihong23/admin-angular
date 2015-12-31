@@ -33,7 +33,6 @@
     }, function(val, old) {
       if(val != -1) {
         // reset city
-        // vm.info.cityId = '-1';
         initCity(val);
         if(val!==old) {
           vm.info.cityId = '-1';
@@ -44,10 +43,8 @@
     $scope.$watch(function() {
       return vm.info.invite;
     }, function(val) {
-      if(val) {
-        vm.info.inviteTime = moment(val).format('YYYY-MM-DD HH:mm');
-        $log.debug(vm.info.inviteTime);
-      }
+      vm.info.inviteTime = moment(val).format('YYYY-MM-DD HH:mm');
+      $log.debug(vm.info.inviteTime);
     })
 
     function init() {
@@ -58,8 +55,7 @@
       vm.info.curStatus = vm.info.status; // for save check
       vm.info.remark = '';
 
-      $log.debug(vm.info.provinceId)
-
+      getDetail();
       getAssignHistory();
       getStatusHistory();
       getRemarkHistory();
@@ -69,6 +65,16 @@
     function initCity(id) {
       vm.cityList = cityList.filter(function(obj) {
         return obj.provinceId == id;
+      });
+    }
+
+    function getDetail() {
+      ApiService.msgDetail({taskId: vm.info.taskId}).success(function(data) {
+        if(data.flag === 1) {
+          if(data.data.inviteTime) {
+            vm.info.invite = data.data.inviteTime;
+          }
+        }
       });
     }
 
@@ -133,9 +139,6 @@
     function save(loadNext) {
       var params = angular.copy(vm.info);
       params.userId = user.uId;
-      if(vm.info.status === vm.info.curStatus) {
-        params.status = null;
-      }
 
       ApiService.updateData(params).success(function(data) {
         if(data.flag === 1) {
@@ -157,7 +160,6 @@
     }
 
     function back() {
-      // $state.go('task.list', {back: true});
       $state.go('task.list');
     }
 
