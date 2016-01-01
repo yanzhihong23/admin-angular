@@ -22,7 +22,6 @@
 
     vm.statusList = statusList;
     vm.save = save;
-    vm.back = back;
     vm.dial = dial;
     vm.hangup = hangup;
 
@@ -157,10 +156,6 @@
       }).error(function() {
         toastr.error('出错了~');
       })
-    }
-
-    function back() {
-      $state.go('task.list');
     }
 
     function next() {

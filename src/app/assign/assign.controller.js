@@ -20,7 +20,6 @@
     vm.getGroupList = getGroupList;
     vm.getMemberList = getMemberList;
     vm.assign = assign;
-    vm.back = back;
     vm.select = select;
     vm.save = save;
 
@@ -166,11 +165,6 @@
         userId: user.uId
       }).success(assignHandler(isLast));
       
-    }
-
-    function back() {
-      // $state.go('task.list', {back: !updated});
-      $state.go('task.list');
     }
     
   }

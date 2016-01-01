@@ -6,7 +6,7 @@
     .controller('ListController', ListController);
 
   /** @ngInject */
-  function ListController($log, $state, $stateParams, $scope, ApiService, UserService, FilterService, toastr, moment) {
+  function ListController($log, $state, $scope, ApiService, UserService, FilterService, toastr, moment) {
     var vm = this, user = UserService.getUser();
 
     vm.user = user;
@@ -80,12 +80,10 @@
       }
     }, true);
 
+    init();
+
     // init
-    if($stateParams.back === 'true') {
-      var data = UserService.getDataList();
-      vm.list = data.list;
-      searchFilter = data.searchFilter;
-    } else {
+    function init() {
       updateDataList({
         pageIndex: vm.currentPage
       });
@@ -96,7 +94,7 @@
         getMemberList();
       }
     }
-
+    
     function select(isInvert) {
       vm.selectedCount = 0;
       vm.list.forEach(function(obj) {
