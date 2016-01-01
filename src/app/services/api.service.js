@@ -249,6 +249,18 @@
           allotUserIdArr: obj.ids
         }
       });
+    };
+
+    this.flowReport = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER + '/report/flowReport',
+        headers: headers,
+        data: {
+          beginDate: obj.startDate,
+          endDate: obj.endDate
+        }
+      });
     }
 
 

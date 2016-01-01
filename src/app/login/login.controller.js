@@ -35,7 +35,8 @@
             assign: info.allotAuth,
             recycle: info.recoverAuth,
             input: info.enterAuth,
-            autoAssign: info.autoAllotAuth
+            autoAssign: info.autoAllotAuth,
+            report: !!info.viewReportAuth
           };
 
           // save user info

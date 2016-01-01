@@ -16,7 +16,7 @@
         controllerAs: 'task'
       })
       .state('task.list', {
-        url: '/list?back',
+        url: '/list',
         views: {
           'task': {
             templateUrl: 'app/list/list.html',
@@ -62,6 +62,16 @@
             templateUrl: 'app/assign/assign.html',
             controller: 'AssignController',
             controllerAs: 'assign'
+          }
+        }
+      })
+      .state('task.report', {
+        url: '/report',
+        views: {
+          'task': {
+            templateUrl: 'app/report/report.html',
+            controller: 'ReportController',
+            controllerAs: 'report'
           }
         }
       })

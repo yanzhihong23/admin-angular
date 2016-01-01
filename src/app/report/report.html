@@ -1,0 +1,61 @@
+<article>
+  <header class="view-title">
+    流量报表
+    <div class="pull-right">
+      <back-button></back-button>
+    </div>
+  </header>
+  <section class="content">
+    <div class="form-inline clearfix search-filters">
+      <div class="form-group">
+        <label for="" class="control-label">日期筛选: </label>
+        <input type="text" class="form-control" ng-model="report.filter.startDate" placeholder="20151108" ng-pattern="/^[0-9]{6,8}$/" maxlength="8"  ng-keypress="report.search($event)">
+        ~
+        <input type="text" class="form-control" ng-model="report.filter.endDate" placeholder="20151115" ng-pattern="/^[0-9]{6,8}$/" maxlength="8" ng-keypress="report.search($event)">
+      </div>
+    </div>
+  
+    <div class="divider"></div>
+
+    <table class="table table-hover table-striped table-responsive">
+      <thead>
+        <tr>
+          <th>日期</th>
+          <th>流量总数</th>
+          <th>有效流量</th>
+          <th>无效流量</th>
+          <th>未知流量</th>
+          <th>到访客户数</th>
+          <th>成交数量</th>
+          <th>有效占比率</th>
+          <th>无效占比率</th>
+          <th>未知占比率</th>
+          <th>到访率</th>
+          <th>成交占比率</th>
+         <!--  <th>流量投放（万元）</th>
+          <th>实收金额（万元）</th>
+          <th>投入产出比</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in report.items">
+          <td>{{item.reportDate}}</td>
+          <td>{{item.totalFlow}}</td>
+          <td>{{item.validFlow}}</td>
+          <td>{{item.invalidFlow}}</td>
+          <td>{{item.otherFlow}}</td>
+          <td>{{item.inviteCount}}</td>
+          <td>{{item.dealCount}}</td>
+          <td>{{item.validRate | number: 2}}%</td>
+          <td>{{item.invalidRate | number: 2}}%</td>
+          <td>{{item.otherRate | number: 2}}%</td>
+          <td>{{item.inviteRate | number: 2}}%</td>
+          <td>{{item.dealRate | number: 2}}%</td>
+          <!-- <td>-</td>
+          <td>-</td>
+          <td>-</td> -->
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</article>
