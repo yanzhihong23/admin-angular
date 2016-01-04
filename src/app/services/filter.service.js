@@ -15,16 +15,20 @@
       itemsPerPage: [10, 15, 20, 25, 30]
     };
 
-    this.filter = {
-      status: '-1', // all
-      coType: '-1', // all
-      itemsPerPage: '10',
-      currentPage: 1,
-      totalItems: 0,
-      searchStr: '',
-      orgId: '-1',
-      memberId: '-1'
+    this.reset = function() {
+      this.filter = {
+        status: '-1', // all
+        coType: '-1', // all
+        itemsPerPage: '10',
+        currentPage: 1,
+        totalItems: 0,
+        searchStr: '',
+        orgId: '-1',
+        memberId: '-1'
+      };
     };
+
+    this.reset();
 
     $log.debug('FilterService end');
     
