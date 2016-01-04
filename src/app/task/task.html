@@ -1,34 +1,8 @@
 <div class="container">
-  <aside class="side-nav">
-    <div class="logo"></div>
-    <ul class="item-list">
-      <li class="item active">
-        <a ui-sref="task.list"><i class="icon icon-store"></i>销售流量分配</a>
-      </li>
-      <li class="item">
-        <a href=""><i class="icon icon-staff"></i>内部人员信息</a>
-      </li>
-      <li class="item">
-        <a href=""><i class="icon icon-assessment"></i>MP人员工作考核</a>
-      </li>
-      <li class="item">
-        <a href=""><i class="icon icon-authority"></i>后台权限管理</a>
-      </li>
-    </ul>
-  </aside>
+  <aside-nav></aside-nav>
+  
   <article class="main-content">
-    <header class="header">
-      <div class="pull-right user" ng-if="user" ng-cloak>
-        <span class="date">{{task.date}}</span>
-        您好！<span class="name">{{user.realName}}</span>
-        (<span class="role">{{user.roleId | role }}</span>)
-
-        <span class="btns">
-          <button class="btn btn-logout" change-password>修改密码</button>
-          <button class="btn btn-logout" ng-click="logout()">安全退出</button>
-        </span>
-      </div>
-    </header>
+    <login-info></login-info>
     <div ui-view="task"></div>
   </article>
 </div>  

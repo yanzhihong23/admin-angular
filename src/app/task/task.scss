@@ -7,52 +7,6 @@
   padding-left: 0;
   padding-right: 0;
   background: #fff;
-  .side-nav{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 200px;
-    min-height: 100%;
-    background: #273241;
-    z-index: 10;
-    .logo{
-      height: 180px;
-      background: url(../assets/images/logo-2.png) no-repeat center;
-      background-size: 74px 87px;
-    }
-    .item-list{
-      padding: 0;
-      .item{
-        position: relative;
-        list-style: none;
-        border-bottom: solid 1px #354050;
-        a{
-          display: block;
-          text-decoration: none;
-          padding-left: 20px;
-          color: #7C8695;
-          line-height: 50px;
-          cursor: pointer;
-        }
-        &.active{
-          a{
-            color: #fff;
-            background: #161F2C;
-          }
-          &:after{
-            content: '';
-            display: block;
-            width: 5px;
-            height: 100%;
-            position: absolute;
-            right: 0;
-            top: 0;
-            background: $green;
-          }
-        }
-      }
-    }
-  }
   .main-content{
     position: relative;
     padding-left: 200px;

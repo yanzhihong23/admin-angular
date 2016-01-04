@@ -1,0 +1,12 @@
+<header class="header">
+  <div class="pull-right user" ng-if="user" ng-cloak>
+    <span class="date" current-time></span>
+    您好！<span class="name">{{user.realName}}</span>
+    (<span class="role">{{user.roleId | role }}</span>)
+
+    <span class="btns">
+      <button class="btn btn-logout" change-password>修改密码</button>
+      <button class="btn btn-logout" ng-click="logout()">安全退出</button>
+    </span>
+  </div>
+</header>
