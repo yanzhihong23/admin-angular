@@ -29,32 +29,26 @@
         <tr>
           <th>日期</th>
           <th>流量总数</th>
-          <th>有效流量</th>
-          <th>无效流量</th>
-          <th>未知流量</th>
-          <th>到访客户数</th>
-          <th>成交数量</th>
-          <th>有效占比率</th>
-          <th>无效占比率</th>
-          <th>未知占比率</th>
-          <th>到访率</th>
-          <th>成交占比率</th>
+          <th>有效A流量(率)</th>
+          <th>有效B流量(率)</th>
+          <th>有效C流量(率)</th>
+          <th>无效流量(率)</th>
+          <th>未知流量(率)</th>
+          <th>到访客户数(率)</th>
+          <th>成交数量(率)</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="item in report.items" ng-class="{'total': item.total}">
+        <tr ng-repeat="item in report.items track by item.reportDate" ng-class="{'total': item.total}">
           <td>{{item.reportDate}}</td>
           <td>{{item.totalFlow}}</td>
-          <td>{{item.validFlow}}</td>
-          <td>{{item.invalidFlow}}</td>
-          <td>{{item.otherFlow}}</td>
-          <td>{{item.inviteCount}}</td>
-          <td>{{item.dealCount}}</td>
-          <td>{{item.validRate | number: 2}}%</td>
-          <td>{{item.invalidRate | number: 2}}%</td>
-          <td>{{item.otherRate | number: 2}}%</td>
-          <td>{{item.inviteRate | number: 2}}%</td>
-          <td>{{item.dealRate | number: 2}}%</td>
+          <td>{{item.validAFlow}} <span class="rate">({{item.validARate | number: 2}}%)</span></td>
+          <td>{{item.validBFlow}} <span class="rate">({{item.validBRate | number: 2}}%)</span></td>
+          <td>{{item.validCFlow}} <span class="rate">({{item.validCRate | number: 2}}%)</span></td>
+          <td>{{item.invalidFlow}} <span class="rate">({{item.invalidRate | number: 2}}%)</span></td>
+          <td>{{item.otherFlow}} <span class="rate">({{item.otherRate | number: 2}}%)</span></td>
+          <td>{{item.inviteCount}} <span class="rate">({{item.inviteRate | number: 2}}%)</span></td>
+          <td>{{item.dealCount}} <span class="rate">({{item.dealRate | number: 2}}%)</span></td>
         </tr>
       </tbody>
     </table>

@@ -58,7 +58,9 @@
             total: true,
             reportDate: '总计',
             totalFlow: 0,
-            validFlow: 0,
+            validAFlow: 0,
+            validBFlow: 0,
+            validCFlow: 0,
             invalidFlow: 0,
             otherFlow: 0,
             inviteCount: 0,
@@ -71,11 +73,10 @@
           };
 
           vm.items = data.data.reportList.map(function(obj) {
-            obj.validFlow = obj.validAFlow + obj.validBFlow + obj.validCFlow;
-            obj.validRate = obj.validARate + obj.validBRate + obj.validCRate;
-
             total.totalFlow += obj.totalFlow;
-            total.validFlow += obj.validFlow;
+            total.validAFlow += obj.validAFlow;
+            total.validBFlow += obj.validBFlow;
+            total.validCFlow += obj.validCFlow;
             total.invalidFlow += obj.invalidFlow;
             total.otherFlow += obj.otherFlow;
             total.inviteCount += obj.inviteCount;
@@ -85,7 +86,9 @@
           });
 
           if(vm.items.length) {
-            total.validRate = total.validFlow/total.totalFlow*100;
+            total.validARate = total.validAFlow/total.totalFlow*100;
+            total.validBRate = total.validBFlow/total.totalFlow*100;
+            total.validCRate = total.validCFlow/total.totalFlow*100;
             total.invalidRate = total.invalidFlow/total.totalFlow*100;
             total.otherRate = total.otherFlow/total.totalFlow*100;
             total.inviteRate = total.inviteCount/total.totalFlow*100;
