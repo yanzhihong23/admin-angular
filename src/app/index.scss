@@ -42,6 +42,10 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
 body{
   background: #273242;
   font-size: 14px;
+  // disable user select
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 html,body,div[ui-view],.container{
