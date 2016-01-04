@@ -1,4 +1,4 @@
-<article>
+<article id="report_view">
   <header class="view-title">
     流量报表
     <div class="pull-right">
@@ -6,12 +6,19 @@
     </div>
   </header>
   <section class="content">
-    <div class="form-inline clearfix search-filters">
+    <div class="form-horizontal clearfix search-filters">
       <div class="form-group">
-        <label for="" class="control-label">日期筛选: </label>
-        <input type="text" class="form-control" ng-model="report.filter.startDate" placeholder="20151108" ng-pattern="/^[0-9]{6,8}$/" maxlength="8"  ng-keypress="report.search($event)">
-        ~
-        <input type="text" class="form-control" ng-model="report.filter.endDate" placeholder="20151115" ng-pattern="/^[0-9]{6,8}$/" maxlength="8" ng-keypress="report.search($event)">
+        <label for="" class="control-label col-sm-1 width-auto">日期筛选: </label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" ng-model="report.filter.startDate" ng-pattern="/^[0-9]{8}$/" maxlength="8" format="YYYYMMDD" date-time min-view="date" max-view="date" max-date="vm.filter.maxDate">
+        </div>
+        
+        <label for="" class="control-label pull-left">~</label>
+
+        <div class="col-sm-2">
+          <input type="text" class="form-control" ng-model="report.filter.endDate" maxlength="8" format="YYYYMMDD" date-time min-view="date" max-view="date">
+        </div>
+        
       </div>
     </div>
   
@@ -32,13 +39,10 @@
           <th>未知占比率</th>
           <th>到访率</th>
           <th>成交占比率</th>
-         <!--  <th>流量投放（万元）</th>
-          <th>实收金额（万元）</th>
-          <th>投入产出比</th> -->
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="item in report.items">
+        <tr ng-repeat="item in report.items" ng-class="{'total': item.total}">
           <td>{{item.reportDate}}</td>
           <td>{{item.totalFlow}}</td>
           <td>{{item.validFlow}}</td>
@@ -51,11 +55,9 @@
           <td>{{item.otherRate | number: 2}}%</td>
           <td>{{item.inviteRate | number: 2}}%</td>
           <td>{{item.dealRate | number: 2}}%</td>
-          <!-- <td>-</td>
-          <td>-</td>
-          <td>-</td> -->
         </tr>
       </tbody>
     </table>
+    <div class="text-center" ng-if="!report.items.length">暂无数据</div>
   </section>
 </article>
