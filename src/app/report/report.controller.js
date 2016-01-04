@@ -10,8 +10,8 @@
     var vm = this;
 
     vm.filter = {
-      startDate: moment().add(-7, 'days').format('YYYYMMDD'),
-      endDate: moment().format('YYYYMMDD')
+      startDate: moment().add(-8, 'days').format('YYYYMMDD'),
+      endDate: moment().add(-1, 'days').format('YYYYMMDD')
     };
 
     $scope.$watch(function() {
