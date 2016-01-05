@@ -84,6 +84,7 @@
                     isLeader: obj.isleader === '1',
                     email: obj.email,
                     userId: obj.user_id,
+                    phone: obj.mobile,
                     name: obj.realname,
                     tasks: obj.workcount
                   };
@@ -110,6 +111,7 @@
               isLeader: obj.isleader === '1',
               email: obj.email,
               userId: obj.user_id,
+              phone: obj.mobile,
               name: obj.realname,
               tasks: obj.workcount
             };
