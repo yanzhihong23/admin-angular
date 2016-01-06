@@ -13,7 +13,7 @@
       replace: true,
       templateUrl: 'app/components/aside-nav/aside.nav.html',
       link: function(scope, element, attr) {
-        
+        scope.active = attr.active;
       }
     };
 

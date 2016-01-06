@@ -1,0 +1,117 @@
+<article>
+  <header class="view-title">
+    任务列表（总数: {{list.filter.totalItems}}）
+  </header>
+  <section class="content clearfix">
+    <!-- search filters -->
+    <div class="form-inline clearfix search-filters">
+      <div class="form-group">
+        <label for="" class="control-label">状态: </label>
+        <select name="" id="" class="form-control" ng-model="list.filter.status">
+          <option value="{{f}}" ng-repeat="f in list.filterData.status">{{f | status}}</option>
+        </select>
+      </div>
+      <div class="form-group" ng-if="list.user.roleId==1">
+        <label for="" class="control-label">分配组别: </label>
+        <select class="form-control" ng-model="list.filter.orgId">
+          <option value="-1">全部</option>>
+          <option value="{{group.orgId}}" ng-repeat="group in list.groupList">{{group.name}}({{group.leader}})</option>
+        </select>
+      </div>
+      <div class="form-group" ng-if="list.user.roleId!=3">
+        <label for="" class="control-label">分配组员: </label>
+        <select class="form-control" ng-model="list.filter.memberId">
+          <option value="-1">全部</option>>
+          <option value="{{member.userId}}" ng-repeat="member in list.memberList">{{member.name}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="" class="control-label">每页条数: </label>
+        <select name="" id="" class="form-control" ng-model="list.filter.itemsPerPage">
+          <option value="{{f}}" ng-repeat="f in list.filterData.itemsPerPage">{{f | abs}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="" class="control-label">开店时间: </label>
+        <input type="text" class="form-control" ng-model="list.filter.startDate" placeholder="20151108" ng-pattern="/^[0-9]{6,8}$/" maxlength="8"  ng-keypress="list.search($event)">
+        ~
+        <input type="text" class="form-control" ng-model="list.filter.endDate" placeholder="20151208" ng-pattern="/^[0-9]{6,8}$/" maxlength="8" ng-keypress="list.search($event)">
+      </div>
+      <div class="form-group">
+        <label for="" class="control-label">搜索: </label>
+        <input type="text" class="form-control" ng-model="list.filter.searchStr" placeholder="姓名/手机号/微信/QQ" ng-keypress="list.search($event)">
+      </div>
+
+    </div>
+    <div class="divider"></div>
+    <table class="table table-hover table-striped table-responsive">
+      <!-- table header -->
+      <thead>
+        <tr>
+          <th ng-if="user.rights.assign"><button class="btn btn-default btn-sm" ng-click="list.select(true)">反选</button></th>
+          <th ng-if="list.user.roleId!=3">客户来源</th>
+          <th ng-if="list.user.roleId!=3">分配时间</th>
+          <th>录入时间</th>
+          <th>姓名</th>
+          <th>电话</th>
+          <th>城市</th>
+          <th>合作类型</th>
+          <th>状态</th>
+          <th ng-if="list.user.roleId==3">备注</th>
+          <th ng-if="list.user.roleId!=3">组别</th>
+          <th ng-if="list.user.roleId!=3">销售代表</th>
+          <th>操作</th> 
+        </tr>
+      </thead>
+      <!-- table body -->
+      <tbody>
+        <tr ng-repeat="item in list.list">
+          <td ng-if="user.rights.assign"><input type="checkbox" ng-model="item.selected" ng-click="list.select()" ng-if="!item.assigned"></td>
+          <td ng-if="list.user.roleId!=3">{{item.customerSource || '-'}}</td>
+          <td ng-if="list.user.roleId!=3">{{item.assignDate || '-'}}</td>
+          <td>{{item.receiveDate || '-'}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.phone | phoneEncrypt}}</td>
+          <td>{{item.city}}</td>
+          <td>{{item.customerType | coType}}</td>
+          <td>{{item.status | status}}</td>
+          <td ng-if="list.user.roleId==3">{{(item.remark | remark) || '-'}}</td>
+          <td ng-if="list.user.roleId!=3">{{item.groupId | team}}</td>
+          <td ng-if="list.user.roleId!=3">{{item.saleman || '-'}}</td>
+          <td>
+            <button type="button" class="btn btn-default btn-sm" ng-click="list.modify($index)" ng-if="item.status==8">查看</button>
+            <button type="button" class="btn btn-info btn-sm" ng-click="list.modify($index)" ng-if="item.status!=8">修改</button>
+            <button type="button" class="btn btn-danger btn-sm" ng-click="list.assign($index)" ng-if="user.rights.assign&&!item.assigned">分配</button>
+            <button type="button" class="btn btn-warning btn-sm" ng-click="list.recovery($index)" ng-if="user.rights.recycle&&item.assigned">回收</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-center" ng-if="!list.list.length">暂无数据</div>
+    <div class="divider"></div>
+
+    <section class="clearfix">
+      <div class="pull-left">
+        <button class="btn btn-danger" ng-click="list.batchAssign()" ng-if="user.rights.assign" ng-disabled="!list.selectedCount">批量分配 <span class="badge">{{list.selectedCount}}</span></button>
+      </div>
+      
+      <!-- paginator -->
+      <pagination ng-change="list.pageChanged()"
+        max-size="5"
+        rotate="false"
+        boundary-links="true"
+        total-items="list.filter.totalItems"
+        ng-model="list.filter.currentPage"
+        items-per-page="list.filter.itemsPerPage"
+        class="pagination green pull-right"
+        previous-text="上一页"
+        next-text="下一页"
+        first-text="首页"
+        last-text="末页">
+      </pagination>
+    </section>
+    
+  </section>
+</article>
