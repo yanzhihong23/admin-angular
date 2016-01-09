@@ -11,6 +11,12 @@
           <option value="{{f}}" ng-repeat="f in list.filterData.status">{{f | storeStatus}}</option>
         </select>
       </div>
+      <div class="form-group">
+        <label for="" class="control-label">省份: </label>
+        <select name="" id="" class="form-control" ng-model="list.filter.provinceId">
+          <option value="{{p.id}}" ng-repeat="p in list.filterData.provinceList">{{p.name}}</option>
+        </select>
+      </div>
       <div class="form-group" ng-if="list.user.roleId==9">
         <label for="" class="control-label">分配组别: </label>
         <select class="form-control" ng-model="list.filter.orgId">

@@ -44,65 +44,23 @@
 
     // filter watcher
     function filterWatcher() {
-      // status watcher
       $scope.$watch(function() {
-        return vm.filter.status;
+        return vm.filter;
       }, function(val, old) {
-        if(val !== old) {
+        if(val.status !== old.status || val.itemsPerPage !== old.itemsPerPage || val.memberId !== old.memberId || val.provinceId !== old.provinceId) {
           updateDataList();
-        }
-      }, true);
-
-      // paginator watcher
-      $scope.$watch(function() {
-        return vm.filter.itemsPerPage;
-      }, function(val, old) {
-        if(val !== old) {
-          updateDataList();
-        }
-      }, true);
-
-      // group watcher
-      $scope.$watch(function() {
-        return vm.filter.orgId;
-      }, function(val, old) {
-        if(val !== old) {
+        } else if(val.orgId !== old.orgId) {
           vm.filter.memberId = '-1';
-          if(val == -1) {
+          if(val.orgId == -1) {
             vm.memberList = null;
           }
           updateDataList();
           vm.groupList.forEach(function(group) {
-            if(group.orgId == val) {
+            if(group.orgId == val.orgId) {
               vm.memberList = group.memberList;
             }
           });
-        }
-      }, true);
-
-      // member watcher
-      $scope.$watch(function() {
-        return vm.filter.memberId;
-      }, function(val, old) {
-        if(val !== old) {
-          updateDataList();
-        }
-      }, true);
-
-      // start date watcher
-      $scope.$watch(function() {
-        return vm.filter.startDate;
-      }, function(val, old) {
-        if(val.format('YYYY-MM-DD') !== old.format('YYYY-MM-DD')) {
-          updateDataList();
-        }
-      }, true);
-
-      // end date watcher
-      $scope.$watch(function() {
-        return vm.filter.endDate;
-      }, function(val, old) {
-        if(val.format('YYYY-MM-DD') !== old.format('YYYY-MM-DD')) {
+        } else if(val.startDate.format('YYYY-MM-DD') !== old.startDate.format('YYYY-MM-DD') || val.endDate.format('YYYY-MM-DD') !== old.endDate.format('YYYY-MM-DD')) {
           updateDataList();
         }
       }, true);
@@ -140,12 +98,18 @@
           vm.filter.totalItems = data.data.total;
 
           vm.list = data.data.list.map(function(obj) {
+            var area = obj.provinces;
+
+            if(area.substr(0, 2) === area.substr(2, 2)) {
+              area = area.substr(2);
+            }
+
             return {
               id: obj.storeId,
               assigned: /2/.test(obj.status), // 0: 未分配, 1: 组内未分配, 2: 已分配
               status: obj.status,
               name: obj.shopName,
-              area: obj.provinces,
+              area: area,
               owner: obj.businessName,
               phone: obj.phone,
               assignedTeam: obj.groupName || '-',

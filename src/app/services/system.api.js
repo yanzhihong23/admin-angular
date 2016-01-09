@@ -30,6 +30,13 @@
       });
     };
 
+    this.province = function() {
+      return $http({
+        method: 'GET',
+        url: APISERVER + '/area/province/list'
+      });
+    };
+
     $log.debug('SystemApi end');
     
   }

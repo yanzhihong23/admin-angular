@@ -6,7 +6,7 @@
     .service('FilterService', FilterService);
 
   /** @ngInject */
-  function FilterService($log, StatusService) {
+  function FilterService($log, StatusService, AddressService) {
     var statusList = StatusService.getStatusList(),
         storeStatusList = StatusService.getStoreStatusList(),
         itemsPerPage = [10, 15, 20, 25, 30];
@@ -31,6 +31,7 @@
 
       this.storeFilter = {
         status: '-1', // all
+        provinceId: '-1',
         itemsPerPage: '10',
         currentPage: 1,
         totalItems: 0,
@@ -44,7 +45,8 @@
 
     this.storeFilterData = {
       status: storeStatusList,
-      itemsPerPage: itemsPerPage
+      itemsPerPage: itemsPerPage,
+      provinceList: AddressService.provinces
     };
 
     this.reset();
