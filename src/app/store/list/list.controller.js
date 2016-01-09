@@ -25,69 +25,6 @@
     vm.select = select;
     vm.search = search;
 
-    // status watcher
-    $scope.$watch(function() {
-      return vm.filter.status;
-    }, function(val, old) {
-      if(val !== old) {
-        updateDataList();
-      }
-    }, true);
-
-    // paginator watcher
-    $scope.$watch(function() {
-      return vm.filter.itemsPerPage;
-    }, function(val, old) {
-      if(val !== old) {
-        updateDataList();
-      }
-    }, true);
-
-    // group watcher
-    $scope.$watch(function() {
-      return vm.filter.orgId;
-    }, function(val, old) {
-      if(val !== old) {
-        vm.filter.memberId = '-1';
-        if(val == -1) {
-          vm.memberList = null;
-        }
-        updateDataList();
-        vm.groupList.forEach(function(group) {
-          if(group.orgId == val) {
-            vm.memberList = group.memberList;
-          }
-        });
-      }
-    }, true);
-
-    // member watcher
-    $scope.$watch(function() {
-      return vm.filter.memberId;
-    }, function(val, old) {
-      if(val !== old) {
-        updateDataList();
-      }
-    }, true);
-
-    // date watcher
-    $scope.$watch(function() {
-      return vm.filter.startDate;
-    }, function(val, old) {
-      if(val !== old) {
-        updateDataList();
-      }
-    }, true);
-
-    // date watcher
-    $scope.$watch(function() {
-      return vm.filter.endDate;
-    }, function(val, old) {
-      if(val !== old) {
-        updateDataList();
-      }
-    }, true);
-
     init();
 
     // init
@@ -101,6 +38,74 @@
       } else if(user.roleId == 10) { // group leader
         getMemberList();
       }
+
+      filterWatcher();
+    }
+
+    // filter watcher
+    function filterWatcher() {
+      // status watcher
+      $scope.$watch(function() {
+        return vm.filter.status;
+      }, function(val, old) {
+        if(val !== old) {
+          updateDataList();
+        }
+      }, true);
+
+      // paginator watcher
+      $scope.$watch(function() {
+        return vm.filter.itemsPerPage;
+      }, function(val, old) {
+        if(val !== old) {
+          updateDataList();
+        }
+      }, true);
+
+      // group watcher
+      $scope.$watch(function() {
+        return vm.filter.orgId;
+      }, function(val, old) {
+        if(val !== old) {
+          vm.filter.memberId = '-1';
+          if(val == -1) {
+            vm.memberList = null;
+          }
+          updateDataList();
+          vm.groupList.forEach(function(group) {
+            if(group.orgId == val) {
+              vm.memberList = group.memberList;
+            }
+          });
+        }
+      }, true);
+
+      // member watcher
+      $scope.$watch(function() {
+        return vm.filter.memberId;
+      }, function(val, old) {
+        if(val !== old) {
+          updateDataList();
+        }
+      }, true);
+
+      // start date watcher
+      $scope.$watch(function() {
+        return vm.filter.startDate;
+      }, function(val, old) {
+        if(val.format('YYYY-MM-DD') !== old.format('YYYY-MM-DD')) {
+          updateDataList();
+        }
+      }, true);
+
+      // end date watcher
+      $scope.$watch(function() {
+        return vm.filter.endDate;
+      }, function(val, old) {
+        if(val.format('YYYY-MM-DD') !== old.format('YYYY-MM-DD')) {
+          updateDataList();
+        }
+      }, true);
     }
     
     function select(isInvert) {
