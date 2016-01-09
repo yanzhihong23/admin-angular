@@ -1,6 +1,6 @@
 <article>
   <header class="view-title">
-    任务列表（总数: {{list.filter.totalItems}}）
+    店铺列表（总数: {{list.filter.totalItems}}）
   </header>
   <section class="content clearfix">
     <!-- search filters -->
@@ -8,21 +8,21 @@
       <div class="form-group">
         <label for="" class="control-label">状态: </label>
         <select name="" id="" class="form-control" ng-model="list.filter.status">
-          <option value="{{f}}" ng-repeat="f in list.filterData.status">{{f | status}}</option>
+          <option value="{{f}}" ng-repeat="f in list.filterData.status">{{f | storeStatus}}</option>
         </select>
       </div>
-      <div class="form-group" ng-if="list.user.roleId==1">
+      <div class="form-group" ng-if="list.user.roleId==9">
         <label for="" class="control-label">分配组别: </label>
         <select class="form-control" ng-model="list.filter.orgId">
           <option value="-1">全部</option>>
-          <option value="{{group.orgId}}" ng-repeat="group in list.groupList">{{group.name}}({{group.leader}})</option>
+          <option value="{{group.orgId}}" ng-repeat="group in list.groupList">{{group.orgName}}</option>
         </select>
       </div>
-      <div class="form-group" ng-if="list.user.roleId!=3">
+      <div class="form-group" ng-if="list.user.roleId!=5">
         <label for="" class="control-label">分配组员: </label>
         <select class="form-control" ng-model="list.filter.memberId">
           <option value="-1">全部</option>>
-          <option value="{{member.userId}}" ng-repeat="member in list.memberList">{{member.name}}</option>
+          <option value="{{member.memberId}}" ng-repeat="member in list.memberList">{{member.name}}</option>
         </select>
       </div>
 
@@ -33,15 +33,20 @@
         </select>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" style="position:relative">
         <label for="" class="control-label">开店时间: </label>
-        <input type="text" class="form-control" ng-model="list.filter.startDate" placeholder="20151108" ng-pattern="/^[0-9]{6,8}$/" maxlength="8"  ng-keypress="list.search($event)">
+        <span class="inline-block">
+          <input type="text" class="form-control" date-time format="YYYY-MM-DD" date-time min-view="date" max-view="date" ng-model="list.filter.startDate" placeholder="20151108" maxlength="10"  ng-keypress="list.search($event)">
+        </span>
         ~
-        <input type="text" class="form-control" ng-model="list.filter.endDate" placeholder="20151208" ng-pattern="/^[0-9]{6,8}$/" maxlength="8" ng-keypress="list.search($event)">
+        <span class="inline-block">
+          <input type="text" class="form-control" date-time format="YYYY-MM-DD" date-time min-view="date" max-view="date" ng-model="list.filter.endDate" placeholder="20151108" maxlength="10"  ng-keypress="list.search($event)">
+        </span>
+        
       </div>
       <div class="form-group">
         <label for="" class="control-label">搜索: </label>
-        <input type="text" class="form-control" ng-model="list.filter.searchStr" placeholder="姓名/手机号/微信/QQ" ng-keypress="list.search($event)">
+        <input type="text" class="form-control" ng-model="list.filter.searchStr" placeholder="姓名/手机号/店名/省市" ng-keypress="list.search($event)">
       </div>
 
     </div>
@@ -51,17 +56,13 @@
       <thead>
         <tr>
           <th ng-if="user.rights.assign"><button class="btn btn-default btn-sm" ng-click="list.select(true)">反选</button></th>
-          <th ng-if="list.user.roleId!=3">客户来源</th>
-          <th ng-if="list.user.roleId!=3">分配时间</th>
-          <th>录入时间</th>
-          <th>姓名</th>
-          <th>电话</th>
-          <th>城市</th>
-          <th>合作类型</th>
-          <th>状态</th>
-          <th ng-if="list.user.roleId==3">备注</th>
-          <th ng-if="list.user.roleId!=3">组别</th>
-          <th ng-if="list.user.roleId!=3">销售代表</th>
+          <th>开店时间</th>
+          <th>店名</th>
+          <th>店主姓名</th>
+          <th>联系方式</th>
+          <th>店铺省市</th>
+          <th ng-if="user.roleId==9">分配组别</th>
+          <th ng-if="user.roleId!=5">分配组员</th>
           <th>操作</th> 
         </tr>
       </thead>
@@ -69,22 +70,17 @@
       <tbody>
         <tr ng-repeat="item in list.list">
           <td ng-if="user.rights.assign"><input type="checkbox" ng-model="item.selected" ng-click="list.select()" ng-if="!item.assigned"></td>
-          <td ng-if="list.user.roleId!=3">{{item.customerSource || '-'}}</td>
-          <td ng-if="list.user.roleId!=3">{{item.assignDate || '-'}}</td>
-          <td>{{item.receiveDate || '-'}}</td>
+          <td>{{item.date}}</td>
+          <td>{{item.owner}}</td>
           <td>{{item.name}}</td>
-          <td>{{item.phone | phoneEncrypt}}</td>
-          <td>{{item.city}}</td>
-          <td>{{item.customerType | coType}}</td>
-          <td>{{item.status | status}}</td>
-          <td ng-if="list.user.roleId==3">{{(item.remark | remark) || '-'}}</td>
-          <td ng-if="list.user.roleId!=3">{{item.groupId | team}}</td>
-          <td ng-if="list.user.roleId!=3">{{item.saleman || '-'}}</td>
+          <td>{{item.phone}}</td>
+          <td>{{item.area}}</td>
+          <td ng-if="user.roleId==9">{{item.assignedTeam}}</td>
+          <td ng-if="user.roleId!=5">{{item.assignedMember}}</td>
           <td>
-            <button type="button" class="btn btn-default btn-sm" ng-click="list.modify($index)" ng-if="item.status==8">查看</button>
-            <button type="button" class="btn btn-info btn-sm" ng-click="list.modify($index)" ng-if="item.status!=8">修改</button>
-            <button type="button" class="btn btn-danger btn-sm" ng-click="list.assign($index)" ng-if="user.rights.assign&&!item.assigned">分配</button>
-            <button type="button" class="btn btn-warning btn-sm" ng-click="list.recovery($index)" ng-if="user.rights.recycle&&item.assigned">回收</button>
+            <button type="button" class="btn btn-info btn-sm" ng-click="list.modify(item.id)" ng-if="item.status!=8">修改</button>
+            <button type="button" class="btn btn-danger btn-sm" ng-click="list.assign(item.id)" ng-if="user.rights.assign&&!item.assigned">分配</button>
+            <button type="button" class="btn btn-warning btn-sm" ng-click="list.recovery(item.id)" ng-if="user.rights.recycle&&item.assigned">回收</button>
           </td>
         </tr>
       </tbody>

@@ -1,132 +1,157 @@
 <article id="detail_view">
   <header class="view-title clearfix">
-    任务详情
+    店铺信息详情
     <div class="pull-right">
-      <button type="button" class="btn btn-success" ng-click="detail.save(true)" ng-if="detail.info.status!=8">保存并加载下一条</button>
-      <button type="button" class="btn btn-warning" ng-click="detail.save()" ng-if="detail.info.status!=8">保存</button>
+      <button type="button" class="btn btn-success" ng-click="detail.save(true)">保存</button>
       <back-button></back-button>
     </div>
   </header>
   <section class="content">
     <form class="form-horizontal">
       <section class="info-group">
-        <h4>个人信息</h4>
+        <h4>商 家 档 案 完 善</h4>
         <div class="form-group">
-          <label for="" class="control-label col-sm-1">姓名: </label>
-          <div class="col-sm-2">
-            <input type="text" class="form-control" ng-model="detail.info.name" maxlength="20">
+          <label for="" class="control-label col-sm-2">商家姓名: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.businessName" maxlength="20" readonly>
           </div>
-          <label for="" class="control-label col-sm-1">电话: </label>
-          <div class="col-sm-2">
-            <input type="text" class="form-control" ng-model="detail.info.phone" maxlength="12">
-          </div>
-          <div class="col-sm-1">
-            <button class="btn btn-block btn-success" ng-click="detail.dial()">呼叫</button>
-            
-          </div>
-          <div class="col-sm-1">
-            <button class="btn btn-block btn-danger" ng-disabled="!detail.calling" ng-click="detail.hangup()">挂断</button>
+          <label for="" class="control-label col-sm-2">身份证号: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.idNo" maxlength="18" readonly>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="" class="control-label col-sm-1">微信: </label>
-          <div class="col-sm-2">
-            <input type="text" class="form-control" ng-model="detail.info.wechat" maxlength="20">
+          <label for="" class="control-label col-sm-2">商家联系电话: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.phone" maxlength="12" readonly>
           </div>
-          <label for="" class="control-label col-sm-1">QQ: </label>
-          <div class="col-sm-2">
-            <input type="text" class="form-control" ng-model="detail.info.qq" maxlength="12">
+          <label for="" class="control-label col-sm-2">支付宝帐号: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.alipayAccount" maxlength="12" readonly>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="" class="control-label col-sm-1">省份: </label>
-          <div class="col-sm-2">
-            <select class="form-control" ng-model="detail.info.provinceId">
-              <option value="-1" disabled>请选择</option>
-              <option value="{{p.id}}" ng-repeat="p in detail.provinceList">{{p.name}}</option>
-            </select>
-            <!-- <select class="form-control" ng-model="detail.info.provinceId" ng-options="option.id as option.name for option in detail.provinceList track by option.id"></select> -->
+          <div class="col-sm-3 col-sm-offset-2">
+            <input type="text" class="form-control" ng-model="detail.info.phone1" maxlength="12">
           </div>
-          <label for="" class="control-label col-sm-1">城市: </label>
-          <div class="col-sm-2">
-            <select class="form-control" ng-model="detail.info.cityId">
-              <option value="-1" disabled>请选择</option>
-              <option value="{{c.id}}" ng-repeat="c in detail.cityList">{{c.name}}</option>
-            </select>
+          <label for="" class="control-label col-sm-2">微信: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.wechat" maxlength="12">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-3 col-sm-offset-2">
+            <input type="text" class="form-control" ng-model="detail.info.phone2" maxlength="12">
           </div>
         </div>
       </section>
       <section class="info-group">
-        <h4>处理状况</h4>
+        <h4>店 铺 信 息 完 善</h4>
         <div class="form-group">
-          <label for="" class="control-label col-sm-1">城市: </label>
-          <div class="col-sm-2">
-            <select class="form-control" ng-model="detail.info.ccity">
-              <option value="12">北京</option>
-              <option value="13">宁波</option>
-              <option value="14">南京</option>
-              <option value="15">苏州</option>
-              <option value="16">广州</option>
-              <option value="17">杭州</option>
-              <option value="18">深圳</option>
-              <option value="19">武汉</option>
-              <option value="20">天津</option>
-              <option value="21">上海</option>
-            </select>
+          <label for="" class="control-label col-sm-2">店铺帐号: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.username" maxlength="20" readonly>
           </div>
-          <label for="" class="col-sm-1 control-label">组别: </label>
-          <label class="col-sm-1 control-label">{{detail.info.groupId | team}}</label>
-          <label for="" class="col-sm-2 control-label">销售代表: </label>
-          <label class="col-sm-1 control-label">{{detail.info.saleman || '-'}}</label>
+          <label for="" class="control-label col-sm-2">店铺名称: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.shopName" maxlength="20" readonly>
+          </div>
         </div>
+
         <div class="form-group">
-
-          <label for="" class="control-label col-sm-1">合作类型: </label>
-          <div class="col-sm-2">
-            <select class="form-control" ng-model="detail.info.customerType">
-              <option value="1">经销商</option>
-              <option value="2">小店</option>
-            </select>
+          <label for="" class="control-label col-sm-2">店铺地址: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.addr" maxlength="20" readonly>
           </div>
-
-          <label for="" class="control-label col-sm-1">任务状态: </label>
-          <div class="col-sm-2">
-            <select class="form-control" ng-model="detail.info.status" ng-disabled="detail.info.status==8">
-              <option value="{{s}}" ng-repeat="s in detail.statusList" ng-disabled="user.roleId==3&&(s==0||s==1) || s==8">{{s | status}}</option>
-            </select>
+          <label for="" class="control-label col-sm-2">开店日期: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.shopDate" readonly>
           </div>
+        </div>
 
-          <section ng-if="detail.info.status==10">
-            <label for="" class="control-label col-sm-1">邀约时间: </label>
-            <div class="col-sm-2">
-              <input date-time type="text" class="form-control" ng-model="detail.info.invite">
-            </div>
+        <div class="form-group">
+          <label for="" class="control-label col-sm-2">运营人数: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.employeeCount" maxlength="3">
+          </div>
+          <label for="" class="control-label col-sm-2">主要用户来源: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.usersSource" maxlength="20">
+          </div>
+        </div>
 
-          </section>
-          
+        <div class="form-group">
+          <label for="" class="control-label col-sm-2">店铺月租金: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.monthlyRent" maxlength="5">
+          </div>
         </div>
       </section>
+
       <section class="info-group">
-        <h4>渠道</h4>
+        <h4>管 理 严 格 制 度</h4>
         <div class="form-group">
-          <label for="" class="col-sm-1 control-label text-right">客户来源: </label>
-          <label class="control-label">{{detail.info.customerSource || '-'}}</label>
+          <label for="" class="control-label col-sm-2">物业: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.property" maxlength="20">
+          </div>
+          <label for="" class="control-label col-sm-2">居委会: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.neighborhood" maxlength="20">
+          </div>
         </div>
-        <div class="form-group" hidden>
-          <label for="" class="control-label col-sm-1">来源详情: </label>
-          <label class="" ng-model="detail.info.sourceDetail">-</label>
+
+        <div class="form-group">
+          <label for="" class="control-label col-sm-2">城管: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.chased" maxlength="20">
+          </div>
         </div>
       </section>
+
       <section class="info-group">
-        <h4>历史记录</h4>
+        <h4>店 铺 设 计 合 理 程 度 </h4>
+        <div class="form-group">
+          <label for="" class="control-label col-sm-2">商品图片是否美观: </label>
+          <div class="col-sm-3">
+            <select class="form-control" ng-model="detail.info.imgGood">
+              <option value="" disabled>请选择</option>
+              <option value="1">是</option>
+              <option value="0">否</option>
+            </select>
+          </div>
+          <label for="" class="control-label col-sm-2">商品分类排序是否合理: </label>
+          <div class="col-sm-3">
+            <select class="form-control" ng-model="detail.info.sortingGood">
+              <option value="" disabled>请选择</option>
+              <option value="1">是</option>
+              <option value="0">否</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="info-group form">
+        <h4>掌 柜 推 荐 和 热 卖 商 品</h4>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <textarea class="form-control" rows="3" ng-model="detail.info.hotGoods" maxlength="500"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <section class="info-group">
+        <h4>历 史 记 录</h4>
         <div ng-if="detail.assignHistory.length" class="record">
           <div class="title">分配历史</div>
           <div ng-repeat="record in detail.assignHistory">
             <span class="date">{{record.date}}</span>
             <span class="from">{{record.from}}</span>
-            <span>分配给</span>
+            <span ng-if="record.type" class="success">分配给</span>
+            <span ng-if="record.type==0" class="danger">回收</span>
             <span class="to">{{record.to}}</span>
           </div>
         </div>
@@ -151,20 +176,9 @@
           </div>
         </div>
 
-        <div ng-if="detail.callHistory.length" class="record">
-          <div class="title">通话记录</div>
-          <div class="relative" ng-repeat="record in detail.callHistory">
-          <!-- <div class="relative"> -->
-            <span class="date">{{record.date}}</span>
-            <span class="name">{{record.name}}</span>
-            <!-- <video controls="" name="media" style="max-width: 100%; max-height: 100%;"><source src="http://192.168.100.20/monitor/20151129/20151129-800080-13611920055-8080-1448799723.2.wav" type="audio/x-wav"></video> -->
-            <video controls="" name="media" style="max-width: 100%; max-height: 100%;"><source ng-src="{{record.src | trustUrl}}" type="audio/x-wav"></video>
-          </div>
-        </div>
-
       </section>
       <section class="info-group form">
-        <h4>添加备注</h4>
+        <h4>添 加 备 注</h4>
         <div class="form-group">
           <div class="col-sm-12">
             <textarea class="form-control" rows="3" ng-model="detail.info.remark" maxlength="200"></textarea>

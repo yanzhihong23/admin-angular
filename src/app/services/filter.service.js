@@ -7,12 +7,14 @@
 
   /** @ngInject */
   function FilterService($log, StatusService) {
-    var statusList = StatusService.getStatusList();
+    var statusList = StatusService.getStatusList(),
+        storeStatusList = StatusService.getStoreStatusList(),
+        itemsPerPage = [10, 15, 20, 25, 30];
 
     this.filterData = { // -1 for all, and fix empty option
       status: statusList,
       coType: ['-1', '1', '2'],
-      itemsPerPage: [10, 15, 20, 25, 30]
+      itemsPerPage: itemsPerPage
     };
 
     this.reset = function() {
@@ -26,6 +28,23 @@
         orgId: '-1',
         memberId: '-1'
       };
+
+      this.storeFilter = {
+        status: '-1', // all
+        itemsPerPage: '10',
+        currentPage: 1,
+        totalItems: 0,
+        searchStr: '',
+        orgId: '-1',
+        memberId: '-1',
+        startDate: moment('2015-07-01'),
+        endDate: moment()
+      };
+    };
+
+    this.storeFilterData = {
+      status: storeStatusList,
+      itemsPerPage: itemsPerPage
     };
 
     this.reset();

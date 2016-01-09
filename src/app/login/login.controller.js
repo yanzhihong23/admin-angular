@@ -43,8 +43,11 @@
           UserService.setUser(vm.user);
           $log.debug(vm.user);
 
-          $state.go('task.list');
-
+          if(/5|9|10/.test(info.roleid)) {
+            $state.go('store.list');
+          } else {
+            $state.go('task.list');
+          }
         } else {
           toastr.error('用户名或密码错误', 'Error');
         }

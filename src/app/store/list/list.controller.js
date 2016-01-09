@@ -6,16 +6,15 @@
     .controller('StoreListController', StoreListController);
 
   /** @ngInject */
-  function StoreListController($log, $state, $scope, ApiService, UserService, FilterService, toastr, moment) {
+  function StoreListController($log, $state, $scope, StoreApi, UserService, FilterService, toastr, moment) {
     var vm = this, user = UserService.getUser();
 
     vm.user = user;
     vm.selectedCount = 0;
     vm.itemsPerPage = 10;
     vm.currentPage = 1;
-    vm.allowAutoAllot = user.allowAutoAllot;
-    vm.filterData = FilterService.filterData;
-    vm.filter = FilterService.filter;
+    vm.filterData = FilterService.storeFilterData;
+    vm.filter = FilterService.storeFilter;
 
     // methods
     vm.modify = modify;
@@ -34,15 +33,6 @@
         updateDataList();
       }
     }, true);
-
-    // coType watcher
-    $scope.$watch(function() {
-      return vm.filter.coType;
-    }, function(val, old) {
-      if(val !== old) {
-        updateDataList();
-      }
-    }, true); 
 
     // paginator watcher
     $scope.$watch(function() {
@@ -73,7 +63,25 @@
 
     // member watcher
     $scope.$watch(function() {
-      return vm.filter.memberId
+      return vm.filter.memberId;
+    }, function(val, old) {
+      if(val !== old) {
+        updateDataList();
+      }
+    }, true);
+
+    // date watcher
+    $scope.$watch(function() {
+      return vm.filter.startDate;
+    }, function(val, old) {
+      if(val !== old) {
+        updateDataList();
+      }
+    }, true);
+
+    // date watcher
+    $scope.$watch(function() {
+      return vm.filter.endDate;
     }, function(val, old) {
       if(val !== old) {
         updateDataList();
@@ -88,9 +96,9 @@
         pageIndex: vm.currentPage
       });
 
-      if(user.roleId == 1) { // city ceo
+      if(user.roleId == 9) { // city ceo
         getGroupList();
-      } else if(user.roleId == 2) { // group leader
+      } else if(user.roleId == 10) { // group leader
         getMemberList();
       }
     }
@@ -115,48 +123,29 @@
 
     function updateDataList() {
       var searchFilter = angular.copy(vm.filter);
-      if(searchFilter.status === '-1') {
-        searchFilter.status = null;
-      }
+      searchFilter.userId = vm.user.uId;
+      searchFilter.startDate = searchFilter.startDate.format('YYYY-MM-DD');
+      searchFilter.endDate = searchFilter.endDate.format('YYYY-MM-DD');
 
-      if(searchFilter.coType === '-1') {
-        searchFilter.coType = null;
-      }
-
-      searchFilter.itemsPerPage = Math.abs(searchFilter.itemsPerPage);
-      searchFilter.uId = vm.user.uId;
-
-      ApiService.getDataList(searchFilter).success(function(data) {
+      StoreApi.list(searchFilter).success(function(data) {
         if(data.flag === 1) {
           toastr.info('列表数据已更新');
 
           vm.selectedCount = 0;
-          vm.filter.totalItems = data.data.dataCount;
+          vm.filter.totalItems = data.data.total;
 
-          vm.list = data.data.result.map(function(obj) {
+          vm.list = data.data.list.map(function(obj) {
             return {
-              taskId: obj.msgid,
-              ccity: obj.ccity,
-              city: obj.city,
-              groupId: obj.cgroup,
-              customerType: obj.custype,
-              email: obj.email,
-              assigned: !/0|2|7/.test(obj.status_type),
-              assignDate: obj.allot_date && moment(obj.allot_date).format('YYYY-MM-DD HH:mm:ss'),
-              status: obj.status_type + '',
-              name: obj.name,
+              id: obj.storeId,
+              assigned: /2/.test(obj.status), // 0: 未分配, 1: 组内未分配, 2: 已分配
+              status: obj.status,
+              name: obj.shopName,
+              area: obj.provinces,
+              owner: obj.businessName,
               phone: obj.phone,
-              receiveDate: obj.protim,
-              qq: obj.qq,
-              wechat: obj.wx,
-              callCount: obj.phncnt,
-              lastCallDate: obj.lastphntim,
-              sourceDetail: obj.srcdtl,
-              customerSource: obj.channelName,
-              saleman: obj.crewRealName,
-              remark: obj.remark,
-              provinceId: obj.province_id ? obj.province_id + '' : '-1',
-              cityId: obj.city_id ? obj.city_id + '' : '-1'
+              assignedTeam: obj.groupName || '-',
+              assignedMember: obj.administrator || '-',
+              date: moment(obj.shopDate).format('YYYY-MM-DD')
             };
           })
         } else {
@@ -165,31 +154,23 @@
       })
     }
 
-    function modify(index) {
-      setTempData();
-
-      $state.go('task.detail', {index: index});
+    function modify(id) {
+      $state.go('store.detail', {id: id});
     }
 
-    function assign(index) {
-      var taskId = vm.list[index].taskId;
-
-      setTempData();
-
-      $state.go('task.assign', {id: taskId});
+    function assign(id) {
+      $state.go('store.assign', {id: id});
     }
 
     function batchAssign() {
       var ids = getSelectedIds();
 
-      $state.go('task.assign', {id: ids});
+      $state.go('store.assign', {id: ids});
     }
 
-    function recovery(index) {
-      var taskId = vm.list[index].taskId;
-
-      ApiService.recovery({
-        taskId: taskId,
+    function recovery(id) {
+      StoreApi.recover({
+        id: id,
         userId: vm.user.uId
       }).success(function(data) {
         if(data.flag === 1) {
@@ -205,7 +186,7 @@
       var ids = vm.list.filter(function(obj) {
         return obj.selected && !obj.assigned;
       }).map(function(obj) {
-        return obj.taskId;
+        return obj.id;
       });
 
       return ids;
@@ -219,28 +200,17 @@
 
     // group list and member list
     function getGroupList() {
-      ApiService.groupList(user).success(function(data) {
+      StoreApi.groupList(user).success(function(data) {
         if(data.flag === 1) {
-          vm.groupList = data.data.result.map(function(obj) {
-            return {
-              orgId: obj.orgid,
-              name: obj.name,
-              leader: obj.realname,
-              members: obj.usercount,
-              tasks: obj.workcount
-            };
-          });
+          vm.groupList = data.data;
 
           vm.groupList.forEach(function(obj) {
-            ApiService.memberList({orgId: obj.orgId}).success(function(data) {
+            StoreApi.groupDetail({orgId: obj.orgId}).success(function(data) {
               if(data.flag === 1) {
-                obj.memberList = data.data.result.map(function(obj) {
+                obj.memberList = data.data.list.map(function(obj) {
                   return {
-                    isLeader: obj.isleader === '1',
-                    email: obj.email,
-                    userId: obj.user_id,
-                    name: obj.realname,
-                    tasks: obj.workcount
+                    memberId: obj.userId,
+                    name: obj.name
                   };
                 });
               }
@@ -253,15 +223,12 @@
     }
 
     function getMemberList() {
-      ApiService.memberList(user).success(function(data) {
+      StoreApi.groupDetail(user).success(function(data) {
         if(data.flag === 1) {
-          vm.memberList = data.data.result.map(function(obj) {
+          vm.memberList = data.data.list.map(function(obj) {
             return {
-              isLeader: obj.isleader === '1',
-              email: obj.email,
-              userId: obj.user_id,
-              name: obj.realname,
-              tasks: obj.workcount
+              memberId: obj.userId,
+              name: obj.name
             };
           });
         }

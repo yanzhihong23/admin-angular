@@ -7,11 +7,13 @@
     .filter('city', city)
     .filter('team', team)
     .filter('status', status)
+    .filter('storeStatus', storeStatus)
     .filter('coType', coType)
     .filter('role', role)
     .filter('remark', remark)
     .filter('trustUrl', trustUrl)
-    .filter('phoneEncrypt', phoneEncrypt);
+    .filter('phoneEncrypt', phoneEncrypt)
+    ;
 
   /** @ngInject */
   function abs() {
@@ -49,6 +51,21 @@
     };
   }
 
+  function storeStatus() {
+    var map = {
+      '-1': '全部',
+      '0': '未编辑',
+      '1': '已编辑',
+      '2': '未分配',
+      '3': '组内未分配',
+      '4': '已分配'
+    };
+
+    return function(id) {
+      return map[id] || '-';
+    };
+  }
+
   function coType() {
     var map = {
       '-1': '全部',
@@ -65,8 +82,11 @@
     var map = {
       '0': '管理员',
       '1': '城市CEO',
-      '2': '主管',
-      '3': '销售'
+      '2': '销售主管',
+      '3': '销售',
+      '5': '运营专员',
+      '9': '运营总监',
+      '10': '运营主管'
     };
 
     return function(id) {

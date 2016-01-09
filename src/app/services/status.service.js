@@ -36,6 +36,10 @@
       return list;
     };
 
+    this.getStoreStatusList = function() {
+      return [-1, 0, 1, 2, 3, 4];
+    };
+
     $log.debug('StatusService end');
     
   }

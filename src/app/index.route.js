@@ -101,7 +101,7 @@
         }
       })
       .state('store.detail', {
-        url: '/detail?index',
+        url: '/detail/:id',
         views: {
           'store': {
             templateUrl: 'app/store/detail/detail.html',
@@ -111,7 +111,7 @@
         }
       })
       .state('store.assign', {
-        url: '/assign?id',
+        url: '/assign/:id',
         views: {
           'store': {
             templateUrl: 'app/store/assign/assign.html',

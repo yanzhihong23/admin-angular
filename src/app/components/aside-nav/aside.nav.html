@@ -1,13 +1,13 @@
 <aside class="side-nav">
 
   <div class="logo"></div>
-  {{active}}
+
   <ul class="item-list">
-    <li class="item" ng-class="{active: active=='task'}">
-      <a ui-sref="task.list"><i class="icon icon-store"></i>销售流量分配</a>
+    <li class="item" ng-class="{active: active=='task'}" ng-click="select('task')">
+      <a><i class="icon icon-store"></i>销售流量分配</a>
     </li>
-    <li class="item" ng-class="{active: active=='store'}">
-      <a ui-sref="store.list"><i class="icon icon-store"></i>店铺服务分配</a>
+    <li class="item" ng-class="{active: active=='store'}" ng-click="select('store')">
+      <a><i class="icon icon-store"></i>店铺服务分配</a>
     </li>
     <li class="item">
       <a href=""><i class="icon icon-staff"></i>内部人员信息</a>
