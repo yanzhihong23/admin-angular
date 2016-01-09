@@ -25,17 +25,20 @@
     function getDetail() {
       StoreApi.detail({id: id}).success(function(data) {
         if(data.flag === 1) {
-          vm.info = angular.copy(data.data);
+          var info = angular.copy(data.data);
 
-          vm.info.shopDate = moment(vm.info.shopDate).format('YYYY-MM-DD');
-          vm.info.idNo = vm.info.personNum;
-          vm.info.wechat = vm.info.weixin;
-          vm.info.addr = vm.info.detailAddress;
-          vm.info.alipayAccount = vm.info.payAlipayNum;
+          info.shopDate = moment(info.shopDate).format('YYYY-MM-DD');
+          info.idNo = info.personNum;
+          info.wechat = info.weixin;
+          info.addr = info.detailAddress;
+          info.alipayAccount = info.payAlipayNum;
 
-          vm.info.imgGood = vm.info.imgGood + '';
-          vm.info.sortingGood = vm.info.sortingGood + '';
-          vm.info.remark = null;
+          info.imgGood = info.imgGood == null ? '' : info.imgGood + '';
+          info.sortingGood = info.sortingGood == null ? '' : info.sortingGood + '';
+
+          info.remark = null;
+
+          vm.info = angular.copy(info);
         }
       });
     }
