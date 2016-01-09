@@ -18,12 +18,22 @@
 
         scope.select = function(type) {
           if(type === 'task') {
-            if(/0|1|2|3/.test(roleId)) {
-              $state.go('task.list');
+            switch(roleId) {
+              case 0:
+              case 1:
+              case 2:
+              case 3:
+                $state.go('task.list');
+                break;
             }
           } else if(type === 'store') {
-            if(/0|5|9|10/.test(roleId)) {
-              $state.go('store.list');
+            switch(roleId) {
+              case 0:
+              case 5:
+              case 9:
+              case 10:
+                $state.go('store.list');
+                break;
             }
           }
         }
