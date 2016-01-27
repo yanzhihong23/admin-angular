@@ -1,0 +1,70 @@
+.header{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  border-bottom: solid 1px #fff;
+  color: #fff;
+  background: #27A069;
+  z-index: 3;
+  .toggle{
+    padding-left: 215px;
+    font-size: 20px;
+    cursor: pointer;
+    &:hover:after{
+      content: '显示/隐藏侧边栏';
+      font-size: 14px;
+      display: block;
+      line-height: 20px;
+      padding: 2px 5px 5px;
+      border: dashed 1px #fff;
+      border-radius: 5px;
+      background: rgba(0,0,0,.5);
+      position: absolute;
+      right: -130px;
+      top: -2px;
+    }
+  }
+  .user{
+    .date{
+      padding-right: 20px;
+    }
+    .btn{
+      background: transparent;
+      border: solid 1px #fff;
+      border-radius: 40px;
+      margin-left: 5px;
+      margin-right: 5px;
+      height: 22px;
+      line-height: 22px;
+      padding: 0 6px;
+      text-align: center;
+      font-size: 12px;
+      color: #fff;
+      background: $green;
+      &:first-child{
+        margin-left: 20px;
+      }
+      &:last-child{
+        margin-right: 20px;
+      }
+    }
+  }
+}
+
+.hide-aside{
+  .side-nav{
+    display: none;
+  }
+  .main-content{
+    padding-left: 0;
+    .header .toggle{
+      padding-left: 15px;
+    }
+  }
+  .view-title{
+    padding-left: 20px;
+  }
+}
