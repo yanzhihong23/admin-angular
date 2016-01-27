@@ -26,60 +26,6 @@
     vm.select = select;
     vm.search = search;
 
-    // status watcher
-    $scope.$watch(function() {
-      return vm.filter.status;
-    }, function(val, old) {
-      if(val !== old) {
-        updateDataList();
-      }
-    }, true);
-
-    // coType watcher
-    $scope.$watch(function() {
-      return vm.filter.coType;
-    }, function(val, old) {
-      if(val !== old) {
-        updateDataList();
-      }
-    }, true); 
-
-    // paginator watcher
-    $scope.$watch(function() {
-      return vm.filter.itemsPerPage;
-    }, function(val, old) {
-      if(val !== old) {
-        updateDataList();
-      }
-    }, true);
-
-    // group watcher
-    $scope.$watch(function() {
-      return vm.filter.orgId;
-    }, function(val, old) {
-      if(val !== old) {
-        vm.filter.memberId = '-1';
-        if(val == -1) {
-          vm.memberList = null;
-        }
-        updateDataList();
-        vm.groupList.forEach(function(group) {
-          if(group.orgId == val) {
-            vm.memberList = group.memberList;
-          }
-        });
-      }
-    }, true);
-
-    // member watcher
-    $scope.$watch(function() {
-      return vm.filter.memberId
-    }, function(val, old) {
-      if(val !== old) {
-        updateDataList();
-      }
-    }, true);
-
     init();
 
     // init
@@ -93,6 +39,36 @@
       } else if(user.roleId == 2) { // group leader
         getMemberList();
       }
+
+      filterWatcher();
+    }
+
+    // filter watcher
+    function filterWatcher() {
+      $scope.$watch(function() {
+        return vm.filter;
+      }, function(val, old) {
+        switch(true) {
+          case val.status !== old.status:
+          case val.coType !== old.coType:
+          case val.itemsPerPage !== old.itemsPerPage:
+          case val.memberId !== old.memberId:
+            updateDataList();
+            break;
+          case val.orgId !== old.orgId:
+            vm.filter.memberId = '-1';
+            if(val.orgId == -1) {
+              vm.memberList = null;
+            }
+
+            updateDataList();
+            vm.groupList.forEach(function(group) {
+              if(group.orgId == val.orgId) {
+                vm.memberList = group.memberList;
+              }
+            });
+        }
+      }, true);
     }
     
     function select(isInvert) {

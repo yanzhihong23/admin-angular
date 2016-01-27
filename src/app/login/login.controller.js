@@ -26,6 +26,7 @@
           toastr.success('登录成功', 'Toastr fun!');
 
           var info = data.data;
+          vm.user.password = null;
           vm.user.isLeader = info.isLeader === '1';
           vm.user.realName = info.username;
           vm.user.orgId = info.orgid;

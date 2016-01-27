@@ -12,11 +12,13 @@
 
     if(!map) {
       map = {};
+      list = [];
       ApiService.getStatusList().success(function(data) {
         if(data.flag === 1) {
-          list = data.data.statusTypeList.map(function(obj) {
+          data.data.statusTypeList.forEach(function(obj) {
             map[obj.statusValue] = obj.statusName;
-            return obj.statusValue;
+
+            list.push(obj.statusValue);
           });
 
           map[-1] = '全部';

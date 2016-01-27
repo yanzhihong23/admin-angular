@@ -6,7 +6,7 @@
     .controller('AssignController', AssignController);
 
   /** @ngInject */
-  function AssignController($scope, $log, $state, $stateParams, ApiService, UserService, toastr) {
+  function AssignController($scope, $log, $state, $stateParams, ApiService, UserService, BackService, toastr) {
     var vm = this, 
         taskIds = $stateParams.id,
         user = UserService.getUser(),
@@ -47,15 +47,17 @@
     }
 
     function save() {
+      vm.assigned = true;
+
       ApiService.autoAllotOpen({
         userId: user.uId,
         ids: vm.selectedIds.join(';')
       }).success(function(data) {
         if(data.flag === 1) {
-          user.autoAllot = true;
-          UserService.setUser(user);
           toastr.success('自动分配开启成功');
+          BackService.goBack();
         } else {
+          vm.assigned = false;
           toastr.error(data.msg);
         }
       });
@@ -126,7 +128,7 @@
           updated = true;
           if(isLast) {
             toastr.success('任务分配成功');
-            $state.reload();
+            BackService.goBack();
           }
         } else {
           toastr.error(data.msg);
