@@ -20,15 +20,16 @@
     function getDetail() {
       FinanceApi.detail({userId: user.uId, id: id}).success(function(data) {
         if(data.flag === 1) {
-          var info = angular.copy(data.data);
+          var info = angular.copy(data.data),
+              detail = info.storeDetail;
 
           vm.shop = {
             id: info.appStoreId,
-            openDate: moment(info.openTime).format('YYYY-MM-DD'),
-            owner: info.shopkeeperName,
-            name: info.shopName,
-            username: info.shopId,
-            addr: info.shopAddr,
+            openDate: moment(detail.shopDate).format('YYYY-MM-DD'),
+            owner: detail.businessName,
+            name: detail.shopName,
+            username: detail.username,
+            addr: detail.detailAddress,
             payTime: info.payMoneyTime && moment(info.payMoneyTime).format('YYYY-MM-DD')
           };
 
