@@ -23,8 +23,6 @@
 
     // init
     function init() {
-      vm.filter.currentPage = 1;
-
       updateDataList();
       filterWatcher();
     }

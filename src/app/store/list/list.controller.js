@@ -29,7 +29,6 @@
 
     // init
     function init() {
-      vm.filter.currentPage = 1;
       updateDataList();
 
       if(user.roleId == 9) { // city ceo
