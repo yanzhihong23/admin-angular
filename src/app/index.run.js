@@ -21,6 +21,17 @@
           evt.preventDefault();
           $state.go('login');
         } else if(/task/.test(toState.name)) {
+          switch($rootScope.user.roleId) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+              break;
+            default:
+              evt.preventDefault();
+              break;
+          }
+
           // user rights check
           switch(toState.name) {
             case 'task.report':
@@ -42,6 +53,26 @@
               if(!$rootScope.user.rights.input) {
                 evt.preventDefault();
               }
+              break;
+          }
+        } else if(/store/.test(toState.name)) {
+          switch($rootScope.user.roleId) {
+            case 0:
+            case 5:
+            case 9:
+            case 10:
+              break;
+            default:
+              evt.preventDefault();
+              break;
+          }
+        } else if(/finance/.test(toState.name)) {
+          switch($rootScope.user.roleId) {
+            case 0:
+            case 4:
+              break;
+            default:
+              evt.preventDefault();
               break;
           }
         }
