@@ -29,9 +29,8 @@
 
     // init
     function init() {
-      updateDataList({
-        pageIndex: vm.currentPage
-      });
+      vm.filter.currentPage = 1;
+      updateDataList();
 
       if(user.roleId == 9) { // city ceo
         getGroupList();
@@ -47,21 +46,31 @@
       $scope.$watch(function() {
         return vm.filter;
       }, function(val, old) {
-        if(val.status !== old.status || val.itemsPerPage !== old.itemsPerPage || val.memberId !== old.memberId || val.provinceId !== old.provinceId) {
-          updateDataList();
-        } else if(val.orgId !== old.orgId) {
-          vm.filter.memberId = '-1';
-          if(val.orgId == -1) {
-            vm.memberList = null;
-          }
-          updateDataList();
-          vm.groupList.forEach(function(group) {
-            if(group.orgId == val.orgId) {
-              vm.memberList = group.memberList;
+        switch(true) {
+          case val.status !== old.status:
+          case val.storeStatus !== old.storeStatus:
+          case val.sourceType !== old.sourceType:
+          case val.itemsPerPage !== old.itemsPerPage:
+          case val.memberId !== old.memberId:
+          case val.provinceId !== old.provinceId:
+          case val.startDate.format('YYYY-MM-DD') !== old.startDate.format('YYYY-MM-DD'):
+          case val.endDate.format('YYYY-MM-DD') !== old.endDate.format('YYYY-MM-DD'):
+            updateDataList();
+
+            break;
+          case val.orgId !== old.orgId:
+            vm.filter.memberId = '-1';
+            if(val.orgId == -1) {
+              vm.memberList = null;
             }
-          });
-        } else if(val.startDate.format('YYYY-MM-DD') !== old.startDate.format('YYYY-MM-DD') || val.endDate.format('YYYY-MM-DD') !== old.endDate.format('YYYY-MM-DD')) {
-          updateDataList();
+            updateDataList();
+            vm.groupList.forEach(function(group) {
+              if(group.orgId == val.orgId) {
+                vm.memberList = group.memberList;
+              }
+            });
+
+            break;
         }
       }, true);
     }

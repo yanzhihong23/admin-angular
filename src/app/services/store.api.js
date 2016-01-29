@@ -17,7 +17,9 @@
         data: {
           userId: obj.userId,
           status: obj.status == -1 ? null : +obj.status, // 状态0~4(未编辑，已编辑，未分配，组内未分配，已分配)
-          capital: obj.provinceId == -1 ? null : +obj.provinceId,
+          storeStatus: +obj.storeStatus,
+          shopSourceType: obj.sourceType == -1 ? null : +obj.sourceType,
+          capital: obj.provinceId == '全部' ? null : obj.provinceId,
           groupId: obj.orgId == -1 ? null : obj.orgId,
           memberId: obj.memberId == -1 ? null : obj.memberId,
           startTime: obj.startDate,
@@ -79,7 +81,13 @@
           weixin: obj.wechat,  // 微信账号
           username: obj.username,  // 店铺账号
           detailAddress: obj.addr,
-          operator:  obj.userId // 操作人ID
+          operator:  obj.userId, // 操作人ID
+
+          merchantsName: obj.saleman,
+          warehouseAddress: obj.warehouseAddr,
+          storeStatus: obj.storeStatus,
+          shopSourceType: obj.sourceType,
+          threePlusOne: obj.threePlusOne
         }
       });
     };

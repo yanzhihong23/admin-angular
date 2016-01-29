@@ -120,6 +120,34 @@
           }
         }
       })
+      // finance
+      .state('finance', {
+        url: '/finance',
+        abstract: true,
+        templateUrl: 'app/finance/finance.html',
+        controller: 'FinanceController',
+        controllerAs: 'finance'
+      })
+      .state('finance.list', {
+        url: '/list',
+        views: {
+          'finance': {
+            templateUrl: 'app/finance/list/list.html',
+            controller: 'FinanceListController',
+            controllerAs: 'list'
+          }
+        }
+      })
+      .state('finance.detail', {
+        url: '/detail/:id',
+        views: {
+          'finance': {
+            templateUrl: 'app/finance/detail/detail.html',
+            controller: 'FinanceDetailController',
+            controllerAs: 'detail'
+          }
+        }
+      })
       ;
 
     $urlRouterProvider.otherwise('/login');

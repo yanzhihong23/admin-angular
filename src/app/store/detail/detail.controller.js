@@ -32,6 +32,11 @@
           info.wechat = info.weixin;
           info.addr = info.detailAddress;
           info.alipayAccount = info.payAlipayNum;
+          info.saleman = info.merchantsName;
+          info.warehouseAddr = info.warehouseAddress;
+          info.sourceType = info.shopSourceType + '';
+          info.storeStatus = info.storeStatus + '';
+          info.threePlusOne = info.threePlusOne == null ? '' : info.threePlusOne + '';
 
           info.imgGood = info.imgGood == null ? '' : info.imgGood + '';
           info.sortingGood = info.sortingGood == null ? '' : info.sortingGood + '';

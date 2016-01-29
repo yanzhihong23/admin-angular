@@ -46,6 +46,29 @@
           <div class="col-sm-3 col-sm-offset-2">
             <input type="text" class="form-control" ng-model="detail.info.phone2" maxlength="12">
           </div>
+          <label for="" class="control-label col-sm-2">招商人员姓名: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.saleman" maxlength="12">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="" class="control-label col-sm-2">店铺来源类型: </label>
+          <div class="col-sm-3">
+            <select class="form-control" ng-model="detail.info.sourceType">
+              <option value="" disabled>请选择</option>
+              <option value="1">经销商</option>
+              <option value="2">销售</option>
+            </select>
+          </div>
+          <label for="" class="control-label col-sm-2">是否三加一: </label>
+          <div class="col-sm-3">
+            <select class="form-control" ng-model="detail.info.threePlusOne">
+              <option value="" disabled>请选择</option>
+              <option value="1">是</option>
+              <option value="0">否</option>
+            </select>
+          </div>
         </div>
       </section>
       <section class="info-group">
@@ -87,6 +110,22 @@
           <label for="" class="control-label col-sm-2">店铺月租金: </label>
           <div class="col-sm-3">
             <input type="text" class="form-control" ng-model="detail.info.monthlyRent" maxlength="5">
+          </div>
+          <label for="" class="control-label col-sm-2">仓库地址: </label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control" ng-model="detail.info.warehouseAddr" maxlength="30">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="" class="control-label col-sm-2">店铺状态: </label>
+          <div class="col-sm-3">
+            <select class="form-control" ng-model="detail.info.storeStatus">
+              <option value="" disabled>请选择</option>
+              <option value="1">正常</option>
+              <option value="-1">休假中</option>
+              <option value="-2">退店</option>
+            </select>
           </div>
         </div>
       </section>

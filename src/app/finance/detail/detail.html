@@ -1,0 +1,77 @@
+<article id="detail_view">
+  <header class="view-title clearfix">
+    返款详情
+    <div class="pull-right">
+      <back-button></back-button>
+    </div>
+  </header>
+  <section class="content">
+    <form class="form-horizontal">
+      <section class="info-group">
+        <h4>开  店  详  情</h4>
+        <div class="form-group">
+          <label class="control-label col-sm-2">店铺ID: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.shop.id}}</p>
+          <label class="control-label col-sm-2">开店时间: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.shop.openDate}}</p>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-2">店主姓名: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.shop.owner}}</p>
+          <label class="control-label col-sm-2">店铺名称: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.shop.name}}</p>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-2">店铺帐号: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.shop.username}}</p>
+          <label class="control-label col-sm-2">店铺地址: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.shop.addr}}</p>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-2">缴款时间: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.shop.payTime}}</p>
+        </div>
+      </section>
+      <section class="info-group">
+        <h4>返  款  详  情</h4>
+        <div class="form-group">
+          <label class="control-label col-sm-2">应收加盟费: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.refund.initialFee}}</p>
+          <label class="control-label col-sm-2">实收加盟费: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.refund.initialFeePaid}}</p>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-2">返款奖励类型: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.refund.type}}</p>
+          <label class="control-label col-sm-2">返款金额（元）: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.refund.reward}}</p>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-2">所属经销商: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.refund.dealer}}</p>
+          <label class="control-label col-sm-2">经销商开户银行: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.refund.bank.name}}</p>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-2">开户行支行: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.refund.bank.branch}}</p>
+          <label class="control-label col-sm-2">银行卡帐号: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.refund.bank.cardNo}}</p>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-2">返款时间: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.refund.updateTime}}</p>
+          <label class="control-label col-sm-2">打款人员: </label>
+          <p class="col-sm-3 form-control-static">{{::detail.refund.payer}}</p>
+        </div>
+      </section>
+    </form>
+  </section>
+</article>

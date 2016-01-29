@@ -1,0 +1,25 @@
+<form class="form-horizontal confirm-modal" name="pwdForm">
+  <div class="modal-header">
+    <h3 class="modal-title">输入返款金额（元）</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-12">
+        <input type="text" class="form-control" name="amount" ng-model="amount" ng-pattern="/^[1-9]{1}[0-9]{0,}$/" maxlength="5" required>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-sm-6">
+        <button type="button" class="btn btn-block btn-default cancel" ng-click="cancel()">取 消</button>
+      </div>
+      <div class="col-sm-6">
+        <button type="button" class="btn btn-block btn-success confirm" ng-disabled="pwdForm.$invalid" ng-click="submit()">确 认</button>
+      </div>
+    </div>
+    <!-- <button class="btn btn-success" type="button" ng-disabled="pwdForm.$invalid" ng-click="pwd.submit()">提交</button> -->
+    <!-- <button class="btn btn-default" type="button" ng-click="pwd.cancel()">取消</button> -->
+  </div>
+
+</form>

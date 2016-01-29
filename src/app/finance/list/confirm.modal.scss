@@ -1,0 +1,51 @@
+.confirm-modal{
+  .modal-title{
+    text-align: center;
+    font-size: 18px;
+  }
+  input{
+    height: 50px;
+    font-size: 18px;
+    text-align: center;
+  }
+  .modal-footer{
+    &, *{
+      padding: 0;
+      margin: 0;
+    }
+    .btn{
+      line-height: 50px;
+      border-radius: 0;
+      font-size: 16px;
+      outline: 0;
+      box-shadow: none;
+      border: 0;
+      &.cancel{
+        border-bottom-left-radius: 6px;
+      }
+      &.confirm{
+        border-bottom-right-radius: 6px;
+      }
+    }
+  }
+}
+
+// Modal Vertically Center
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}

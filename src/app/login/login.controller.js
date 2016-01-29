@@ -14,6 +14,8 @@
       // password: 'zjdd1234',
       // username: '13764903755',
       // password: '123456'
+      // username: '13681945800',
+      // username: '13585679356',
     };
 
     vm.submit = submit;
@@ -44,11 +46,19 @@
           UserService.setUser(vm.user);
           $log.debug(vm.user);
 
-          if(/5|9|10/.test(info.roleid)) {
-            $state.go('store.list');
-          } else {
-            $state.go('task.list');
+          switch(info.roleid) {
+            case 5:
+            case 9:
+            case 10:
+              $state.go('store.list');
+              break;
+            case 4:
+              $state.go('finance.list');
+              break;
+            default:
+              $state.go('task.list');
           }
+
         } else {
           toastr.error('用户名或密码错误', 'Error');
         }

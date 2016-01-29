@@ -1,0 +1,95 @@
+<article>
+  <header class="view-title">
+    返款列表（总数: {{list.filter.totalItems}}）
+  </header>
+  <section class="content clearfix">
+    <!-- search filters -->
+    <div class="form-inline clearfix search-filters">
+      <div class="form-group">
+        <label for="" class="control-label">返款类型: </label>
+        <select name="" id="" class="form-control" ng-model="list.filter.type">
+          <option value="{{key}}" ng-repeat="(key, value) in list.filterData.type">{{value}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="" class="control-label">状态: </label>
+        <select name="" id="" class="form-control" ng-model="list.filter.status">
+          <option value="{{key}}" ng-repeat="(key, value) in list.filterData.status">{{value}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="" class="control-label">每页条数: </label>
+        <select name="" id="" class="form-control" ng-model="list.filter.itemsPerPage">
+          <option value="{{f}}" ng-repeat="f in list.filterData.itemsPerPage">{{f | abs}}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="" class="control-label">搜索: </label>
+        <input type="text" class="form-control" ng-model="list.filter.searchStr" placeholder="店铺ID / 经销商" ng-keypress="list.search($event)">
+      </div>
+
+    </div>
+    <div class="divider"></div>
+    <table class="table table-hover table-striped table-responsive">
+      <!-- table header -->
+      <thead>
+        <tr>
+          <th>店铺ID</th>
+          <th>开店时间</th>
+          <th>返款时间</th>
+          <th>返款类型</th>
+          <th>所属经销商</th>
+          <th>奖励金额（元）</th>
+          <th>经销商开户银行 </th>
+          <th>经销商银行卡号</th>
+          <th>操作</th> 
+        </tr>
+      </thead>
+      <!-- table body -->
+      <tbody>
+        <tr ng-repeat="item in list.list">
+          <td>{{item.storeId}}</td>
+          <td>{{item.openDate}}</td>
+          <td>{{item.returnDate || '-'}}</td>
+          <td>{{item.type}}</td>
+          <td>{{item.dealer}}</td>
+          <td>{{item.amount | currency:''}}</td>
+          <td>{{item.bankName || '-'}}</td>
+          <td>{{item.bankNo || '-'}}</td>
+          <td>
+            <button type="button" class="btn btn-info btn-sm" ng-click="list.detail(item.id)">详情</button>
+            <button type="button" class="btn btn-danger btn-sm" ng-if="item.state!=2" ng-click="list.update(item.id)">已打款</button>
+            <span ng-if="item.state==2" class="suc">返款成功</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-center" ng-if="!list.list.length">暂无数据</div>
+    <div class="divider"></div>
+
+    <section class="clearfix">
+      <div class="pull-left">
+        <button class="btn btn-danger" ng-click="list.batchAssign()" ng-if="user.rights.assign" ng-disabled="!list.selectedCount">批量分配 <span class="badge">{{list.selectedCount}}</span></button>
+      </div>
+      
+      <!-- paginator -->
+      <uib-pagination ng-change="list.pageChanged()"
+        max-size="5"
+        rotate="false"
+        boundary-links="true"
+        total-items="list.filter.totalItems"
+        ng-model="list.filter.currentPage"
+        items-per-page="list.filter.itemsPerPage"
+        class="pagination green pull-right"
+        previous-text="上一页"
+        next-text="下一页"
+        first-text="首页"
+        last-text="末页">
+      </uib-pagination>
+    </section>
+    
+  </section>
+</article>

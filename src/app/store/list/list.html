@@ -14,7 +14,7 @@
       <div class="form-group">
         <label for="" class="control-label">省份: </label>
         <select name="" id="" class="form-control" ng-model="list.filter.provinceId">
-          <option value="{{p.id}}" ng-repeat="p in list.filterData.provinceList">{{p.name}}</option>
+          <option value="{{p.name}}" ng-repeat="p in list.filterData.provinceList">{{p.name}}</option>
         </select>
       </div>
       <div class="form-group" ng-if="list.user.roleId==9">
@@ -29,6 +29,18 @@
         <select class="form-control" ng-model="list.filter.memberId">
           <option value="-1">全部</option>>
           <option value="{{member.memberId}}" ng-repeat="member in list.memberList">{{member.name}}</option>
+        </select>
+      </div>
+      <div class="form-group" ng-if="list.user.roleId!=5">
+        <label for="" class="control-label">来源类型: </label>
+        <select class="form-control" ng-model="list.filter.sourceType">
+          <option value="{{key}}" ng-repeat="(key, value) in list.filterData.sourceType">{{value}}</option>
+        </select>
+      </div>
+      <div class="form-group" ng-if="list.user.roleId!=5">
+        <label for="" class="control-label">店铺状态: </label>
+        <select class="form-control" ng-model="list.filter.storeStatus">
+          <option value="{{key}}" ng-repeat="(key, value) in list.filterData.storeStatus">{{value}}</option>
         </select>
       </div>
 
@@ -77,8 +89,8 @@
         <tr ng-repeat="item in list.list">
           <td ng-if="user.rights.assign"><input type="checkbox" ng-model="item.selected" ng-click="list.select()" ng-if="!item.assigned"></td>
           <td>{{item.date}}</td>
-          <td>{{item.owner}}</td>
           <td>{{item.name}}</td>
+          <td>{{item.owner}}</td>
           <td>{{item.phone}}</td>
           <td>{{item.area}}</td>
           <td ng-if="user.roleId==9">{{item.assignedTeam}}</td>
@@ -100,7 +112,7 @@
       </div>
       
       <!-- paginator -->
-      <pagination ng-change="list.pageChanged()"
+      <uib-pagination ng-change="list.pageChanged()"
         max-size="5"
         rotate="false"
         boundary-links="true"
@@ -112,7 +124,7 @@
         next-text="下一页"
         first-text="首页"
         last-text="末页">
-      </pagination>
+      </uib-pagination>
     </section>
     
   </section>
