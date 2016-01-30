@@ -6,7 +6,7 @@
     .controller('StoreDetailController', StoreDetailController);
 
   /** @ngInject */
-  function StoreDetailController($log, $state, $scope, $stateParams, $location, UserService, StoreApi, SystemApi, CallApi, StatusService, AddressService, toastr, moment) {
+  function StoreDetailController($log, $stateParams, UserService, StoreApi, toastr, moment) {
     var vm  = this, 
         id = $stateParams.id,
         user = UserService.getUser();

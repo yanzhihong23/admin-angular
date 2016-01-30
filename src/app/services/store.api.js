@@ -6,7 +6,7 @@
     .service('StoreApi', StoreApi);
 
   /** @ngInject */
-  function StoreApi($http, $log, APISERVER, md5) {
+  function StoreApi($http, $log, APISERVER) {
     var headers = {'Conetent-Type': 'application/json'};
 
     this.list = function(obj) {

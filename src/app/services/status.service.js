@@ -6,7 +6,7 @@
     .service('StatusService', StatusService);
 
   /** @ngInject */
-  function StatusService(localStorageService, $log, $state, $rootScope, ApiService) {
+  function StatusService(localStorageService, $log, ApiService) {
     var map = localStorageService.get('statusMap'),
         list = localStorageService.get('statusList');
 

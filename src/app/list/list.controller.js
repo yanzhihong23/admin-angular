@@ -11,8 +11,6 @@
 
     vm.user = user;
     vm.selectedCount = 0;
-    vm.itemsPerPage = 10;
-    vm.currentPage = 1;
     vm.allowAutoAllot = user.allowAutoAllot;
     vm.filterData = FilterService.filterData;
     vm.filter = FilterService.filter;
@@ -30,9 +28,7 @@
 
     // init
     function init() {
-      updateDataList({
-        pageIndex: vm.currentPage
-      });
+      updateDataList();
 
       if(user.roleId == 1) { // city ceo
         getGroupList();

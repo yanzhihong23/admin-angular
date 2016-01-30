@@ -6,7 +6,7 @@
     .service('BackService', BackService);
 
   /** @ngInject */
-  function BackService(localStorageService, $log, $state, $rootScope) {
+  function BackService(localStorageService, $log, $state) {
     this.setBackView = function(fromState, fromParams) {
       if(fromState.name) {
         localStorageService.set('backView', {

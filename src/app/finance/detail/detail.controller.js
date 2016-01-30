@@ -6,7 +6,7 @@
     .controller('FinanceDetailController', FinanceDetailController);
 
   /** @ngInject */
-  function FinanceDetailController($log, $state, $scope, $stateParams, $location, UserService, FinanceApi, SystemApi, CallApi, StatusService, AddressService, toastr, moment) {
+  function FinanceDetailController($log, $stateParams, UserService, FinanceApi, toastr, moment) {
     var vm  = this, 
         id = $stateParams.id,
         user = UserService.getUser();

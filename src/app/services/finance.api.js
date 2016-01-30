@@ -6,7 +6,7 @@
     .service('FinanceApi', FinanceApi);
 
   /** @ngInject */
-  function FinanceApi($http, $log, APISERVER, md5) {
+  function FinanceApi($http, $log, APISERVER) {
     var headers = {'Conetent-Type': 'application/json'};
 
     this.list = function(obj) {

@@ -6,7 +6,7 @@
     .controller('StoreAssignController', StoreAssignController);
 
   /** @ngInject */
-  function StoreAssignController($scope, $log, $state, $stateParams, StoreApi, UserService, BackService, toastr) {
+  function StoreAssignController($log, $stateParams, StoreApi, UserService, BackService, toastr) {
     var vm = this, 
         ids = $stateParams.id.split(','),
         user = UserService.getUser(),
