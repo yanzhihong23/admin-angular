@@ -8,6 +8,7 @@
     .filter('team', team)
     .filter('status', status)
     .filter('storeStatus', storeStatus)
+    .filter('shopStatus', shopStatus)
     .filter('coType', coType)
     .filter('role', role)
     .filter('remark', remark)
@@ -59,6 +60,18 @@
       '2': '未分配',
       '3': '组内未分配',
       '4': '已分配'
+    };
+
+    return function(id) {
+      return map[id] || '-';
+    };
+  }
+
+  function shopStatus() {
+    var map = {
+      '1': '正常',
+      '-1': '休假中',
+      '-2': '退店'
     };
 
     return function(id) {

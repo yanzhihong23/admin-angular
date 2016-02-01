@@ -79,6 +79,7 @@
           <th>店主姓名</th>
           <th>联系方式</th>
           <th>店铺省市</th>
+          <th>店铺状态</th>
           <th ng-if="user.roleId==9">分配组别</th>
           <th ng-if="user.roleId!=5">分配组员</th>
           <th>操作</th> 
@@ -91,12 +92,13 @@
           <td>{{item.date}}</td>
           <td>{{item.name}}</td>
           <td>{{item.owner}}</td>
-          <td>{{item.phone}}</td>
+          <td>{{item.phone | phoneEncrypt}}</td>
           <td>{{item.area}}</td>
+          <td>{{item.storeStatus | shopStatus}}</td>
           <td ng-if="user.roleId==9">{{item.assignedTeam}}</td>
           <td ng-if="user.roleId!=5">{{item.assignedMember}}</td>
           <td>
-            <button type="button" class="btn btn-info btn-sm" ng-click="list.modify(item.id)" ng-if="item.status!=8">修改</button>
+            <button type="button" class="btn btn-info btn-sm" ng-click="list.modify(item.id)" ng-if="item.status!=8">详情</button>
             <button type="button" class="btn btn-danger btn-sm" ng-click="list.assign(item.id)" ng-if="user.rights.assign&&!item.assigned">分配</button>
             <button type="button" class="btn btn-warning btn-sm" ng-click="list.recovery(item.id)" ng-if="user.rights.recycle&&item.assigned">回收</button>
           </td>

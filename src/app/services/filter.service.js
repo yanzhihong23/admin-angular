@@ -22,6 +22,7 @@
       itemsPerPage: itemsPerPage,
       provinceList: AddressService.provinces,
       storeStatus: {
+        '0': '全部',
         '1': '正常',
         '-1': '休假中',
         '-2': '退店'
@@ -61,7 +62,7 @@
 
       this.storeFilter = {
         status: '-1', // all
-        storeStatus: '1',
+        storeStatus: '0',
         sourceType: '-1',
         provinceId: '全部',
         itemsPerPage: '10',

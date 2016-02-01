@@ -114,8 +114,8 @@
 
             return {
               id: obj.storeId,
-              assigned: /2/.test(obj.status), // 0: 未分配, 1: 组内未分配, 2: 已分配
               status: obj.status,
+              storeStatus: obj.storeStatus,
               name: obj.shopName,
               area: area,
               owner: obj.businessName,

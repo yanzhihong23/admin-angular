@@ -12,6 +12,7 @@
         <h4>商 家 档 案 完 善</h4>
         <div class="form-group">
           <label for="" class="control-label col-sm-2">商家姓名: </label>
+          <!-- <p class="col-sm-3 form-control-static">{{detail.info.businessName}}</p> -->
           <div class="col-sm-3">
             <input type="text" class="form-control" ng-model="detail.info.businessName" maxlength="20" readonly>
           </div>
@@ -46,21 +47,6 @@
           <div class="col-sm-3 col-sm-offset-2">
             <input type="text" class="form-control" ng-model="detail.info.phone2" maxlength="12">
           </div>
-          <label for="" class="control-label col-sm-2">招商人员姓名: </label>
-          <div class="col-sm-3">
-            <input type="text" class="form-control" ng-model="detail.info.saleman" maxlength="12">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="" class="control-label col-sm-2">店铺来源类型: </label>
-          <div class="col-sm-3">
-            <select class="form-control" ng-model="detail.info.sourceType">
-              <option value="" disabled>请选择</option>
-              <option value="1">经销商</option>
-              <option value="2">销售</option>
-            </select>
-          </div>
           <label for="" class="control-label col-sm-2">是否三加一: </label>
           <div class="col-sm-3">
             <select class="form-control" ng-model="detail.info.threePlusOne">
@@ -68,6 +54,21 @@
               <option value="1">是</option>
               <option value="0">否</option>
             </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="" class="control-label col-sm-2">店铺来源类型: </label>
+          <div class="col-sm-3">
+            <select class="form-control" ng-model="detail.info.sourceType" disabled>
+              <option value="" disabled>请选择</option>
+              <option value="1">经销商</option>
+              <option value="2">销售</option>
+            </select>
+          </div>
+          <label for="" class="control-label col-sm-2">招商人员姓名: </label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="detail.info.saleman" maxlength="12" readonly>
           </div>
         </div>
       </section>
@@ -120,7 +121,7 @@
         <div class="form-group">
           <label for="" class="control-label col-sm-2">店铺状态: </label>
           <div class="col-sm-3">
-            <select class="form-control" ng-model="detail.info.storeStatus">
+            <select class="form-control" ng-model="detail.info.storeStatus" disabled>
               <option value="" disabled>请选择</option>
               <option value="1">正常</option>
               <option value="-1">休假中</option>
