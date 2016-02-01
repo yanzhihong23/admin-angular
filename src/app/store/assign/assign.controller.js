@@ -9,8 +9,7 @@
   function StoreAssignController($log, $stateParams, StoreApi, UserService, BackService, toastr) {
     var vm = this, 
         ids = $stateParams.id.split(','),
-        user = UserService.getUser(),
-        updated = false;
+        user = UserService.getUser();
         
     vm.loadCompleted = false;
     vm.selectedCount = 0;

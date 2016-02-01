@@ -77,9 +77,9 @@
             </select>
           </div>
           <label for="" class="col-sm-1 control-label">组别: </label>
-          <label class="col-sm-1 control-label">{{detail.info.groupId | team}}</label>
-          <label for="" class="col-sm-2 control-label">销售代表: </label>
-          <label class="col-sm-1 control-label">{{detail.info.saleman || '-'}}</label>
+          <p class="col-sm-2 form-control-static">{{detail.info.groupId | team}}</p>
+          <label for="" class="col-sm-1 control-label">销售代表: </label>
+          <p class="col-sm-2 form-control-static">{{detail.info.saleman || '-'}}</p>
         </div>
         <div class="form-group">
 
@@ -112,7 +112,7 @@
         <h4>渠道</h4>
         <div class="form-group">
           <label for="" class="col-sm-1 control-label text-right">客户来源: </label>
-          <label class="control-label">{{detail.info.customerSource || '-'}}</label>
+          <p class="col-sm-2 form-control-static">{{detail.info.customerSource || '-'}}</p>
         </div>
         <div class="form-group" hidden>
           <label for="" class="control-label col-sm-1">来源详情: </label>
