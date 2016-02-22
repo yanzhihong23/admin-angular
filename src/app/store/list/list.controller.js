@@ -49,6 +49,7 @@
           case val.status !== old.status:
           case val.storeStatus !== old.storeStatus:
           case val.sourceType !== old.sourceType:
+          case val.threePlusOne !== old.threePlusOne:
           case val.itemsPerPage !== old.itemsPerPage:
           case val.memberId !== old.memberId:
           case val.provinceId !== old.provinceId:

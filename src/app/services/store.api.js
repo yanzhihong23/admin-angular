@@ -18,6 +18,7 @@
           userId: obj.userId,
           status: obj.status == -1 ? null : +obj.status, // 状态0~4(未编辑，已编辑，未分配，组内未分配，已分配)
           storeStatus: +obj.storeStatus ? +obj.storeStatus : null,
+          threePlusOne: +obj.threePlusOne == -1 ? null : +obj.threePlusOne,
           shopSourceType: obj.sourceType == -1 ? null : +obj.sourceType,
           capital: obj.provinceId == '全部' ? null : obj.provinceId,
           groupId: obj.orgId == -1 ? null : obj.orgId,

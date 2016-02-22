@@ -31,6 +31,11 @@
         '-1': '全部',
         '1': '经销商',
         '2': '销售'
+      },
+      threePlusOne: {
+        '-1': '全部',
+        '1': '是',
+        '0': '否'
       }
     };
 
@@ -64,6 +69,7 @@
         status: '-1', // all
         storeStatus: '0',
         sourceType: '-1',
+        threePlusOne: '-1',
         provinceId: '全部',
         itemsPerPage: '10',
         currentPage: 1,
