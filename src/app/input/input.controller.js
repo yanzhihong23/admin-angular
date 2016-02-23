@@ -94,7 +94,7 @@
         cityId: '-1',
         channelId: '-1',
         coType: '-1',
-        ccity: '0'
+        ccity: '21'
       };
     }
 
