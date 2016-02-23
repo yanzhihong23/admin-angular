@@ -86,7 +86,7 @@
           <td>{{item.receiveDate || '-'}}</td>
           <td>{{item.name}}</td>
           <td>{{item.phone | phoneEncrypt}}</td>
-          <td>{{item.callCount}}</td>
+          <td>{{item.callCount || 0}}</td>
           <td>{{item.city}}</td>
           <td>{{item.customerType | coType}}</td>
           <td>{{item.status | status}}</td>
