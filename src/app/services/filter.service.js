@@ -9,7 +9,7 @@
   function FilterService($log, StatusService, AddressService) {
     var statusList = StatusService.getStatusList(),
         storeStatusList = StatusService.getStoreStatusList(),
-        itemsPerPage = [10, 15, 20, 25, 30];
+        itemsPerPage = [10, 20, 30, 40, 50, 100];
 
     this.filterData = { // -1 for all, and fix empty option
       status: statusList,
@@ -57,7 +57,7 @@
       this.filter = {
         status: '-1', // all
         coType: '-1', // all
-        itemsPerPage: '10',
+        itemsPerPage: '30',
         currentPage: 1,
         totalItems: 0,
         searchStr: '',
