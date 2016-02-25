@@ -4,7 +4,8 @@
     <div class="pull-right">
       <button type="button" class="btn btn-success" ng-click="detail.save(true)" ng-if="detail.info.status!=8">保存并加载下一条</button>
       <button type="button" class="btn btn-warning" ng-click="detail.save()" ng-if="detail.info.status!=8">保存</button>
-      <back-button></back-button>
+      <a ui-sref="task.list" class="btn btn-default">返回</a>
+      <!-- <back-button></back-button> -->
     </div>
   </header>
   <section class="content">
@@ -56,6 +57,11 @@
               <option value="{{c.id}}" ng-repeat="c in detail.cityList">{{c.name}}</option>
             </select>
           </div>
+        </div>
+
+        <div class="form-group">
+          <label for="" class="control-label col-sm-1">详细地址: </label>
+          <p class="col-sm-11 form-control-static">{{detail.info.city || '-'}}</p>
         </div>
       </section>
       <section class="info-group">
