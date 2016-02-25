@@ -52,7 +52,7 @@
       </div>
       <div class="form-group">
         <label for="" class="control-label">搜索: </label>
-        <input type="text" class="form-control" ng-model="list.filter.searchStr" placeholder="姓名/手机号/微信/QQ" ng-keypress="list.search($event)">
+        <input type="text" class="form-control" ng-model="list.filter.searchStr" placeholder="姓名/手机号/销售代表" ng-keypress="list.search($event)">
       </div>
 
     </div>
@@ -68,7 +68,7 @@
           <th>姓名</th>
           <th>电话</th>
           <th>通话次数</th>
-          <th>城市</th>
+          <th>地址</th>
           <th>合作类型</th>
           <th>状态</th>
           <th ng-if="list.user.roleId==3">备注</th>
@@ -87,7 +87,7 @@
           <td>{{item.name}}</td>
           <td>{{item.phone | phoneEncrypt}}</td>
           <td>{{item.callCount || 0}}</td>
-          <td>{{item.city}}</td>
+          <td>{{item.city || '-'}}</td>
           <td>{{item.customerType | coType}}</td>
           <td>{{item.status | status}}</td>
           <td ng-if="list.user.roleId==3">{{(item.remark | remark) || '-'}}</td>
